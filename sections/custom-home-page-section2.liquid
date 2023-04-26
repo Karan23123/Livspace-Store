@@ -1,0 +1,120 @@
+<div class="explore-the-range">
+  <div id="product-slider" class="home-prod">
+    <div class="container-lg">
+      <div class="swiper-head">
+        <p>{{ section.settings.heading }}</p>
+      </div>
+
+      <div class="swiper explore-our-category">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            <div class="swiper-slide">
+              <div class="card w-100 explocrd">
+                <div class="explore-category-photo">
+                  <a href="{{ block.settings.collection.url }}">
+                    {% if block.settings.collection_image != null %}
+                      <img
+                        src="{{ block.settings.collection_image | img_url: '180x'}}"
+                        class="card-img-top w-100"
+                        alt=""
+                      >
+                    {% else %}
+                      <img
+                        src="{{ block.settings.collection.image | img_url: '180x'}}"
+                        class="card-img-top w-100"
+                        alt=""
+                      >
+                    {% endif %}
+                  </a>
+                </div>
+                <div class="text-start explore-category-name p-2 p-md-3">
+                  <a href="{{ block.settings.collection.url }}">
+                    <p>{{ block.settings.collection.title -}}</p>
+                  </a>
+                  <p class="expllore-content-short-text">{{ block.settings.collection.description | truncate: 110 }}</p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="explore-our-category-swiper-pagination"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var swiper = new Swiper(".explore-our-category", {
+    slidesPerView: 5,
+    breakpoints: {
+      200: {
+        slidesPerView: 2,
+        spaceBetween: 25,
+      },
+      320: {
+        slidesPerView: 2,
+        spaceBetween: 25,
+      },
+      480: {
+        slidesPerView: 3,
+        spaceBetween: 25,
+      },
+      768: {
+        slidesPerView: 4,
+        spaceBetween: 30,
+      },
+      992: {
+        slidesPerView: 4,
+        spaceBetween: 30,
+      },
+    },
+    pagination: {
+      el: ".explore-our-category-swiper-pagination",
+      type: "progressbar",
+    },
+  });
+</script>
+
+{% schema %}
+{
+     "name":"Explore Category",
+     "settings": [
+        {
+  			"type": "text",
+  			"id": "heading",
+  			"label": "Title"
+  		}
+
+     ],
+     "blocks": [
+                {
+                    "type": "header",
+                    "name": "Collection",
+                    "settings":[
+                      {
+                  "type": "collection",
+                  "id": "collection",
+                  "label": "Collection"
+                      },
+                      {
+                "type": "image_picker",
+                "id": "collection_image",
+                "label": "Collection Image"
+                }
+                    ]
+                }
+     ],
+    "presets": [
+{
+"name": "Explore Category",
+"category": "Home Page Sections"
+}
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,34 @@
+
+    {%- if customer.orders.size == 0 -%}
+      {% section 'custom-no-order' %}
+      {% render 'custom-recently-viewed-products' %}
+{% section 'custom-explore-categories' %}
+      {% else %}
+      <section id="current-order" class="pb-5">
+        <div class="container-lg">
+            <div class="row breadcrumbs py-3 d-sm-flex d-none">
+                <nav class="col-12 col-sm-12 col-lg-12 breadcrum">
+                    <ul class="breadcrumb-list list-unstyled d-flex m-0 flex-wrap">
+                       <li><a href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a></li>
+                    <li><a href="{{ routes.account_url }}"> {{ 'general.breadcrumb.account' | t }}</a></li>
+                    <li>{{ 'customer.general.orders' | t }}</li>
+                    </ul>
+                </nav>
+            </div>
+         <div class="cuurent-order-head">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="cuurent-order-heading d-flex align-items-center">
+                            <h1 class="m-0">Current Orders</h1>
+                            <p class="m-0">({{ customer.orders.size }} Items)</p>
+                        </div>
+                    </div>
+                </div>
+         </div>
+          {% section 'custom-customer-orders' %}
+        </div>
+      </section>
+      
+      {% endif %}
+{% section 'custom-my-account-footer' %}
+

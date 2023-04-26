@@ -1,0 +1,17 @@
+{% if collections[collectionhandle].products.size>0 %}
+{% if collectionhandle=='trending-products' %}
+<h5>Trending Products</h5>
+{% else %}
+<h5>Top Searches</h5>
+{% endif %}
+<ul class="search-trending-product-list list-unstyled p-0 m-0">
+    {% for product in collections[collectionhandle].products limit:3 %}
+    <li>
+        <a href="{{ product.url }}" tabindex="-1">
+            <img src="{{ product.featured_image | img_url: '450x450'}}" alt="{{ product.title }}" class="img-fluid">
+            <span>{{ product.title }}</span>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}

@@ -1,0 +1,15 @@
+<div class="app-login">
+  <header class="form__header">
+    <h1 class="form__title heading h1">Redirecting...</h1>
+  </header>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    window.addEventListener('DOMContentLoaded', () => {
+      let configPayload = {
+        actionType: "LOGIN",
+        redirectUrl: urlParams.get("checkout_url")
+      }
+      window.ReactNativeWebView?.postMessage(JSON.stringify(configPayload));
+    })
+  </script>
+</div>

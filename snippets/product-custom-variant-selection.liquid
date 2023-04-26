@@ -1,0 +1,274 @@
+{% assign collectionname='' %}
+{% for c in product.collections %}
+
+{% if c.metafields.category.is_leaf!=blank and c.metafields.category.is_leaf==true %}
+{% assign collectionname = c.handle %}
+{% break %}
+{% endif %}
+{% endfor %}
+
+{% if collectionname == '' %}
+{% assign collectionname = product.collections.last.handle %}
+{% endif %}
+
+{% if product.variants.size >1 %}
+<div class="customize-products" id="cs">
+    <div class="container-lg">
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="customize" role="tabpanel" aria-labelledby="customize-tab">
+                <div class="customize-tab-product">
+                    <div class="row">
+                        {% assign firstcolorimg='' %}
+                        <div class="col-lg-8 order-5 order-lg-0 pt-3 pt-sm-0" id="customizecontainer">
+                            <div class="cutsomise-product-tab-head-cont">
+                                <h3>Customize the product </h3>
+                            </div>
+                            <div class="customizeProductCustmoizers  d-flex flex-column">
+                                {% assign col = collections[collectionname] %}
+                            {% if col.metafields.ukeyo.variant_selection_order.value != blank %}
+                            {% assign colvariantsort = col.metafields.ukeyo.variant_selection_order.value |
+                            newline_to_br | split: '<br />' %}
+                            {%- assign allvarianttypedata = shop.metafields.varianttypes.varianttypes | JSON -%}
+                            {% assign cssclass="" %}
+                            {% for disp in colvariantsort -%}
+                            {% assign currenval= disp| strip %}
+                            {% assign isvariantexistsfornamespace = allvarianttypedata | where: 'title', currenval %}
+                            {% if isvariantexistsfornamespace.size >0 %}
+                            {% if product.selected_or_first_available_variant.metafields.productvariantoption contains
+                            isvariantexistsfornamespace[0].namespace %}
+                            {% assign keyvalues="" %}
+                            {% for variant in product.variants %}
+                            {% assign keyvalues =keyvalues |append:
+                            variant.metafields.productvariantoption[isvariantexistsfornamespace[0].namespace]
+                            |append:"~" %}
+                            {% endfor %}
+                            {% assign allvalues=keyvalues | split: "~"| uniq %}
+                            {% if allvalues.size>1 %}
+                            <div class="sofa-size" id="variantoptions_{{ forloop.index }}">
+                                <div class="sofs-size-head">
+                                    <h3>{{ isvariantexistsfornamespace[0].title}}</h3>
+                                    {% assign cssclass=isvariantexistsfornamespace[0].cssclass %}
+                                </div>
+
+                                <ul class="nav nav-pills" id="pills-tab" role="tablist">
+
+                                    {% for val in allvalues %}
+                                    {% if isvariantexistsfornamespace[0].title == 'Color' %}
+                                    {% assign cssclass='colors' %}
+                                    {% assign colorname=val | append: ".jpg" | replace: ' ' ,'-'%}
+                                    {% if firstcolorimg=='' %}
+                                    {% assign firstcolorimg=val | append: ".jpg" | replace: ' ' ,'-'%}
+                                    {% endif %}
+                                    {% endif %}
+                                    <li class="nav-item" role="presentation">
+                                        <button class="{{ cssclass }} nav-link"
+                                            id="{{ isvariantexistsfornamespace[0].namespace }}_{{ forloop.index }}"
+                                            data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab"
+                                            aria-controls="pills-home" data-text="{{ val }}" {% if
+                                            isvariantexistsfornamespace[0].title=='Color' %}
+                                            data-img="{{ colorname | replace:  ' ' ,'-' | file_url  }}" {% endif %}
+                                            aria-selected="true"
+                                            onclick="ChangeVariantSelection('{{ isvariantexistsfornamespace[0].namespace }}','{{ val }}',this);">
+
+                                            {% if isvariantexistsfornamespace[0].title == 'Color' %}
+
+                                            <img src="{{ colorname | file_url  }}"
+                                                alt="{{ colorname | replace: '.jpg','' }}"
+                                                title="{{ colorname | replace: '.jpg','' }}" width="40" height="40">
+                                            </img>
+                                            {% else %}
+                                            {{ val }}
+                                            {% endif %}
+                                        </button>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            </div>
+                        </div>
+                        {% if firstcolorimg!='' %}
+                        <div class="col-lg-4 order-lg-2 order-sm-1 order-md-1 text-center" id="customizeimgdiv">
+                            <img id="customizeimg" src="{{ firstcolorimg | file_url  }}"
+                                alt="{{ firstcolorimg | replace: '.jpg','' }}"
+                                title="{{ firstcolorimg | replace: '.jpg','' }}" class="img-fluid w-100">
+                            <div class="text-center render" style="display:none">Render not available.</div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <script type="text/javascript">
+        var jprop = "";
+        var jsonfinal = "";
+        var allvariants = "";
+
+        var selectedvariant = {{ product.selected_or_first_available_variant.metafields.productvariantoption | json }};
+
+        selectedvariant["variantid"] = {{ product.selected_or_first_available_variant.id }};
+        selectedvariant["price"] = "{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}";
+        selectedvariant["originalprice"] = "{{ product.selected_or_first_available_variant.compare_at_price | money_without_trailing_zeros }}";
+        selectedvariant["inventory"] = {{ product.selected_or_first_available_variant.inventory_quantity }};
+        console.log("Selected Variant is:", selectedvariant);
+        {% for variant in product.variants %}
+        jprop = "";
+        jprop += '"variantid":{{variant.id}},';
+        jprop += '"price":"{{variant.price | money_without_trailing_zeros}}",';
+        jprop += '"originalprice":"{{variant.compare_at_price | money_without_trailing_zeros }}",';
+        jprop += '"inventory":"{{variant.inventory_quantity  }}",';
+        {% for key in variant.metafields.productvariantoption %}
+        jprop = jprop + '"{{ key[0]}}":"{{ key[1] }}",';
+        {% endfor %}
+        jprop = jprop.substring(0, jprop.length - 1);
+        jsonfinal = jsonfinal + "{" + jprop + "},";
+        {% endfor %}
+        jsonfinal = jsonfinal.substring(0, jsonfinal.length - 1);
+        allvariants = "[" + jsonfinal + "]";
+
+        function ChangeVariantSelection(headername, selectedval, ctrl) {
+            var qtyarray = [];
+            if (headername === 'color') {
+                $('#customizeimg').attr('src', $(ctrl).attr('data-img'));
+            }
+            var selectedheaderjson = JSON.parse(allvariants).filter(function (data) {
+                return data[headername] === selectedval;
+            });
+            console.log("Currently Selected Variant", selectedvariant);
+            if (selectedheaderjson != undefined && selectedheaderjson.length > 0) {
+                if (selectedheaderjson.length === 1) {
+                    selectedvariant = selectedheaderjson[0];
+                }
+                else {
+                    selectedvariant[headername] = selectedval;
+                    var counter = 0;
+                    var selectedindex = 0;
+                    var currentcounter = 0;
+
+
+                    if (selectedheaderjson.length > 0) {
+
+                        for (var key in selectedheaderjson[0]) {
+
+
+                            if ($('#' + key + '_1').length > 0 && headername != key) {
+                                $('button[id^="' + key + '"]').each(function (index, el) {
+
+                                    var keyexistsjson = selectedheaderjson.filter(function (data) {
+                                        return data[key].trim() === $(el).attr('data-text').trim();
+                                    });
+
+                                    if (keyexistsjson.length === 0) {
+                                        $(el).attr("disabled", true);
+
+                                    }
+                                    else {
+                                        $(el).removeAttr('disabled');
+                                    }
+
+                                });
+                            }
+                        }
+                    }
+
+                    for (var i = 0; i < selectedheaderjson.length; i++) {
+                        currentcounter = 0;
+                        for (var key in selectedheaderjson[i]) {
+                            if (key != 'variantid' && key != 'originalprice' && key != 'price' && key != 'inventory') {
+                                if (selectedheaderjson[i][key] === selectedvariant[key]) {
+                                    currentcounter = currentcounter + 1;
+                                }
+                            }
+                        }
+
+                        if (currentcounter > counter) {
+
+                            counter = currentcounter;
+                            selectedindex = i;
+                        }
+
+                    }
+                    selectedvariant = selectedheaderjson[selectedindex];
+
+                }
+                MarkActiveVariant();
+            }
+
+        }
+
+
+        function MarkActiveVariant() {
+
+            $('#selectedvariantvalues').empty();
+            console.log("selected variant in active method");
+            console.log(selectedvariant);
+            for (var key in selectedvariant) {
+
+                if (selectedvariant.hasOwnProperty(key)) {
+                    var selectedval = selectedvariant[key];
+                    if ($('#' + key + '_1').length > 0) {
+
+                        $('[id^="' + key + '"]').removeClass("active");
+                        $('button[id^="' + key + '"]').each(function (index, el) {
+
+                            if ($(el).attr('data-text').trim() === selectedval.trim() && $(el).prop("disabled") === false) {
+                                $(el).addClass("active");
+                            }
+
+                        });
+                    }
+                    if (key != 'variantid' && key != 'originalprice' && key != 'price' && key != 'inventory') {
+                        $('#selectedvariantvalues').append('<li class="nav-item" role="presentation">' + selectedval + '</li><li> | </li>');
+                    }
+                }
+
+            }
+            {% if product.variants.size > 1 %}
+
+            $('#selectedvariantvalues').append('<li class="nav-item red" role="presentation"><a href="#cs">Customize</a></li>');
+            {% endif %}
+            if (selectedvariant["price"] != selectedvariant["originalprice"]) {
+                $('#originalprice').html(selectedvariant["originalprice"]);
+            }
+            $('#price').html(selectedvariant["price"]);
+            if (selectedvariant.inventory == 0) {
+                $('#btnaddcart').attr("disabled", true);
+                $('#outofstockmsg').css("display", "block");
+            }
+            else {
+                $('#btnaddcart').removeAttr('disabled');
+                $('#outofstockmsg').css("display", "none");
+            }
+
+        }
+
+
+
+        {% if product.variants.size > 1 %}
+        $(document).ready(function (e) {
+            {% if product.selected_or_first_available_variant.id == product.first_available_variant.id %}
+
+            $('#customizecontainer>div>ul>li>button').first().click();
+            {% endif %}
+            MarkActiveVariant();
+            {% if product.selected_or_first_available_variant.id != product.first_available_variant.id %}
+
+            $('#customizecontainer>div>ul>li>button.active').first().click();
+            {% endif %}
+
+
+        })
+        {% endif %}
+        function CustomAddtoCart() {
+            AddtoCartProduct(selectedvariant.variantid, $('#qtyselection').val());
+
+        }
+
+    </script>

@@ -1,0 +1,1837 @@
+.g-0 {
+  gap: 5px;
+}
+
+.g-1 {
+  gap: 10px;
+}
+
+.g-2 {
+  gap: 20px;
+}
+
+.g-3 {
+  gap: 30px;
+}
+
+body {
+  background-color: #F5F4F5;
+}
+
+header {
+  padding-top: 14px;
+  background-color: white;
+}
+header ul.navbar-nav {
+  gap: 24px;
+}
+header i.fa-solid.fa-bars-staggered {
+  font-size: 30px;
+  color: #eb595e;
+}
+header button.navbar-toggler {
+  padding: 0.25rem 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  background-color: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 0.25rem;
+}
+header .navbar-toggler:focus {
+  text-decoration: none;
+  outline: 0;
+  box-shadow: none;
+}
+header a#user {
+  border: 1px solid rgba(0, 0, 0, 0.4509803922);
+  border-radius: 18px;
+  padding: 6px 7px;
+}
+header li.nav-item a {
+  color: black !important;
+  font-family: "Gilroy";
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 22px;
+  padding: 0px 0px !important;
+  margin: 0.5rem;
+}
+header li.nav-item a.active {
+  color: #EB6162 !important;
+  font-weight: 700;
+  border-bottom: 3px solid #EB6162;
+  border-radius: 1px;
+  display: inline-block;
+}
+header .btn:focus {
+  box-shadow: none;
+}
+header .dropdown a {
+  color: black !important;
+  font-family: "Gilroy";
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 22px;
+}
+header .dropdown-toggle::after {
+  content: "\f107" !important;
+  font-family: "fontawesome";
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 0;
+}
+header .dropdown-menu[data-bs-popper] {
+  top: 100%;
+  left: inherit;
+  right: 0 !important;
+  margin-top: 0.125rem;
+}
+
+.lower-head-menu li.nav-item a.active {
+  color: #EB6162 !important;
+  border-bottom: 0px;
+  font-weight: 700;
+  border-radius: 1px;
+  display: inline-block;
+}
+
+#product-info {
+  background-color: #f5f4f5;
+}
+#product-info ul.breadcrumb-list li:nth-last-child(n+2) {
+  opacity: 0.8;
+}
+#product-info .share {
+  gap: 8px;
+}
+#product-info .dropdown-item.active,
+#product-info .dropdown-item:active {
+  color: #fff;
+  text-decoration: none;
+  background-color: #eb595e !important;
+}
+#product-info ul.dropdown-menu.show {
+  border-radius: 20px;
+  border: 1px solid #eb595e;
+  margin-top: 14px !important;
+}
+#product-info a.dropdown-item {
+  border-radius: 10px;
+  font-family: "Gilroy";
+  font-weight: 500;
+}
+#product-info .add-to-cart:focus {
+  box-shadow: 0 0 0 0.25rem rgba(235, 89, 94, 0.35);
+}
+#product-info .carousel-control-prev {
+  left: 20px;
+}
+#product-info .carousel-control-next {
+  right: 20px;
+}
+#product-info ul.breadcrumb-list a {
+  text-decoration: none;
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+  color: #402f40;
+}
+#product-info ul.breadcrumb-list li:not(:last-child):after {
+  content: "\f105";
+  font-family: "fontawesome";
+  font-size: 14px;
+  padding-left: 7px;
+}
+#product-info .share-text {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+}
+#product-info .product-name h1 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 44px;
+}
+#product-info .product-name p {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  padding-top: 9px;
+}
+#product-info ul.review i {
+  font-size: 14px;
+}
+#product-info ul.review li:not(:last-child) i {
+  color: #f4c243;
+}
+#product-info ul.review li:last-child {
+  color: #939393;
+}
+#product-info .product-price p {
+  -webkit-text-decoration-line: line-through;
+          text-decoration-line: line-through;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  color: #b8b7b8;
+}
+#product-info .product-price span {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 44px;
+}
+#product-info .left-info {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #7b7b7b;
+}
+#product-info .left-info span {
+  margin-left: 10px;
+  background: #E6E6E6;
+  border-radius: 4px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: #000000;
+}
+#product-info .left-info .nav-link {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #666666;
+  padding: 0px;
+}
+#product-info .left-info ul.customize-list li:nth-child(2n-2) {
+  margin: 0px 10px;
+}
+#product-info .left-info .nav-pills .nav-link {
+  color: #666666;
+  background-color: transparent !important;
+}
+#product-info .left-info .nav-pills .nav-link.active {
+  font-weight: 700;
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+  color: #EB6162;
+}
+#product-info .right-info p:not(span) {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #666666;
+}
+#product-info .right-info span a {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  color: #eb595e;
+  padding-left: 10px;
+  text-decoration: none;
+}
+#product-info .dropdown-toggle {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: transparent;
+  color: black;
+  border-radius: 40px;
+  padding: 10px 30px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  font-family: "Gilroy";
+}
+#product-info .dropdown-toggle::after {
+  content: url("../svg/At half-past eight t.svg");
+  font-family: "fontawesome";
+  display: inline-block;
+  margin-left: 0.255em;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
+  padding-left: 20px;
+}
+#product-info button.heart {
+  border: 1px solid black;
+  background-color: transparent;
+  color: black;
+  border-radius: 40px;
+  padding: 10px 25px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+#product-info .right-filters .dropdown-toggle {
+  border: 1px solid black;
+  background-color: transparent;
+  color: black;
+  border-radius: 40px;
+  padding: 10px 20px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+#product-info .add-to-cart {
+  background-color: #eb595e;
+  border: none;
+  border-radius: 40px;
+  padding: 10px 25px;
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+}
+#product-info .s-img {
+  max-height: 527px;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+#product-info span.arrow img {
+  background-color: black;
+  padding: 20px;
+  border-radius: 50px;
+}
+#product-info .carousel-control-prev,
+#product-info .carousel-control-next {
+  opacity: inherit;
+}
+#product-info ul.breadcrumb-list {
+  gap: 10px;
+}
+#product-info .product-name {
+  gap: 10px;
+}
+#product-info ul.review {
+  gap: 5px;
+  padding-top: 6px;
+}
+#product-info .product-price {
+  gap: 10px;
+}
+#product-info .left-filters {
+  gap: 20px;
+}
+#product-info .right-filters {
+  gap: 20px;
+}
+#product-info button.check {
+  background-color: #402f40;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  position: absolute;
+  padding: 9px 18px;
+  top: 4px;
+  right: 4px;
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+}
+#product-info input.pincode-input {
+  padding: 12px 169px 12px 20px;
+  border-radius: 50px;
+  border: none;
+  background-color: #f5f4f5;
+}
+#product-info input.pincode-input::-moz-placeholder {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000000;
+}
+#product-info input.pincode-input:-ms-input-placeholder {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000000;
+}
+#product-info input.pincode-input::placeholder {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000000;
+}
+#product-info div#product-availability {
+  padding: 20px 0px;
+  background-color: #503B51;
+}
+#product-info div#product-availability .check-your-availability p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #FFFFFF;
+}
+#product-info .product-feat {
+  gap: 24px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #000000;
+  mix-blend-mode: normal;
+}
+
+.customize-products .cutsomise-product-tab-head-cont h3 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+  color: #000000;
+}
+.customize-products .sofa-size .sofs-size-head h3 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: flex-end;
+  color: #000000;
+}
+.customize-products .sofa-size ul {
+  gap: 15px;
+}
+.customize-products .sofa-size .seater-sofa {
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 124px !important;
+}
+.customize-products .sofa-size .seater-sofa img {
+  margin-right: 15px;
+}
+.customize-products .sofa-size .nav-pills .nav-link {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000000 !important;
+  background-color: transparent !important;
+}
+.customize-products .sofa-size .nav-pills .nav-link.active {
+  border: 1px solid #9F76A1 !important;
+}
+.customize-products .leg-type .leg-type-head h3 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: flex-end;
+  color: #000000;
+}
+.customize-products .leg-type ul {
+  gap: 15px;
+}
+.customize-products .leg-type .nav-pills .nav-link {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000000 !important;
+  background-color: transparent !important;
+}
+.customize-products .leg-type .nav-pills .nav-link.active {
+  border: 1px solid #9F76A1 !important;
+}
+
+#product-tabs {
+  padding: 40px 0px;
+}
+#product-tabs .nav-pills .nav-link.active,
+#product-tabs .nav-pills .show > .nav-link {
+  color: #000;
+  background-color: transparent;
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+}
+#product-tabs .nav-link {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+  color: #000000;
+}
+#product-tabs .nav-link.active:before {
+  content: "";
+  position: absolute;
+  width: 44px;
+  height: 5px;
+  background: #eb595e;
+  border-radius: 2.5px;
+  top: 40px;
+  left: 30%;
+}
+
+#product-description {
+  background-color: white;
+}
+#product-description .details h4 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 30px;
+}
+#product-description span.pro-h {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 200%;
+}
+#product-description span.pro-h2 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 200%;
+}
+#product-description .details p {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+#product-description ul.product-list p {
+  margin: 0;
+}
+
+.product-dimension table {
+  background: #f5f4f5 !important;
+}
+.product-dimension th {
+  padding-right: 40px;
+  padding-left: 40px;
+  padding-bottom: 10px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+  color: #939393;
+}
+.product-dimension td {
+  padding-right: 40px;
+  padding-left: 40px;
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 30px;
+}
+.product-dimension .bef {
+  border-left: 1px solid rgba(50, 50, 50, 0.1);
+}
+.product-dimension .tb {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 20px;
+  background-color: #f5f4f5;
+  max-width: 500px;
+  width: 100%;
+}
+.product-dimension p {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 26px;
+  color: #666666;
+}
+.product-dimension h4 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 30px;
+}
+
+#explore-collection {
+  background: #f9f7f7;
+  padding: 80px 0px;
+}
+#explore-collection .collection-head h4 {
+  font-family: "Gilroy";
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 20px;
+}
+#explore-collection .collection-head h4::first-letter {
+  color: #eb595e;
+}
+#explore-collection .collection-head p {
+  max-width: 571px;
+  width: 100%;
+  display: block;
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 160%;
+  margin-bottom: 30px;
+}
+#explore-collection .collection-head a {
+  background: #eb6162;
+  border-radius: 30px;
+  color: #ececec;
+  text-decoration: none;
+  padding: 10px 30px;
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+}
+#explore-collection .collection-head a i {
+  color: white;
+  padding-left: 10px;
+}
+
+#footer {
+  background-color: #402f40;
+}
+#footer .foot-logo p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #ffffff;
+  opacity: 0.7;
+}
+#footer ul.foot-list li a {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 240%;
+  color: #ffffff;
+  mix-blend-mode: normal;
+  text-decoration: none;
+  opacity: 0.7;
+}
+#footer .foot-menu p {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+}
+#footer .contact-info a {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  opacity: 0.7;
+  color: #ffffff;
+  text-decoration: none;
+}
+#footer .contact-info p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  opacity: 0.7;
+  color: #ffffff;
+  text-decoration: none;
+  max-width: 307px;
+  width: 100%;
+}
+#footer .contact-info div {
+  gap: 15px;
+}
+#footer .contact-info img {
+  background-color: #775473;
+  padding: 8px;
+  border-radius: 4px;
+}
+#footer .subscribe-now {
+  padding: 32px;
+  background: #fcefef;
+  border-radius: 4px;
+}
+#footer .row.subs-ico img {
+  padding: 8px;
+  background: #3e313d;
+  border-radius: 20px;
+}
+#footer p.sub-head {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 26px;
+}
+#footer p.low-form-text {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #3e313d;
+}
+#footer .subs-txt b {
+  font-size: 14px;
+  line-height: 22px;
+  font-family: "Gilroy";
+  font-style: normal;
+}
+#footer .subs-txt p:last-child {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  opacity: 0.6;
+}
+#footer button {
+  background: #eb6162;
+  border-radius: 4px;
+  border: none;
+  width: 48px;
+  height: 51px;
+  position: absolute;
+  right: 6px;
+  top: 6px;
+}
+#footer input[type=email] {
+  width: 100%;
+  padding: 18px 80px 18px 20px;
+  border: 1px solid #e6e6e6;
+  background: #ffffff;
+  opacity: 0.6;
+  border-radius: 8px;
+}
+#footer input[type=email]:focus-visible {
+  outline-color: #eb595e;
+}
+#footer .social-icon ul {
+  gap: 30px;
+}
+#footer .social-icon a i {
+  font-size: 21px;
+  color: #3e313d;
+}
+#footer .social-head p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  text-align: center;
+}
+#footer .subscribe-now {
+  background-image: url("../svg/subscribe.svg");
+  background-repeat: no-repeat;
+  background-position-x: right;
+  background-position-y: bottom;
+}
+#footer .locations p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #ffffff;
+  opacity: 0.7;
+}
+#footer hr:not([size]) {
+  height: 2px;
+  background: #f9f9f9;
+}
+#footer .right-copy ul {
+  gap: 10px;
+}
+#footer .right-copy li a {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 24px;
+  font-feature-settings: "salt" on, "liga" off;
+  color: #ffffff;
+  text-decoration: none;
+}
+#footer .copy p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 24px;
+  font-feature-settings: "salt" on, "liga" off;
+  color: #ffffff;
+}
+#footer .u-lkj {
+  gap: 40px;
+  max-width: 847px;
+}
+#footer .contact-info {
+  max-width: 355px;
+  width: 100%;
+}
+#footer p.bnlk {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: white;
+}
+#footer .l-1 {
+  max-width: 84px;
+  width: 100%;
+}
+#footer .l-2 {
+  max-width: 80px;
+  width: 100%;
+}
+#footer .l-3 {
+  max-width: 84px;
+  width: 100%;
+}
+#footer .l-4 {
+  max-width: 84px;
+  width: 100%;
+}
+
+#mybtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: #eb595e;
+  color: white;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+#product-slider {
+  background-color: white;
+  position: relative;
+  overflow-x: hidden;
+  padding: 80px 0px;
+}
+#product-slider .swiper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+  left: 15px;
+  overflow: visible !important;
+}
+#product-slider .swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#product-slider .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+#product-slider .swiper-horizontal > .swiper-pagination-progressbar,
+#product-slider .swiper-pagination-progressbar.swiper-pagination-horizontal,
+#product-slider .swiper-pagination-progressbar.swiper-pagination-vertical.swiper-pagination-progressbar-opposite,
+#product-slider .swiper-vertical > .swiper-pagination-progressbar.swiper-pagination-progressbar-opposite {
+  width: 100%;
+  height: 4px;
+  left: 0;
+  top: 99% !important;
+}
+#product-slider h5.card-title {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #000000;
+  mix-blend-mode: normal;
+}
+#product-slider p.card-text span {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+  color: #939393;
+  mix-blend-mode: normal;
+  -webkit-text-decoration-line: line-through;
+          text-decoration-line: line-through;
+  padding-left: 10px;
+}
+#product-slider p.card-text:not(span) {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+}
+#product-slider .card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: none;
+  border-radius: 0.25rem;
+}
+#product-slider .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+  background: black;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(0);
+  transform-origin: left top;
+}
+#product-slider .swiper-head p {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 48px;
+}
+#product-slider .swiper-pagination {
+  position: inherit;
+}
+#product-slider .card-body {
+  text-align: left;
+  line-height: 24px;
+}
+#product-slider .card-body h5 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 32px;
+  color: #000000;
+  margin: 0;
+}
+#product-slider .card-body p:not(.card-text) {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 32px;
+  color: #939393;
+  margin: 0;
+}
+#product-slider .card-body input.input-slide-color {
+  width: 20px;
+  height: 20px;
+}
+
+#testimonial {
+  background-color: white;
+  padding: 80px 0px;
+}
+#testimonial .bg {
+  background-color: #f9f7f7;
+}
+#testimonial img.arrow {
+  background-color: black;
+  padding: 18px 12px;
+  border-radius: 50px;
+}
+#testimonial .carousel-control-next,
+#testimonial .carousel-control-prev {
+  opacity: 1;
+}
+#testimonial ul.review li:not(:last-child) i {
+  color: #f4c243;
+}
+#testimonial ul.review li:last-child {
+  color: #e1e0e0;
+}
+#testimonial p.test-tst {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 200;
+  font-size: 16px;
+  line-height: 24px;
+  max-width: 300px;
+  width: 100%;
+}
+#testimonial .test-name p:nth-child(2) span {
+  color: #000000;
+  opacity: 0.3;
+}
+#testimonial .test-name:not(.test-tst) {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+}
+#testimonial .test-head-txt p {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 48px;
+}
+#testimonial .test-head-txt a::not(.review-list) {
+  border: 1px solid black;
+  border-radius: 30px;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 26px;
+  color: black;
+}
+#testimonial .test-head-txt {
+  padding-bottom: 40px;
+}
+
+#mybtn:hover i {
+  transform: rotate(360deg);
+  transition: 0.5s all;
+  color: black;
+}
+
+img.arrow:hover {
+  transform: rotate(360deg);
+  transition: 0.5s all ease-in-out;
+}
+
+.test-head-txt a:hover {
+  color: white !important;
+  background: #eb595e;
+  border: 1px solid #eb595e !important;
+  transition: 0.5s all ease-in-out;
+}
+
+section#current-order ul.breadcrumb-list {
+  gap: 10px;
+}
+section#current-order ul.breadcrumb-list li:nth-last-child(n+2) {
+  opacity: 0.8;
+}
+section#current-order ul.breadcrumb-list a {
+  text-decoration: none;
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+  color: #402f40;
+}
+section#current-order ul.breadcrumb-list li:not(:last-child):after {
+  content: "\f105";
+  font-family: "fontawesome";
+  font-size: 14px;
+  padding-left: 7px;
+}
+section#current-order .cuurent-order-heading {
+  gap: 12px;
+}
+section#current-order .cuurent-order-heading h1 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 38px;
+  align-items: center;
+  color: #000000;
+}
+section#current-order .cuurent-order-heading p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  display: flex;
+  align-items: center;
+  color: #666666;
+}
+section#current-order .cuurent-order-search {
+  gap: 16px;
+}
+section#current-order .cuurent-order-search input[type=search] {
+  height: 48px;
+  padding: 13px 132px 13px 16px;
+  border-radius: 6px;
+  border: none;
+}
+section#current-order .cuurent-order-search input[type=search]::-moz-placeholder {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #666666;
+}
+section#current-order .cuurent-order-search input[type=search]:-ms-input-placeholder {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #666666;
+}
+section#current-order .cuurent-order-search input[type=search]::placeholder {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #666666;
+}
+section#current-order .cuurent-order-search button.current-order-filter {
+  padding: 9px;
+  background: white;
+  height: 48px;
+  border: 0.6125px solid #E6E6E6;
+  border-radius: 2.45px;
+}
+section#current-order .search-cuurent-order button {
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  right: 4.52%;
+  top: 17.57%;
+}
+section#current-order .cuurent-products {
+  padding: 24px;
+  background: white;
+  border: 1px solid #E6E6E6;
+  border-radius: 8px;
+}
+section#current-order .cuurent-products .current-order-id li:nth-child(2n-2) {
+  margin: 0px 10px;
+}
+section#current-order .cuurent-products .current-order-id .current-order-id-content {
+  gap: 10px;
+}
+section#current-order .cuurent-products .current-order-id .current-order-id-content input#myId {
+  border: none;
+  padding: 0;
+  width: 100px;
+  height: 20px;
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+section#current-order .cuurent-products .current-order-id .current-order-id-content input#myId:focus-visible {
+  outline: none;
+}
+section#current-order .cuurent-products .current-order-id .current-order-id-content button#copy-myorderid {
+  border: none;
+  background: transparent;
+  padding: 0;
+  line-height: 0;
+}
+section#current-order .cuurent-products .current-order-id .current-order-id-content h3 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #666666;
+  margin: 0;
+}
+section#current-order .cuurent-products .current-order-id .current-order-id-content p {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  margin: 0;
+}
+section#current-order .cuurent-products .current-order-id .current-order-dates {
+  gap: 10px;
+}
+section#current-order .cuurent-products .current-order-id .current-order-dates h3 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #666666;
+  margin: 0;
+}
+section#current-order .cuurent-products .current-order-id .current-order-dates p {
+  font-family: "Gilroy";
+  color: black;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  margin: 0;
+}
+section#current-order .cuurent-product-info {
+  gap: 20px;
+}
+section#current-order .cuurent-product-info .cuurent-product-cont h3 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: #000000;
+}
+section#current-order .cuurent-product-info .cuurent-product-cont p:not(.badge) {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+  color: #666666;
+  mix-blend-mode: normal;
+}
+section#current-order .cuurent-product-info .cuurent-product-cont .badge {
+  background: #E6E6E6;
+  border-radius: 4px;
+  color: black;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  height: 26px;
+  padding: 9px;
+  line-height: 6px;
+  margin-left: 11px;
+}
+section#current-order .cuurent-product-info .cuurent-product-cont ul li:nth-child(2n-2) {
+  margin: 0px 10px;
+}
+section#current-order .cuurent-product-info .cuurent-product-cont ul a {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  color: #666666;
+  text-decoration: none;
+}
+section#current-order .current-order-quantity-info .current-order-quantity p {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+  margin: 0;
+}
+section#current-order .current-order-quantity-info .current-order-price h3 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  margin: 0;
+}
+section#current-order .view-order-sec .current-ordered {
+  gap: 12px;
+}
+section#current-order .view-order-sec .current-ordered-icon {
+  padding: 14.42px;
+  background-color: #9F76A1;
+  border-radius: 38.4615px;
+}
+section#current-order .view-order-sec .current-ordered-cont h3 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #9F76A1;
+  margin: 0;
+}
+section#current-order .view-order-sec .current-ordered-cont p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  margin: 0;
+}
+section#current-order .view-order-sec .current-order-view h3 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  color: #EB6162;
+  line-height: 26px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+section#current-order .view-order-sec .current-order-view i {
+  font-size: 21px;
+}
+
+section.current-order-banner {
+  background-color: #FDEFEF;
+  padding-top: 80px;
+}
+section.current-order-banner .current-order-banner-info h3 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 44px;
+}
+section.current-order-banner .current-order-banner-info p {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 160%;
+  max-width: 470px;
+  width: 100%;
+  margin: 30px 0px;
+}
+section.current-order-banner .current-order-banner-info .current-order-downloads {
+  gap: 20px;
+}
+
+.order-details .order-details-content {
+  background: white;
+  overflow: hidden;
+}
+.order-details .order-detail-icon {
+  border: 1px solid #E6E6E6;
+  border-radius: 40px;
+  padding: 15.7px;
+}
+.order-details .order-detail-icon.active {
+  background: #9F76A1;
+  border-radius: 40px;
+  padding: 15.7px;
+}
+.order-details ul.order-detail-list li {
+  position: relative;
+}
+.order-details ul.order-detail-list li:not(last-child) ::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: red;
+  position: absolute;
+  top: 50%;
+  left: 2px;
+}
+.order-details .cancel-button {
+  gap: 16px;
+}
+.order-details .deliver-home {
+  background: #FFFFFF;
+  border-radius: 8px;
+}
+.order-details .inner-deliver {
+  gap: 10px;
+}
+.order-details .inner-deliver h3 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  margin: 0;
+}
+.order-details .deliver-home p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  color: #666666;
+}
+.order-details .download-invoice {
+  background: #FFFFFF;
+  border-radius: 8px;
+}
+.order-details .download-invoice .paid-by p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #666666;
+}
+.order-details .download-invoice .paid-by h3 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+}
+.order-details .download-invoice .google-pay p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #666666;
+}
+.order-details .download-invoice a.view-details {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+  color: #EB6162;
+  text-decoration: none;
+}
+.order-details .download-invoice .download-invoice-button {
+  text-align: center;
+  padding: 11px;
+  border: 1px solid #000000;
+  border-radius: 30px;
+}
+.order-details .download-invoice .download-invoice-button img {
+  margin-right: 10px;
+}
+.order-details .download-invoice .download-invoice-button a {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #000000;
+  text-decoration: none;
+}
+.order-details .modal-dialog {
+  max-width: 800px !important;
+  margin: 1.75rem auto;
+}
+.order-details .form-check-input {
+  width: 22px;
+  height: 22px;
+  margin-right: 10px;
+}
+
+.need-help-button button {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #EB6162;
+  padding: 11px 28px;
+  border: 1px solid #EB6162;
+  border-radius: 30px;
+  background-color: transparent;
+}
+
+.cancel-order-button button {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: white;
+  padding: 11px 28px;
+  border: 1px solid #EB6162;
+  border-radius: 30px;
+  background-color: #EB6162;
+}
+
+@media (max-width: 320px) {
+  a.navbar-brand {
+    width: 65%;
+  }
+  #product-info .product-name h4 {
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 44px;
+  }
+  #product-slider .swiper-head p {
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 48px;
+  }
+}
+@media (max-width: 425px) {
+  #product-info .product-name h4 {
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 44px;
+  }
+  #footer .u-lkj {
+    gap: 0px;
+    max-width: 847px;
+  }
+}
+@media (max-width: 576px) {
+  #explore-collection {
+    padding: 20px 0px;
+  }
+  #product-slider {
+    padding: 20px 0px;
+  }
+  #testimonial {
+    padding: 20px 0px;
+  }
+}
+@media (max-width: 991px) {
+  header ul.navbar-nav {
+    gap: 10px;
+  }
+  #product-slider {
+    padding: 20px 15px;
+  }
+  #explore-collection {
+    padding: 40px 0px;
+  }
+  #testimonial {
+    padding: 40px 0px;
+  }
+  .header-form {
+    display: block !important;
+  }
+  .header-form {
+    display: block !important;
+  }
+}
+@media (max-width: 1024px) {
+  #product-slider .swiper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    left: 0px;
+  }
+  .product-dimension td {
+    padding-right: 40px;
+    padding-left: 40px;
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+  }
+  #product-info input.pincode-input {
+    padding: 12px 109px 12px 20px;
+    border-radius: 50px;
+    border: none;
+    background-color: #f5f4f5;
+  }
+}
+@media (max-width: 1199px) {
+  .header-form {
+    display: none;
+  }
+  header ul.navbar-nav {
+    gap: 6px !important;
+  }
+}
+@media (max-width: 1366px) {
+  header ul.navbar-nav {
+    gap: 15px;
+  }
+}
+button.btn.btn-primary {
+  border: 1px solid black !important;
+  border-radius: 30px !important;
+  padding: 10px 20px !important;
+  text-decoration: none !important;
+  font-family: "Gilroy";
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+  line-height: 26px !important;
+  color: black !important;
+}
+
+.btn-primary {
+  color: #fff !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+.modal-dialog {
+  max-width: 800px;
+  margin: 1.75rem auto;
+}
+
+button.btn.btn-primary:hover {
+  background: #eb595e !important;
+  border: 1px solid #eb6162 !important;
+  color: #fff !important;
+}
+
+h5#exampleModalLabel {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px !important;
+  line-height: 26px !important;
+  display: flex;
+  align-items: center;
+  color: #000000;
+}
+
+.left-image {
+  border-radius: 0.25rem;
+}
+
+p.reviewtext {
+  font-family: "Gilroy" !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+  line-height: 26px !important;
+}
+
+p.godrej span.badge {
+  background: #E6E6E6;
+  border-radius: 4px;
+  color: black;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px !important;
+  height: 26px;
+  padding: 9px;
+  line-height: 6px;
+  margin-left: 11px;
+}
+
+p.godrej {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  line-height: 22px;
+  color: #666666;
+  mix-blend-mode: normal;
+}
+
+.review-list ul li a {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  color: #666666;
+  text-decoration: none !important;
+}
+
+.review-list li {
+  padding: 2px 5px;
+  font-size: 14px;
+}
+
+.modal-footer {
+  border-top: 0px !important;
+}
+
+.modal-header {
+  border-bottom: 0px !important;
+}
+
+div#border {
+  border: 1px solid #E6E6E6;
+  border-radius: 8px;
+  padding-top: 26px;
+  margin-left: 5px;
+  margin-right: 7px;
+  padding-bottom: 40px;
+  padding-left: 16px;
+}
+
+h5.rating-title {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  display: flex;
+  align-items: center;
+  color: #000000;
+}
+
+.star-list li i {
+  color: #F4C243 !important;
+  padding: 2px;
+  font-size: 20px;
+}
+
+li.stars i {
+  color: #939393 !important;
+}
+
+textarea#w3review::-moz-placeholder {
+  padding-top: 12px;
+  display: flex;
+  align-items: flex-start;
+  font-family: "Gilroy";
+  font-size: 14px;
+}
+
+textarea#w3review:-ms-input-placeholder {
+  padding-top: 12px;
+  display: flex;
+  align-items: flex-start;
+  font-family: "Gilroy";
+  font-size: 14px;
+}
+
+textarea#w3review::placeholder {
+  padding-top: 12px;
+  display: flex;
+  align-items: flex-start;
+  font-family: "Gilroy";
+  font-size: 14px;
+}
+
+textarea#w3review {
+  padding: 12px 13px 0px;
+  width: 764px;
+  border-radius: 8px;
+  border-color: #E6E6E6 !important;
+  max-width: 802px;
+  margin: 0.75rem auto;
+}
+
+#pic {
+  display: none;
+}
+
+.newbtn {
+  cursor: pointer;
+}
+
+#blah {
+  max-width: 100px;
+  margin-top: 20px;
+}
+
+.modal-content {
+  background: #FCFCFC;
+}
+
+.upload-image {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 100px;
+  height: 100px;
+  background: #FFFFFF;
+  border: 2px dashed #E6E6E6;
+  border-radius: 8px;
+}
+
+#blah {
+  max-width: 100px;
+  position: relative;
+  left: 0;
+  top: 0;
+}
+
+label.newbtn {
+  height: 64px;
+}
+
+button.btn.btn-secondary {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 28px;
+  gap: 8px;
+  width: 115px;
+  height: 48px;
+  border: 1px solid #000000;
+  border-radius: 30px;
+  background: transparent !important;
+  color: #323232;
+  font-family: "Gilroy";
+  font-weight: 700;
+}
+
+button#btns {
+  padding: 8px 28px !important;
+  width: 181px;
+  height: 48px;
+  background: #EB6162 !important;
+  border-radius: 30px !important;
+  border-color: #EB6162 !important;
+  color: #fff !important;
+}/*# sourceMappingURL=style.css.map */

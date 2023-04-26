@@ -1,0 +1,433 @@
+<div class="cart-Wrap">
+    <div class="breadcrumbs py-3">
+        <div class="container-lg">
+            <nav class="breadcrum">
+                <ul class="breadcrumb-list list-unstyled d-flex m-0 flex-wrap">
+                    <li><a href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a></li>
+                    <li>Shopping Cart</li>
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="container-lg py-lg-4 py-md-3 py-sm-3 py-2">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="cartHeading d-flex align-items-center">
+                    <h2 class="shopingCart mb-0 me-3">
+                        My Shoping Cart
+                    </h2>
+                    <span class="cartItems">({{ cart.item_count }} Items)</span>
+                </div>
+            </div>
+        </div>
+        {% if cart.item_count==0 %}
+        <div class="row">
+            <div class="col-12">
+                <div class="noProductCart text-center align-items-center">
+                    <img class="img-fluid" src="{{ 'emptycart.svg' | file_url }}" alt="Empty Shopping Cart">
+                    <h4 class="noprod-head">
+                        No product in "Shopping Cart"
+                    </h4>
+                    <button type="button" class="btn btn-primary mt-md-2 mb-1" id="repOrder"
+                        onclick="javascript:window.location='/'">
+                        Explore Now
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% if cart.item_count>0 %}
+    <div class="container-lg">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-lg-12 col-xl-12">
+                <div class="cartinner-Wrap">
+                    <div class="row pt-md-4 d-none d-md-flex">
+                        <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                            <div class="cartProductHead">
+                                <p class="cartdetailHead">
+                                    Product
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-2 col-lg-2">
+                            <div class="cartProductHead">
+                                <p class="cartdetailHead">
+                                    Quantity
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-2 col-sm-2 col-md-2 col-lg-2">
+                            <div class="cartProductHead d-flex justify-content-end">
+                                <p class="cartdetailHead">
+                                    Total
+                                </p>
+                            </div>
+                        </div>
+                        <div class="hr-wrap">
+                            <hr class="custom-hr">
+                        </div>
+                    </div>
+                    {%- for line_item in cart.items -%}
+                    <div class="d-flex py-md-5 py-3 flex-lg-row flex-column justify-content-between borderBottom">
+                            <div class="cartDetailProduct">
+                                <div class="cartDeutailInner d-flex">
+                                    <div class="Cartproduct-wrap">
+                                        <img src="{{ line_item.image.src |  product_img_url: 'original' }}"
+                                            alt="{{ line_item.image.alt | escape }}" class="cartProd-Img">
+                                    </div>
+                                    <div class="cartProductDetail-wrap  w-lg-auto w-100">
+                                        <div class="d-flex justify-content-between">
+                                            <h5 class="Cart-prodname mb-0">
+                                                <a href="{{ line_item.url }}">{{ line_item.product.title }}</a>
+                                            </h5>
+                                            <div class="cartBtnPrice dropdown d-block d-lg-none">
+                                                <button class="btn btn-white iconWrap d-flex p-0" type="button"
+                                                    data-bs-toggle="dropdown" aria-expanded="false"
+                                                    data-bs-target="#cartoptions{{ forloop.index }}">
+                                                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <ellipse cx="9.19283" cy="15.9736" rx="2.45455" ry="2.5"
+                                                            fill="#666666" />
+                                                        <ellipse cx="15.7397" cy="15.9736" rx="2.45455" ry="2.5"
+                                                            fill="#666666" />
+                                                        <ellipse cx="22.2827" cy="15.9736" rx="2.45455" ry="2.5"
+                                                            fill="#666666" />
+                                                        <rect x="0.5" y="0.5" width="31" height="31" rx="3.5"
+                                                            stroke="#E6E6E6" />
+                                                    </svg>
+                                                </button>
+                                                <ul class="dropdown-menu"
+                                                    aria-labelledby="cartoptions{{ forloop.index }}">
+                                                    <li><a class="dropdown-item"
+                                                            href="/cart/change?line={{ forloop.index }}&quantity=0"
+                                                            rel="{{ item.id }}">Delete</a></li>
+                                                    <li><a class="dropdown-item" href="#">Share</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <p class="carttag d-flex m-0 align-items-center"> {{ line_item.product.vendor }}
+                                            <span class="badgeCustom d-md-flex d-none">
+                                                <span class="innerBAdgeSPan">Seasonal</span>
+                                            </span>
+                                        </p>
+                                        <div class="cartProductVendor d-flex align-items-center">
+                                            <p class="carttag-Category mb-0">
+                                                {% for key in
+                                                line_item.variant.metafields.productvariantoption %}
+                                                {% if key[1]!='' %}
+
+                                                <span class="tagLink">{{ key[1] }}
+                                                    {% if forloop.index!=forloop.length %}
+                                                    <span>|</span>
+                                                    {% endif %}
+                                                </span>
+                                                {% assign variantoptioncounter=1 %}
+
+                                                {% endif %}
+                                                {% endfor %}
+                                            </p>
+                                            <button class="btn btn-white p-0 customEdit d-flex align-items-center"
+                                                data-bs-toggle="modal" data-bs-target="#cartDetailModal">
+
+                                                <svg width="19" height="19" viewBox="0 0 19 19" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9.67188 15.4365H15.0967" stroke="#EB6162"
+                                                        stroke-width="1.15385" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path
+                                                        d="M2.83984 13.2209L11.5168 2.83984L14.0659 4.97002L5.38895 15.3511L3.15936 15.4363L2.83984 13.2209Z"
+                                                        stroke="#EB6162" stroke-width="1.15385" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                                <span class="d-md-block d-none">Edit</span>
+                                            </button>
+
+                                            <div class="modal fade" id="cartDetailModal" tabindex="-1"
+                                                aria-labelledby="cartDetailModal" style="display: none;"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header p-0">
+                                                            <h5 class="modal-title" id="cartDetailModalLabel">
+                                                                Customize again or repeat task?
+                                                            </h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body p-0">
+                                                            <div class="cartDetailProduct d-flex">
+                                                                <div class="Cartproduct-wrap">
+                                                                    <img src="{{ line_item.image.src |  product_img_url: 'original' }}"
+                                                                        alt="{{ line_item.image.alt | escape }}"
+                                                                        class="cartProd-Img">
+                                                                </div>
+                                                                <div class="cartProductDetail-wrap">
+                                                                    <div class="modalProductHead">
+                                                                        <h5 class="Cart-prodname mb-0">
+                                                                            {{ line_item.product.title }}
+                                                                        </h5>
+                                                                    </div>
+                                                                    <div class="carttag d-flex align-items-center">
+                                                                        {{ line_item.product.vendor }}
+                                                                        <span class="badgeCustom d-md-flex d-none">
+                                                                            <span class="innerBAdgeSPan">Seasonal</span>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="modal_list d-flex align-items-start">
+                                                                        <p class="carttag-Category mb-0">
+                                                                            {% for key in
+                                                                            line_item.variant.metafields.productvariantoption
+                                                                            %}
+                                                                            {% if key[1]!='' %}
+                                                                            <span class="tagLink"> {{ key[1] }}
+                                                                                {% if forloop.index!=forloop.length %}
+                                                                                <span>|</span>
+                                                                                {% endif %}
+                                                                            </span>
+                                                                            {% assign variantoptioncounter=1 %}
+                                                                            {% endif %}
+                                                                            {% endfor %}
+                                                                        </p>
+                                                                    </div>
+                                                                    <h4 class="priceModal d-none d-md-block">
+                                                                        {{ line_item.original_price
+                                                                        |money_without_trailing_zeros }}
+                                                                    </h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modalPrice">
+                                                            <h4 class="priceModal d-block d-md-none">
+                                                                {{ line_item.original_price
+                                                                |money_without_trailing_zeros }}
+                                                            </h4>
+                                                        </div>
+                                                        <div class="modal-footer p-0">
+                                                            <button type="button" class="customizeBtn"
+                                                                onclick="window.location='{{ line_item.url }}'">Customize</button>
+                                                            <button type="button" class="repeatOrderBtn"
+                                                                onclick="window.location='/cart/change?line={{ forloop.index }}&quantity={{ line_item.quantity |plus:1  }}';"
+                                                                id="repOrder">Repeat order</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cartPriceandQuantity justify-content-between pt-lg-0 pt-3">
+                                <div class="d-flex align-items-end">
+                                    <div class="cartincrementWrap">
+                                        <button class="btn btn-white incDecBtn customradius1"
+                                            style="border-right: none;display: flex;align-items: center;justify-content: center;"
+                                            onclick="window.location='/cart/change?line={{ forloop.index }}&quantity={{ line_item.quantity |minus:1  }}';"
+                                            rel="{{ item.id }}'">
+                                            <svg width="11" height="1" viewBox="0 0 11 1" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1.26953 0.538086H9.88492" stroke="black"
+                                                    stroke-width="0.807692" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                        <input type="number" class="input-width text-center border-end-0 border-start-0"
+                                            value="{{ line_item.quantity  }}">
+                                        <button class="btn btn-white incDecBtn customradius2"
+                                            style="border-left:none;display: flex;align-items: center;justify-content: center;"
+                                            data-bs-toggle="modal" data-bs-target="#cartDetailModal{{ forloop.index }}">
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M2.65234 7H11.2677" stroke="black" stroke-width="0.807692"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M6.96094 2.69238L6.96094 11.3078" stroke="black"
+                                                    stroke-width="0.807692" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="cartBtnPriceOuter d-flex flex-column justify-content-md-between justify-content-center align-items-end">
+                                    <div class="cartBtnPrice dropdown d-none d-lg-block">
+                                        <button class="btn btn-white iconWrap d-flex p-0" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false"
+                                            data-bs-target="#cartoptions{{ forloop.index }}">
+                                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <ellipse cx="9.19283" cy="15.9736" rx="2.45455" ry="2.5"
+                                                    fill="#666666" />
+                                                <ellipse cx="15.7397" cy="15.9736" rx="2.45455" ry="2.5"
+                                                    fill="#666666" />
+                                                <ellipse cx="22.2827" cy="15.9736" rx="2.45455" ry="2.5"
+                                                    fill="#666666" />
+                                                <rect x="0.5" y="0.5" width="31" height="31" rx="3.5"
+                                                    stroke="#E6E6E6" />
+                                            </svg>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="cartoptions{{ forloop.index }}">
+                                            <li><a class="dropdown-item"
+                                                    href="/cart/change?line={{ forloop.index }}&quantity=0"
+                                                    rel="{{ item.id }}">Delete</a></li>
+                                            <li><a class="dropdown-item" href="#">Share</a></li>
+                                        </ul>
+                                    </div>
+                                    <h4 class="price">
+                                        {{ line_item.final_line_price |money_without_trailing_zeros }}
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <!-- Modal Popup !-->
+                            <div class="modal fade IncementinProduct" id="cartDetailModal{{ forloop.index }}"
+                                tabindex="-1" aria-labelledby="cartDetailModal{{ forloop.index }}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header p-0">
+                                            <h5 class="modal-title" id="cartDetailModalLabel">
+                                                Customize again or repeat last?
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body p-0">
+                                            <div class="cartDetailProduct d-flex">
+                                                <div class="Cartproduct-wrap">
+                                                    <img src="{{ line_item.image.src |  product_img_url: 'original' }}"
+                                                        alt="{{ line_item.image.alt | escape }}" class="cartProd-Img">
+                                                </div>
+                                                <div class="cartProductDetail-wrap">
+                                                    <div class="modalProductHead">
+                                                        <h5 class="Cart-prodname mb-0">
+                                                            {{ line_item.product.title }}
+                                                        </h5>
+                                                    </div>
+                                                    <div class="carttag d-flex">
+                                                        {{ line_item.product.vendor }}
+                                                        <span class="badgeCustom">
+                                                            <span class="innerBAdgeSPan">Seasonal</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="d-flex align-items-start">
+                                                        <p class="carttag-Category mb-0">
+                                                            {% for key in
+                                                            line_item.variant.metafields.productvariantoption %}
+                                                            {% if key[1]!='' %}
+                                                            <span class="tagLink"> {{ key[1] }}
+                                                                {% if forloop.index!=forloop.length %}
+                                                                <span>|</span>
+                                                                {% endif %}
+                                                            </span>
+                                                            {% assign variantoptioncounter=1 %}
+
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                        </p>
+                                                    </div>
+                                                    <h4 class="priceModal d-none d-md-block">
+                                                        {{ line_item.original_price
+                                                        |money_without_trailing_zeros }}
+                                                    </h4>
+                                                </div>
+                                                <h4 class="priceModal d-block d-md-none">
+                                                    {{ line_item.original_price |money_without_trailing_zeros }}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer p-0">
+                                            <button type="button" class="customizeBtn"
+                                                onclick="window.location='{{ line_item.url }}'">Customize</button>
+                                            <button type="button" class="repeatOrderBtn"
+                                                onclick="window.location='/cart/change?line={{ forloop.index }}&quantity={{ line_item.quantity |plus:1  }}';"
+                                                id="repOrder">Repeat order</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Modal Popup !-->
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="discountRow text-center">
+        <p class="discountCart mb-0 px-3">
+            <span>
+                <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_3788_79680)">
+                        <path
+                            d="M10.1817 5.94227C10.3936 5.66981 10.3445 5.27713 10.0721 5.06522C9.79961 4.8533 9.40694 4.90238 9.19502 5.17485L4.82002 10.7998C4.6081 11.0723 4.65719 11.465 4.92966 11.6769C5.20212 11.8888 5.59479 11.8397 5.80671 11.5673L10.1817 5.94227Z"
+                            fill="#F8F8F8" />
+                        <path
+                            d="M5.93838 7.12103C6.45614 7.12103 6.87588 6.7013 6.87588 6.18353C6.87588 5.66577 6.45614 5.24603 5.93838 5.24603C5.42061 5.24603 5.00088 5.66577 5.00088 6.18353C5.00088 6.7013 5.42061 7.12103 5.93838 7.12103Z"
+                            fill="#F8F8F8" />
+                        <path
+                            d="M10.0009 10.5585C10.0009 11.0763 9.58114 11.496 9.06338 11.496C8.54561 11.496 8.12588 11.0763 8.12588 10.5585C8.12588 10.0408 8.54561 9.62103 9.06338 9.62103C9.58114 9.62103 10.0009 10.0408 10.0009 10.5585Z"
+                            fill="#F8F8F8" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M13.4498 5.90688C14.0117 3.80017 12.0717 1.86017 9.96498 2.4221C8.87266 0.535082 6.12908 0.535082 5.03676 2.4221C2.93005 1.86017 0.990048 3.80017 1.55198 5.90688C-0.335035 6.9992 -0.335035 9.74278 1.55198 10.8351C0.990049 12.9418 2.93005 14.8818 5.03676 14.3199C6.12908 16.2069 8.87266 16.2069 9.96498 14.3199C12.0717 14.8818 14.0117 12.9418 13.4498 10.8351C15.3368 9.74278 15.3368 6.9992 13.4498 5.90688ZM6.07654 3.12527C6.6731 1.96736 8.32865 1.96736 8.92521 3.12527C9.16469 3.59011 9.70497 3.8139 10.203 3.65455C11.4436 3.25761 12.6142 4.42826 12.2173 5.66886L12.1024 6.02793C12.0094 6.31872 12.14 6.63416 12.4115 6.77399L12.7466 6.94666C13.9045 7.54321 13.9045 9.19876 12.7466 9.79532C12.2817 10.0348 12.058 10.5751 12.2173 11.0731C12.6142 12.3137 11.4436 13.4844 10.203 13.0874C9.70496 12.9281 9.16469 13.1519 8.92521 13.6167C8.32865 14.7746 6.6731 14.7746 6.07654 13.6167C5.83705 13.1519 5.29678 12.9281 4.79875 13.0874C3.55815 13.4844 2.38749 12.3137 2.78443 11.0731C2.94378 10.5751 2.72 10.0348 2.25516 9.79532C1.09724 9.19876 1.09724 7.54321 2.25516 6.94666C2.72 6.70717 2.94378 6.1669 2.78443 5.66886C2.38749 4.42826 3.55815 3.25761 4.79875 3.65455C5.29678 3.8139 5.83705 3.59011 6.07654 3.12527Z"
+                            fill="#F8F8F8" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_3788_79680">
+                            <rect width="15" height="15" fill="white" transform="translate(0 0.871094)" />
+                        </clipPath>
+                    </defs>
+                </svg>
+            </span>
+            10% Instant Discount with Fedral Bank Debit Cards on a min
+            spend of $150. TCA
+        </p>
+    </div>
+    <div class="subtotalwrap">
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <h4 class="subTotalHead">
+                        Sub Total ({{ cart.item_count }} items) <i
+                            class="fa fa-exclamation-circle d-lg-inline-block d-none"></i>
+                    </h4>
+                    <p class="taxInclude mb-0">
+                        Tax included. Shipping calculated at checkout
+                    </p>
+                </div>
+                <div
+                    class="col-12 col-sm-6 d-flex align-items-center justify-content-md-end  justify-content-between mt-2 mt-md-0">
+                    <h4 class="price">
+                        {{ cart.total_price | money_without_trailing_zeros}}
+                    </h4>
+                    <button type="button" class="btn btn-primary" id="ptocheckout"
+                        onclick="window.location='/checkout';">Proceed to Checkout
+                        <span class="ps-3 d-lg-inline-block d-none">
+                            <svg width="24" height="23" viewBox="0 0 24 23" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0.923103 11.5002L23.0769 11.5002" stroke="white" stroke-width="1.84615"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M17.2567 5.68197L23.0745 11.4997L16.9141 17.6602" stroke="white"
+                                    stroke-width="1.84615" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% schema %}
+{
+"name": "Section name",
+"settings": []
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

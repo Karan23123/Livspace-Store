@@ -1,0 +1,200 @@
+<div class="container-lg">
+    <div class="row product-dimension ">
+        <div class="col-lg-6">
+            <h4>Dimensions</h4>
+            {% assign productdimdetails=product.metafields.product.dimensions.value %}
+
+            {% if productdimdetails == blank %}
+            <p class="pt-0 pt-sm-4"></p>
+            <div class="tb">
+                <table class="position-relative">
+                    <tbody>
+                        <tr>
+                            <th>Width</th>
+                            <th class="bef">Depth</th>
+                            <th class="bef">Height</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                {% if product.first_available_variant.metafields.productvariant.Width.value!=blank %}
+                                {{ product.first_available_variant.metafields.productvariant.Width.value }}
+                                {% else %}
+                                {{ product.metafields.product.Width.value }} {{
+                                product.metafields.product.measurement_unit_of_item }}
+                                {% endif %}
+                            </td>
+                            <td class="bef">
+                                {% if product.first_available_variant.metafields.productvariant.Depth.value!=blank %}
+                                {{ product.first_available_variant.metafields.productvariant.Depth.value }}
+                                {% else %}
+                                {{ product.metafields.product.Depth.value }} {{
+                                product.metafields.product.measurement_unit_of_item }}
+                                {% endif %}
+                            </td>
+                            <td class="bef">
+                                {% if product.first_available_variant.metafields.productvariant.Height.value !=blank %}
+                                {{ product.first_available_variant.metafields.productvariant.Height.value }}
+                                {% else %}
+                                {{ product.metafields.product.Height.value }} {{
+                                product.metafields.product.measurement_unit_of_item }}
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+
+            {% for key in productdimdetails %}
+            <p class="pt-0 pt-sm-4">{{ key.Name }}</p>
+            <div class="tb">
+                <table class="position-relative">
+                    <tbody>
+                        <tr>
+                            {% for k in key %}
+
+                            {% if k[0]!='Name' %}
+                            <th>{{ k[0] }}</th>
+                            {% endif %}
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            {% for k in key %}
+                            {% if k[0]!='Name' %}
+                            <td>{{ k[1] }} {{ product.metafields.product.measurement_unit_of_item }}</td>
+                            {% endif %}
+                            {% endfor %}
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="col-lg-6 d-flex justify-content-end pt-3 pt-md-0">
+            <div class="d-flex align-items-start pro-slid">
+                {% assign dimensionimages = product.images | where: 'alt', "Dimension" %}
+
+                {% if dimensionimages.size>1 %}
+                <div class="tab-content h-100" id="dimensionslider-tabContent">
+                    {% for image in dimensionimages -%}
+                    <div class="tab-pane fade {% if forloop.index==1 %}show active {% endif %} h-100"
+                        id="dimension-{{ forloop.index }}" role="tabpanel"
+                        aria-labelledby="dimension-{{ forloop.index }}-tab">
+                        <img src="{{ image.src | product_img_url: "original" }}" class="img-fluid h-100 w-100"
+                            alt="Dimension">
+
+                    </div>
+                    {%- endfor %}
+                </div>
+                <div class="position-relative w-sm-25" id="">
+                    <div class="side-slider nav flex-column nav-pills ms-auto flex-nowrap position-relative slider2"
+                        id="dimensionsideslider" role="tablist" aria-orientation="vertical">
+                    </div>
+                    {% if dimensionimages.size>2 %}
+                    <button class="nav-link click-down-slider" onclick="next123()">
+                        <img src="https://cdn.shopify.com/s/files/1/0623/4567/4925/files/Frame_112123.png?v=1663752896"
+                            alt="">
+                    </button>
+                    {% endif %}
+
+                </div>
+                {%elsif dimensionimages.size == 1 %}
+                <img src="{{ dimensionimages[0].src | product_img_url: "original" }}" class="w-100" alt="Dimension">
+
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% if dimensionimages.size>1 %}
+<script>
+    let text = '', temp = '';
+    {% for image in dimensionimages -%}
+    temp = '{"URL":"{{image.src | product_img_url: "large"}}","isShow":{% if forloop.index<4 %}1 {% else %}0 {% endif %},"order":{{forloop.index}},"actualorder":{{forloop.index}}}';
+    text = text + temp + ',';
+    {% endfor %}
+    if (text.length > 0) {
+        text = text.substring(0, text.length - 1);
+    }
+    text = '[' + text + ']';
+
+    text = JSON.parse(text);
+
+    let obj = Object.assign({}, text);
+
+    document.addEventListener('DOMContentLoaded', test(obj), false);
+    function next123() {
+        obj = Object.assign({}, text);
+        let newArr = [];
+        let nextIndex = false;
+        let firstIndex = false;
+        Object.entries(obj).forEach((entry, index, array) => {
+            const [key, value] = entry;
+
+            let newShow = value.isShow
+            let newValue = value.order
+            if (newValue > 0) {
+                newValue = value.order - 1
+                if (newValue == 2 && index === (array.length - 1)) {
+                    firstIndex = true;
+                }
+            }
+            if (newValue <= 0) {
+                newShow = 0
+            }
+
+            if (nextIndex) {
+                newShow = 1
+                newValue = 3
+                nextIndex = false
+            }
+
+            if (firstIndex) {
+                newArr.shift();
+                newArr.unshift({ "URL": array[0][1].URL, "isShow": 1, "order": 3, "actualorder": array[0][1].actualorder })
+                newArr.push({ "URL": value.URL, "isShow": newShow, "order": newValue, "actualorder": value.actualorder })
+
+            } else {
+                newArr.push({ "URL": value.URL, "isShow": newShow, "order": newValue, "actualorder": value.actualorder })
+            }
+            if (newValue == 2) {
+                nextIndex = true
+            }
+        });
+        text = newArr
+        obj = Object.assign({}, text);
+        $('#dimensionsideslider').html('')
+        test(obj)
+
+
+    }
+    function test(funobj) {
+        let final = [];
+        Object.entries(funobj).forEach((entry, index, array) => {
+            const [key, value] = entry;
+            if (value.isShow == '1') {
+                final.push(value)
+            }
+        });
+        final.sort(function (a, b) {
+            return a.order - b.order;
+        });
+
+
+        final.forEach((val, ind) => {
+            let active = "";
+            var imgs = $('#dimensionslider-tabContent .active ').find('img').attr('src');
+            if (val.URL == imgs) {
+                active = "active";
+            }
+
+            $('#dimensionsideslider').append('<button class="nav-link ' + active + '" id="dimension-' + val.actualorder + '-tab" data-bs-toggle="pill" data-bs-target="#dimension-' + val.actualorder + '" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true"><img src="' + val.URL + '" alt="Dimensions"></button>');
+        })
+
+    }
+</script>
+{% endif %}

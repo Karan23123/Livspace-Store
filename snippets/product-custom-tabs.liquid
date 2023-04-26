@@ -1,0 +1,70 @@
+{% for col in product.collections %}
+{% if col.metafields.ukeyo.producttabs.value != blank %}
+{% assign producttabshead= col.metafields.ukeyo.producttabs.value |JSON %}
+{% break; %}
+{% endif %}
+{% endfor %}
+
+<div id="product-tabs">
+    <div class="container-lg">
+        <ul class="nav nav-pills mx-auto justify-content-between" id="pills-tab" role="tablist">
+            {% for tabkey in producttabshead %}
+            <li class="nav-item" role="presentation">
+                <button class="nav-link {% if forloop.index==1 %}active{% endif %} position-relative"
+                    id="pills-{{ forloop.index }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ forloop.index }}"
+                    type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+                    {{ tabkey.title }}
+                </button>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div id="product-description" class="py-5">
+    <div class="container-lg">
+        <div class="tab-content" id="pills-tabContent">
+            {% for tabkey in producttabshead %}
+            <div class="tab-pane fade {% if forloop.index==1 %}show active{% endif %}" id="pills-{{ forloop.index }}"
+                role="tabpanel" aria-labelledby="pills-{{ forloop.index }}-tab">
+                {% assign tabval=tabkey.details | replace: "[description]",product.description %}
+                {% for metakey in product.metafields.product %}
+                {% assign replaceterm='['| append: metakey[0] | append: ']' %}
+
+                {% assign tabval =tabval |replace:replaceterm,product.metafields.product[metakey[0]]%}
+                {% endfor %}
+                {% for metakey in product.selected_or_first_available_variant.metafields.productvariant %}
+                {% assign replaceterm='['| append: metakey[0] | append: ']' %}
+
+                {% assign tabval =tabval
+                |replace:replaceterm,product.selected_or_first_available_variant.metafields.productvariant[metakey[0]]%}
+                {% endfor %}
+                <div class="row details">
+                    {{ tabval | newline_to_br}}
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+<div id="product-dimension">
+    {% assign parentsku=product.metafields.product.parentsku.value %}
+    {% assign allimages=product.metafields.product.images.value |JSON %}
+
+    {% assign zoomimages = allimages.Zoom | times: 1 %}
+    {% if zoomimages > 1 %}
+    <div class="container-lg">
+        {% if zoomimages>4 %}
+        {% assign zoomimages=4 %}
+        {% endif %}
+        <div class="row product-photos pt-2 pt-md-4">
+            {% for i in (1..zoomimages) -%}
+            <div class="col-6 col-sm-6 col-md-3 col-lg-3 mt-3">
+                <img src="{{ shop.metafields.cdnurl.cdnurl.url|JSON }}/sku_images/{{ parentsku }}/Zoom_{{ i }}.jpg"
+                    class="w-100 img-fluid h-100" alt="{{ image.alt | escape }}">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}

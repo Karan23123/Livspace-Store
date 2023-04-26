@@ -1,0 +1,80 @@
+<div class="the-perfect-pieces" style="background-color:{{ section.settings.divsectionbg }}">
+  <div class="container-lg">
+    <div class="the-perfect-pieces-head">
+      <h5>{{ section.settings.heading }}</h5>
+    </div>
+    <div class="the-perfect-pieces-head-content py-4">
+      <div class="row plp-row">
+         {% for block in section.blocks %}
+          <div class="col-6 col-sm-6 col-md-4 col-lg-4 mb-3 pll-Pro">
+            <a href="{{ block.settings.collection.url }}">
+            <div class="the-perfect-pieces-inner-cont position-relative h-100">
+              <div class="the-perfect-pieces-inner-content-image h-100">
+                 {% if block.settings.collection_image != nil %}
+                  <img src="{{ block.settings.collection_image | img_url: 'original'}}"  class="img-fluid w-100 h-100" alt="">
+                     {% else %}
+                     <img src="{{ block.settings.collection.image | img_url: 'original'}}"  class="img-fluid w-100 h-100" alt="">
+                     {% endif %}
+                
+              </div>
+              <div class="inner-perfect-pieces-text position-absolute {% if forloop.index == 2 or forloop.index==5 %} bottom-pieces {% else %} top-pieces  {% endif %} w-100 h-50 p-md-4 p-3">
+                <p>{{  block.settings.collection.title }}</p>
+                <!-- <button>Explore <span>→</span></button> -->
+              </div>
+            </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+     "name":"Explore Sub Category",
+     "tag":"section",
+     "settings": [
+       {
+  			"type": "text",
+  			"id": "heading",
+  			"label": "Title"
+  		},                
+         {
+          			"type": "color",
+          			"id": "divsectionbg",
+          			"label": "Section Background Color"
+            		}
+     ],
+   "blocks": [
+                {
+                    "type": "header",
+                    "name": "Collection",
+                    "settings":[
+                      {
+                  "type": "collection",
+                  "id": "collection",
+                  "label": "Collection"
+                      },
+                      {
+                "type": "image_picker",
+                "id": "collection_image",
+                "label": "Collection Image"
+                }
+                    ]
+                }
+     ],
+      "presets": [
+{
+"name": "Explore Sub Category",
+"category": "Home Page Sections"
+}
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

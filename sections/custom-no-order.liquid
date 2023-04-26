@@ -1,0 +1,39 @@
+<div class="breadcrumbs py-3">
+        <div class="container-lg">
+            <nav class="breadcrum">
+                <ul class="breadcrumb-list list-unstyled d-flex m-0 flex-wrap">
+                    <li><a href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a></li>
+                    <li><a href="{{ routes.account_url }}"> {{ 'general.breadcrumb.account' | t }}</a></li>
+                    <li>{{ 'customer.general.orders' | t }}</li>
+                </ul>
+            </nav>
+        </div>
+   </div>
+    <div class="order-details">
+        <div class="container-lg">
+            <div class="order-detail-head pt-lg-5 pt-md-4 pt-sm-3 pt-2 pb-lg-3 pb-md-3 pb-sm-2">
+                <h5>My Orders</h5>
+            </div>
+            <div class="order-details-content-empty text-center py-lg-5 py-md-4 py-sm-3 py-2">
+                <picture>
+                    <img src="{{ 'no-order.svg' |asset_url }}" alt="Empty Order" class="img-fluid">
+                </picture>
+                <h6 class="py-lg-3 py-2">You've not placed an order yet!</h6>
+                <button class="find-inspiration" onclick="window.location='/'">Explore Now</button>
+            </div>
+        </div>
+    </div>
+    
+
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

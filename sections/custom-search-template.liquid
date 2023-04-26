@@ -1,0 +1,71 @@
+<div class="search-banner py-3">
+    <div class="container-lg">
+        <p>
+                <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.9814 17.4559C14.5339 17.4559 18.2244 13.7653 18.2244 9.21279C18.2244 4.66028 14.5339 0.969727 9.9814 0.969727C5.42883 0.969727 1.73828 4.66028 1.73828 9.21279C1.73828 13.7653 5.42883 17.4559 9.9814 17.4559Z"
+                        stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M9.98193 6.23145V6.46222" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                    <path d="M9.98193 8.89844V12.8215" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                </svg>
+          Get flat 20% off on your first purchase. - Code LIVSPACE20
+        </p>
+    </div>
+</div>
+{% if search.results_count==0 %}
+    <div class="search-no-result-image text-center ">
+      <div class="container-fluid">
+        <picture>
+            <img src="{{ 'emptysearch.svg'|asset_url }}" alt=" No Result" class="img-fluid py-md-5 py-3">
+        </picture>
+        <div class="search-no-result-image-text">
+            <h5>Uh-oh, we couldn't find <span>“{{ search.terms | escape }}”</span></h5>
+            <p>We've got our best people on it, till then try a different spelling or keyword!</p>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="search-reults-products">
+    <div class="plp-filters" id="plpfil" style="padding: 40px 0px;">
+        <div class="container-lg">
+         
+            <div class="search-products-reults-head">
+                <h5>Showing results for <span>“{{ search.terms | escape }}”</span></h5>
+                <p>We found {{ search.results_count }} results for <span>“{{ search.terms | escape }}”</span>.</p>
+            </div>
+            {% render 'custom-search-filter' %}
+            {% paginate search.results by 50 %}
+            {%- for product in search.results -%}
+            {% if forloop.index==1 or remaining ==0 %}
+            <div class="row">
+                {% endif %}
+                {%- render 'custom-product-grid-item-template', product: product -%}
+                {% assign remaining = forloop.index | modulo: 6 %}
+                {% if remaining == 0 %}
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endpaginate %}
+        </div>
+    </div>
+</div>
+{% endif %}
+<script>
+    $(document).ready(function () {
+        AddRecentSearch('{{ search.terms | escape }}');
+    });
+</script>
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+  
+{% endjavascript %}

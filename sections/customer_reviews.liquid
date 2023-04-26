@@ -1,0 +1,188 @@
+<!-- Testimonial Slider Start-->
+<div id="testimonial">
+    <div class="container-lg">
+      <div class="test-head-txt">
+        <div class="row">
+          <div class="col-12 col-sm-7 col-md-7 col-lg-6">
+            <h3> {{ section.settings.text-box }} </h3>
+          </div>
+          <div class="col-12 col-sm-5 col-md-5 col-lg-6 d-flex justify-content-sm-end align-items-center py-3 py-md-0">
+            <a href="#">Write a Review</a>
+          </div>
+        </div>
+      </div>
+      <div id="carouselExampleControl" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="row">
+              <div class="col-md-2 col-lg-2 d-none d-md-block">
+              <img src="{{ section.settings.sampleid | img_url: '200x200' }}" />
+                
+              </div>
+
+              <div class="col-md-8 col-lg-8">
+                <div class="row gx-0">
+                  <div class="col-lg-5 d-none d-lg-block">
+                   <img src="{{ section.settings.sampleid | img_url: '200x200' }}" />
+                  </div>
+
+                  <div class="col-lg-7 bg p-5 d-flex align-items-center">
+                    <div class="test-monial">
+                      <div class="quote py-3">
+                      <img src="{{ section.settings.sampleid | img_url: '200x200' }}" />
+                      </div>
+
+                      <div class="person-img py-3">
+                       <img src="{{ section.settings.sampleid | img_url: '200x200' }}" />
+                      </div>
+
+                      <div class="test-name d-flex flex-wrap g-2">
+                        <p class="test-tst">
+                          It’s a good product, I bought it as a placeholder at
+                          my in-laws place. Good to sit for a short periods. “
+                        </p>
+                        <p>Pooja Singh &nbsp; <span>|</span></p>
+                        <ul class="review list-unstyled d-flex m-0">
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                        </ul>
+                        <p>(4.0)</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2 col-lg-2 d-flex justify-content-end d-none d-md-block">
+              <img src="{{ section.settings.sampleid | img_url: '200x200' }}" />
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row">
+              <div class="col-md-2 col-lg-2 d-none d-md-block">
+               <img src="{{ section.settings.sampleid | img_url: '200x200' }}" />
+              </div>
+
+              <div class="col-md-8 col-lg-8">
+                <div class="row gx-0">
+                  <div class="col-lg-5 d-none d-lg-block">
+                 <img src="{{ section.settings.sampleid | img_url: '200x200' }}" />
+                  </div>
+
+                  <div class="col-lg-7 bg p-5 d-flex align-items-center">
+                    <div class="test-monial">
+                      <div class="quote py-3">
+                       <img src="{{ section.settings.sampleid | img_url: '200x200' }}" />
+                      </div>
+
+                      <div class="person-img py-3">
+                        <img src="{{ section.settings.sampleid | img_url: '200x200' }}" />
+                      </div>
+
+                      <div class="test-name d-flex flex-wrap g-2">
+                        <p class="test-tst">
+                          It’s a good product, I bought it as a placeholder at
+                          my in-laws place. Good to sit for a short periods. “
+                        </p>
+                        <p>Pooja Singh &nbsp; <span>|</span></p>
+                        <ul class="review list-unstyled d-flex m-0">
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                        </ul>
+                        <p>(4.0)</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2 col-lg-2 d-flex justify-content-end d-none d-md-block">
+               <img src="{{ section.settings.sampleid | img_url: '200x200' }}" />
+              </div>
+            </div>
+          </div>
+        
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControl"
+          data-bs-slide="prev">
+          <span aria-hidden="true">
+            <img class="arrow" src="https://cdn.shopify.com/s/files/1/0623/4567/4925/files/Arrow_1.svg?v=1662464352" alt="" />
+          </span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControl"
+          data-bs-slide="next">
+          <span aria-hidden="true">
+            <img class="arrow" src="https://cdn.shopify.com/s/files/1/0623/4567/4925/files/Arrow_1_1.svg?v=1662464407" alt="" />
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+{% schema %}
+{
+  "name": "customer Reviews",
+"max_blocks": 4,
+ 
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Product Image",
+      "settings": [
+        {
+        "id": "product",
+        "type": "image_picker",
+        "label": "Product Image"
+        },
+{
+"type": "product",
+        "id": "sampleid",
+        "label": "Product"
+},
+
+
+        
+{
+      "id": "text-box",
+      "type": "text",
+      "label": "Heading",
+      "default": "Title"
+    }
+
+
+        
+      ]
+    }
+  ]
+}
+ 
+{% endschema %}
+ 
+{% stylesheet %}
+{% endstylesheet %}
+ 
+{% javascript %}
+{% endjavascript %}
+
+
+
+
+
+
+
+
+
+
+
+
+

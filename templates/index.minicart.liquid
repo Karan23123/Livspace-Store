@@ -1,0 +1,58 @@
+{% layout none %}
+ <div class="mini-cart-head pb-3">
+                                        <h5>Mini Cart <span style="float: right;cursor: pointer;"
+                                                onclick="hideminicart()">&#10005;</span></h5>
+                                    </div>
+                                    <div class="mini-cart-body">
+                                        {% for line_item in cart.items %}
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="mini-cart-img h-100">
+                                                    <img src="{{ line_item.image.src |  product_img_url: " medium" }}"
+                                                        alt="{{ line_item.image.alt | escape }}"
+                                                        class="w-100 img-fluid h-100">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <div class="mini-crat-items-info">
+                                                    <h5> <a href="{{ line_item.url }}">{{ line_item.product.title |truncate:30 }}</a></h5>
+                                                    <ul class="mini-crat-list list-unstyled d-flex m-0">
+                                                       {% assign variantoptioncounter=0 %}
+                                                      {% for key in line_item.variant.metafields.productvariantoption %}
+                                                       
+                                                        {% if key[1]!='' %}
+                                                        <li>{{ key[1] }}</li>
+                                                          {% assign variantoptioncounter=1 %}
+                                                      {% if forloop.index!=forloop.length %}
+                                                         <li>|</li>
+                                                        {% endif %}
+                                                           {% endif %}
+                                                        {% endfor %}
+                                                       {% if variantoptioncounter>0 %}
+                                                        <span><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                                                         {% endif %}
+                                                    </ul>
+                                                </div>
+                                                <div class="qunatity-and-price d-flex justify-content-between">
+                                                    <div class="qunatity">
+                                                        QTY <span>{{ line_item.quantity }}</span>
+                                                    </div>
+                                                    <div class="mini-crat-price">
+                                                        <p> {{ line_item.final_line_price |money_without_trailing_zeros }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="mini-cart-button d-flex justify-content-between pt-4">
+                                        <button class="view-crat-button-minicart" onclick="location.href='/cart'">View Cart
+                                          <span>({{ cart.item_count
+                                                }})</span> </button>
+                                        <button class="checkout-button-minicart" onclick="location.href='/checkout'">Checkout <span>({{ cart.total_price |
+                                                money_without_trailing_zeros
+                                                }})</span></button>
+                                    </div>
+                                   

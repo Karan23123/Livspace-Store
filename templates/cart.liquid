@@ -1,0 +1,8 @@
+{% section 'custom-cart-template' %}
+
+
+  {% include 'custom-recently-viewed-products' %}
+{%- if cart.item_count == 0 -%}
+  {% section 'custom-explore-categories' %}
+{%- endif -%}  
+<!-- bcpo done -->

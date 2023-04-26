@@ -1,0 +1,409 @@
+{%- assign is_entirely_fulfilled = false -%}
+{%- assign has_one_fulfillment = false -%}
+
+{%- if order.fulfillment_status == 'fulfilled' -%}
+{%- assign has_one_fulfillment = true -%}
+{%- assign is_entirely_fulfilled = true -%}
+{%- assign tracking_numbers = '' -%}
+
+{%- assign number_of_fulfillable_items = 0 -%}
+
+{%- for line_item in order.line_items -%}
+{%- assign number_of_fulfillable_items = number_of_fulfillable_items | plus: line_item.quantity -%}
+{%- endfor -%}
+
+{%- for line_item in order.line_items -%}
+{%- assign tracking_numbers = tracking_numbers | append: line_item.fulfillment.tracking_number | append: ',' -%}
+
+{%- if line_item.fulfillment.item_count != number_of_fulfillable_items -%}
+{%- assign has_one_fulfillment = false -%}
+{%- endif -%}
+{%- endfor -%}
+
+{%- assign tracking_numbers = tracking_numbers | split: ',' | compact | uniq -%}
+{%- endif -%}
+<div class="breadcrumbs py-3">
+    <div class="container-lg">
+        <nav class="breadcrum">
+            <ul class="breadcrumb-list list-unstyled d-flex m-0 flex-wrap">
+                <li><a href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a></li>
+                <li><a href="{{ routes.account_url }}"> {{ 'general.breadcrumb.account' | t }}</a></li>
+                <li>{{ 'customer.general.orders' | t }}</li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<section id="current-order" class="pb-4">
+    <div class="container-lg">
+        <div class="cuurent-order-head">
+            <div class="cuurent-order-heading">
+                <h1 class="m-0">Orders Details</h1>
+            </div>
+        </div>
+        <div class="order-details order-details-bg">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="order-details-content">
+                        {% comment %} For Mobile Device Delivery Address Start {% endcomment %}
+                        <div class="deliver-home p-md-4 p-3 mt-lg-0 mt-md-3 mb-3 d-sm-none d-block">
+                            <div class="inner-deliver d-flex align-items-center">
+                                <img src="{{'home.svg'|asset_url  }}" alt="Home Icon" class="img-fluid">
+                                <h3>Deliver to </h3>
+                            </div>
+                            <div class="inner-deliver-cont pt-3">
+                                <p>{{ order.shipping_address.address1 }}
+                                    {% if order.shipping_address.address2 != '' %}
+                                    , {{ order.shipping_address.address2 }}
+                                    {% endif %}
+                                    {% if order.shipping_address.city != '' %}
+                                    , {{ order.shipping_address.city }}
+                                    {% endif %}
+                                    {% if order.shipping_address.province != '' %}
+                                    , {{ order.shipping_address.province }}
+                                    {% endif %}
+                                    {% if order.shipping_address.country != ''%}
+                                    , {{ order.shipping_address.country }}
+                                    {% endif %}
+                                    {% if order.shipping_address.zip != '' %}
+                                    , {{ order.shipping_address.zip }}
+                                    {% endif %}
+                                </p>
+                                <p>Mobile no. : {{ order.shipping_address.phone }}</p>
+                            </div>
+                        </div>
+                        {% comment %} For Mobile Device Delivery Address End {% endcomment %}
+                        {% for line_item in order.line_items %}
+                        <div class="edfgh d-flex flex-column">
+                            <div class="order-detail-progress d-flex order-lg-0 order-1">
+                                <ul class="order-detail-list list-unstyled d-flex justify-content-between w-100 m-0">
+                                    <li class="d-flex flex-column orderDetailactive" style="gap:16px">
+                                        <div class="order-detail-icon active d-inline-block">
+                                            <svg width="56" height="56" viewBox="0 0 56 56" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect width="56" height="56" rx="28" fill="#9F76A1" />
+                                                <path
+                                                    d="M34.0092 20.9368H18.3887C17.9071 20.9368 17.5166 21.3317 17.5166 21.8189V37.6184C17.5166 38.1056 17.9071 38.5005 18.3887 38.5005H34.0092C34.4908 38.5005 34.8813 38.1056 34.8813 37.6184V21.8189C34.8813 21.3317 34.4908 20.9368 34.0092 20.9368Z"
+                                                    stroke="white" stroke-width="1.5" stroke-miterlimit="10" />
+                                                <path
+                                                    d="M37.961 34.9014H37.9697C38.1259 34.7653 38.2213 34.5722 38.2213 34.3528V18.211C38.2213 17.816 37.9089 17.5 37.5184 17.5H21.5595C21.3469 17.5 21.1517 17.6009 21.0215 17.7502"
+                                                    stroke="white" stroke-width="1.5" stroke-miterlimit="10" />
+                                                <path d="M34.7158 21.1906L38.0221 17.8464" stroke="white"
+                                                    stroke-width="1.5" stroke-miterlimit="10" />
+                                                <path d="M34.752 38.2065L38.0583 34.8052" stroke="white"
+                                                    stroke-width="1.5" stroke-miterlimit="10" />
+                                                <path
+                                                    d="M24.3711 20.9235L27.6774 17.5222H30.9837L27.6774 20.9235V25.321H24.3711V20.9235Z"
+                                                    fill="white" />
+                                                <path d="M17.6484 21.2308L21.0285 17.7461" stroke="white"
+                                                    stroke-width="1.5" stroke-miterlimit="10" />
+                                                <path d="M19.1523 34.2298V37.0518" stroke="white" stroke-width="1.21544"
+                                                    stroke-miterlimit="10" />
+                                                <path d="M20.0918 34.2298V37.0518" stroke="white" stroke-width="1.21544"
+                                                    stroke-miterlimit="10" />
+                                                <path d="M21.0215 34.2298V37.0518" stroke="white" stroke-width="1.21544"
+                                                    stroke-miterlimit="10" />
+                                                <path d="M21.9785 34.2298V37.0518" stroke="white" stroke-width="1.21544"
+                                                    stroke-miterlimit="10" />
+                                                <path d="M22.9307 34.2298V37.0518" stroke="white" stroke-width="1.21544"
+                                                    stroke-miterlimit="10" />
+                                            </svg>
+                                        </div>
+                                        <div class="order-detail-information active">
+                                            <h3>Ordered</h3>
+                                            <p>Wed, 2 Dec ’21</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="order-details-line"></div>
+                                    </li>
+
+                                    <li class="d-flex flex-column" style="gap:16px">
+                                        <div class="order-detail-icon">
+
+                                            <svg width="56" height="56" viewBox="0 0 56 56" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M16.2264 35.1113L16 20.4453L27.7731 25.334V40L16.2264 35.1113Z"
+                                                    stroke="#939393" stroke-width="1.39989" stroke-linejoin="round" />
+                                                <path d="M40.0003 35.1113V20.4453L27.7744 25.334V40L40.0003 35.1113Z"
+                                                    stroke="#939393" stroke-width="1.39989" stroke-linejoin="round" />
+                                                <path
+                                                    d="M27.7731 25.3335L39.999 20.4449L27.3203 16.0006L16 20.4449L27.7731 25.3335Z"
+                                                    stroke="#939393" stroke-width="1.39989" stroke-linejoin="round" />
+                                                <path
+                                                    d="M20.0781 18.6667L31.8512 23.5554V28.8885L34.5681 26.2219L35.9265 27.1108V22.2221L24.1534 17.3334"
+                                                    stroke="#939393" stroke-width="1.39989" stroke-linejoin="round" />
+                                                <path d="M19.8525 31.3657L21.664 32.8896L25.2868 29.3339"
+                                                    stroke="#939393" stroke-width="1.39989" stroke-linejoin="round" />
+                                                <rect x="0.5" y="0.5" width="55" height="55" rx="27.5"
+                                                    stroke="#E6E6E6" />
+                                            </svg>
+
+
+                                        </div>
+                                        <div class="order-detail-information">
+                                            <h3>Packing</h3>
+                                            <p>Wed, 2 Dec ’21</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="order-details-line"></div>
+                                    </li>
+                                    <li class="d-flex flex-column" style="gap:16px">
+                                        <div class="order-detail-icon">
+
+                                            <svg width="56" height="56" viewBox="0 0 56 56" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M36.4607 33.6989H38.7C39.1753 33.6989 39.5606 33.3091 39.5606 32.8284V20.2867C39.5606 19.806 39.1753 19.4162 38.7 19.4162H23.8128C23.3375 19.4162 22.9521 19.806 22.9521 20.2867V33.6989H32.4488"
+                                                    stroke="#939393" stroke-width="1.5" stroke-miterlimit="10" />
+                                                <path
+                                                    d="M21.8797 33.6984H22.9544V26.7649C22.9544 26.2842 22.569 25.8944 22.0938 25.8944H19.0153C18.7883 25.8944 18.57 25.9854 18.4073 26.1456L16.6004 27.9212C16.4292 28.0857 16.335 28.3153 16.335 28.5535V32.8279C16.335 33.3086 16.7203 33.6984 17.1956 33.6984H17.8635"
+                                                    stroke="#939393" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M19.869 36.016C20.9875 36.016 21.8942 35.0989 21.8942 33.9676C21.8942 32.8362 20.9875 31.9191 19.869 31.9191C18.7505 31.9191 17.8438 32.8362 17.8438 33.9676C17.8438 35.0989 18.7505 36.016 19.869 36.016Z"
+                                                    stroke="#939393" stroke-width="1.5" stroke-miterlimit="10" />
+                                                <path
+                                                    d="M34.4569 36.016C35.5753 36.016 36.4821 35.0989 36.4821 33.9676C36.4821 32.8362 35.5753 31.9191 34.4569 31.9191C33.3384 31.9191 32.4316 32.8362 32.4316 33.9676C32.4316 35.0989 33.3384 36.016 34.4569 36.016Z"
+                                                    stroke="#939393" stroke-width="1.5" stroke-miterlimit="10" />
+                                                <rect x="0.5" y="0.5" width="55" height="55" rx="27.5"
+                                                    stroke="#E6E6E6" />
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="order-detail-information">
+                                            <h3>Ship</h3>
+                                            <p>Wed, 2 Dec ’21</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="order-details-line"></div>
+                                    </li>
+                                    <li class="d-flex flex-column" style="gap:16px">
+                                        <div class="order-detail-icon">
+
+                                            <svg width="56" height="56" viewBox="0 0 56 56" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M25.854 31.7198L28.9867 32.7641C28.9867 32.7641 36.8186 31.1977 37.8629 31.1977C38.9071 31.1977 38.9071 32.2419 37.8629 33.2862C36.8186 34.3304 33.1637 37.4632 30.031 37.4632C26.8982 37.4632 24.8097 35.8968 22.7212 35.8968C20.6327 35.8968 17.5 35.8968 17.5 35.8968"
+                                                    stroke="#939393" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M17.5 29.6316C18.5442 28.5873 20.6327 27.0209 22.7212 27.0209C24.8097 27.0209 29.7699 29.1094 30.5531 30.1537C31.3363 31.1979 28.9867 32.7643 28.9867 32.7643"
+                                                    stroke="#939393" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M23.7666 23.8881V19.7111C23.7666 19.1344 24.2341 18.6669 24.8109 18.6669H37.3418C37.9186 18.6669 38.3861 19.1344 38.3861 19.7111V28.0651"
+                                                    stroke="#939393" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path d="M33.6861 18.6669H28.4648V23.366H33.6861V18.6669Z"
+                                                    fill="#939393" />
+                                                <rect x="0.5" y="0.5" width="55" height="55" rx="27.5"
+                                                    stroke="#E6E6E6" />
+                                            </svg>
+
+                                        </div>
+                                        <div class="order-detail-information">
+                                            <h3>Delivery</h3>
+                                            <p>Wed, 2 Dec ’21</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="inner-order-detail d-flex mb-sm-0 mb-3">
+                                <div class="cuurent-products w-100">
+                                    <div class="cuurent-product-info d-flex">
+                                        <div class="cuurent-product-img">
+                                            <img src="{{ line_item.image | product_img_url:'medium' }}"
+                                                alt="{{ line_item.title }}" class="img-fluid"></img>
+                                        </div>
+                                        <div class="cuurent-product-cont">
+                                            <h3>{{ line_item.product.title }}</h3>
+                                            <p>{{ line_item.vendor }} <span class="badge">Seasonal</span></p>
+                                            <ul class="list-unstyled d-flex m-0">
+                                                {% for key in line_item.variant.metafields.productvariantoption
+                                                %}
+                                                {% if key[1]!='' %}
+                                                <li>{{ key[1] }}</li>
+
+                                                {% if forloop.index != forloop.length %}
+                                                <li>|</li>
+                                                {% endif %}
+                                                {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="current-order-id pt-4 d-flex justify-content-between align-items-center">
+                                        <div class="current-order-id-cont">
+                                              <ul class="list-unstyled d-flex m-0">
+                                                  <li>
+                                                      <div class="current-order-id-content d-flex align-items-center">
+                                                          <h3>Order ID</h3>
+                                                          <span class="ordernumbercopy" id="myOrder_{{ order.order_number }}_{{ forloop.index }}">#{{
+                                                              order.order_number }}</span>
+                                                          <button onclick="copyordertext('myOrder_{{ order.order_number }}_{{ forloop.index }}')"
+                                                              id="copy-myorderid">
+                                                              <svg width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                  <path
+                                                                      d="M4.66797 2.83268V12.8327C4.66797 13.2747 4.84356 13.6986 5.15612 14.0112C5.46869 14.3238 5.89261 14.4993 6.33464 14.4993H13.0013C13.4433 14.4993 13.8673 14.3238 14.1798 14.0112C14.4924 13.6986 14.668 13.2747 14.668 12.8327V5.53435C14.6679 5.31232 14.6235 5.09253 14.5374 4.88789C14.4513 4.68325 14.3251 4.49788 14.1663 4.34268L11.4038 1.64102C11.0924 1.33656 10.6743 1.16607 10.2388 1.16602H6.33464C5.89261 1.16602 5.46869 1.34161 5.15612 1.65417C4.84356 1.96673 4.66797 2.39065 4.66797 2.83268V2.83268Z"
+                                                                      stroke="#EB6162" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                                  </path>
+                                                                  <path
+                                                                      d="M11.334 14.4987V16.1654C11.334 16.6074 11.1584 17.0313 10.8458 17.3439C10.5333 17.6564 10.1093 17.832 9.66732 17.832H3.00065C2.55862 17.832 2.1347 17.6564 1.82214 17.3439C1.50958 17.0313 1.33398 16.6074 1.33398 16.1654V6.9987C1.33398 6.55667 1.50958 6.13275 1.82214 5.82019C2.1347 5.50763 2.55862 5.33203 3.00065 5.33203H4.66732"
+                                                                      stroke="#EB6162" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                                  </path>
+                                                              </svg>
+                                                          </button>
+                                                      </div>
+                                                  </li>
+                                              </ul>
+                                          </div>
+                                          <div class="current-order-quantity-info">
+                                              <ul class="list-unstyled d-flex m-0 justify-content-end align-items-center">
+                                                  <li>
+                                                      <div class="current-order-quantity">
+                                                          <p>QTY: {{ line_item.quantity }} </p>
+                                                      </div>
+                                                  </li>
+                                                  <li>|</li>
+                                                  <li>
+                                                      <div class="current-order-price">
+                                                          <h3>{{ line_item.final_price
+                                                              |money_without_trailing_zeros }}</h3>
+                                                      </div>
+                                                  </li>
+                                              </ul>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                        
+                        <div class="cancel-button d-sm-flex d-none justify-content-md-end justify-content-between">
+                            <div class="need-help-button">
+                                <button href="#">Need Help?</button>
+                            </div>
+                            <div class="cancel-order-button">
+                                <button href="#" data-bs-toggle="modal" data-bs-target="#canceloreder">Cancel
+                                    Order</button>
+                            </div>
+                        </div>
+                          {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="deliver-home p-4 mt-lg-0 mt-md-3 mt-3 d-sm-block d-none">
+                        <div class="inner-deliver d-flex align-items-center">
+                            <img src="{{ 'home.svg' |asset_url }}" alt="Home Icon" class="img-fluid">
+                            <h3>Deliver to</h3>
+                        </div>
+                        <div class="inner-deliver-cont pt-3">
+                            <p>{{ order.shipping_address.address1 }}
+                                {% if order.shipping_address.address2 != '' %}
+                                , {{ order.shipping_address.address2 }}
+                                {% endif %}
+                                {% if order.shipping_address.city != '' %}
+                                , {{ order.shipping_address.city }}
+                                {% endif %}
+                                {% if order.shipping_address.province != '' %}
+                                , {{ order.shipping_address.province }}
+                                {% endif %}
+                                {% if order.shipping_address.country != ''%}
+                                , {{ order.shipping_address.country }}
+                                {% endif %}
+                                {% if order.shipping_address.zip != '' %}
+                                , {{ order.shipping_address.zip }}
+                                {% endif %}
+                            </p>
+                            <p>Mobile no. : {{ order.shipping_address.phone }}</p>
+                        </div>
+                    </div>
+
+                    <div class="download-invoice p-4 mt-4">
+                        <div class="paid-by d-flex justify-content-between">
+                            <p>Paid by</p>
+                            <h3>{{ order.total_price|money_without_trailing_zeros }}</h3>
+                        </div>
+                        <div class="google-pay d-flex justify-content-between">
+                            <p><img src="{{'gpay.svg' |asset_url  }}" alt="google pay" class="img-fluid"> Google Pay</p>
+                            <span class="view-details" onclick="showviewdetail()">View Details</span>
+                        </div>
+                        <div class="order-summary-bill d-none" id="hideviewdetail">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <p class="billing-summary-text">Billing Summary</p>
+                                </li>
+                                <li>
+                                    <hr>
+                                </li>
+                                <li>
+                                    <p>Subtotal <span class="float-end summary-prices">{{ order.subtotal_price |
+                                            money_without_trailing_zeros }}</span></p>
+                                </li>
+                                {% if order.total_discounts > 0 %}
+                                <li>
+                                    <p>Discount <span class="float-end summary-green summary-prices"> -{{
+                                            order.total_discounts |money_without_trailing_zeros }} </span></p>
+                                </li>
+                                {% endif %}
+                                {% if order.shipping_price > 0 %}
+                                <li>
+                                    <p>Shipping <span class="float-end summary-prices"> {{ order.shipping_price |
+                                            money_without_trailing_zeros }}</span>
+                                    </p>
+                                </li>
+                                {% endif %}
+                                {% if order.tax_price > 0 %}
+                                <li>
+                                    <p>Tax Included <span class="float-end summary-prices">{{ order.tax_price |
+                                            money_without_trailing_zeros }}</span></p>
+                                </li>
+                                {% endif %}
+                                <li>
+                                    <hr>
+                                </li>
+                                <li>
+                                    <p>Grand Total <span class="float-end summary-prices"><b>{{ order.total_price |
+                                                money_without_trailing_zeros }}</b></span></p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="download-invoice-button">
+                            <a href="#"><img src="{{ 'download.svg' |asset_url }}" alt="Download Invoice"
+                                    class="img-fluid">Download
+                                Invoice</a>
+                        </div>
+
+                    </div>
+                    <div class="cancel-button justify-content-md-end justify-content-between pt-lg-4 pt-md-3 pt-sm-2 pt-3 d-sm-none d-flex">
+                        <div class="need-help-button">
+                            <button href="#">Need Help?</button>
+                        </div>
+                        <div class="cancel-order-button">
+                            <button href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Cancel
+                                Order</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function showviewdetail() {
+        document.getElementById("hideviewdetail").classList.toggle("d-none");
+        let asdf = document.querySelector(".view-details");
+        if (asdf.innerHTML === "View Details") {
+            asdf.innerHTML = "Hide Details";
+        } else {
+            asdf.innerHTML = "View Details";
+        }
+    }
+</script>
+{% section 'custom-my-account-footer' %}

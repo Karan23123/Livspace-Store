@@ -1,0 +1,179 @@
+{%  assign collectionname='' %}
+{% for c in product.collections %}
+ 
+  {% if c.metafields.category.is_leaf!=blank and c.metafields.category.is_leaf==true %}
+    {%  assign collectionname = c.handle %}
+    {% break %}
+    {% endif %}
+  {% endfor %}
+  
+  {% if collectionname == ''  %}
+     {%  assign collectionname = product.collections.last.handle %}
+    {% endif %}
+    
+<section id="product-info">
+  <div class="container-lg pt-4">
+      <div class="row breadcrumbs">
+         {%- if section.settings.show_breadcrumb -%}
+        <nav class="col-10 col-sm-9 col-lg-9 breadcrum">
+          <ul class="breadcrumb-list list-unstyled d-flex m-0 flex-wrap">
+           <li>
+              <a href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a>
+            </li>
+            <li>            
+                <a href="{{ collections[collectionname].url }}">{{ collections[collectionname].title }}</a> 
+           
+            </li>          
+          </ul>
+        </nav>
+         {%- endif -%}
+         <div class="col-2 col-sm-3 col-lg-3 share d-flex justify-content-sm-end justify-content-end align-items-center">
+           {%- if section.settings.show_share -%}
+         
+          <div class="sharebutton dropdown  d-none">
+            <button class="share-button" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <img src="{{ 'Share.svg'|asset_url }}" alt="Share" class="img-fluid" />
+              <span class="share-text d-none d-sm-block">Share</span>
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-body p-0">
+                    <ul class="share-tick down">
+                      <div class="share-inner">
+                        <div class="share-text text-center">
+                          <p>Share this with anyone</p>
+                        </div>
+                        <div class="share-icons">
+                          <ul class="d-flex list-unstyled">
+                             <li><a href="https://www.facebook.com/Livspace/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="https://twitter.com/livspace" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="https://www.instagram.com/livspace/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                    <li><a href="https://in.pinterest.com/livspace/" target="_blank"><i class="fa fa-pinterest-square" aria-hidden="true"></i></a></li>
+                    <li><a href="https://www.youtube.com/channel/UCyfOXXDxxyf5xGtU7K4-Cag" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="justify-content" id="sharebutton" style="display: none;" >
+              
+            </div>
+          </div>
+
+          <div class="dropdown  d-none">
+             <button class="share-button"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{{ 'Share.svg'|asset_url }}" alt="Share" class="img-fluid"  />
+            <span class="share-text">Share</span>
+               </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <div class="share-inner">
+                <div class="share-text">
+                  <p>Share this with anyone</p>
+                </div>
+                <div class="share-icons">
+                  <ul class="d-flex list-unstyled">
+                    <li><a href="https://www.facebook.com/Livspace/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="https://twitter.com/livspace" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="https://www.instagram.com/livspace/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                    <li><a href="https://in.pinterest.com/livspace/" target="_blank"><i class="fa fa-pinterest-square" aria-hidden="true"></i></a></li>
+                    <li><a href="https://www.youtube.com/channel/UCyfOXXDxxyf5xGtU7K4-Cag" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </ul>
+          </div>
+           {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    
+   {%- render 'product-custom-image-slider' %}
+   {%- render 'product-custom-title-price' -%}          
+   {%- render 'product-custom-variant-selection' -%}
+      {%- render 'product-check-availabilty' %}
+     </section>    
+   {%- render 'product-custom-tabs' %}
+   {%- render 'product-custom-dimensions' %}
+{%- render 'product-custom-collection-info' %}
+{%- render 'product-custom-related-products' %}
+<div class="container-lg">
+<div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+</div>
+   
+{% schema %}
+  {
+    "name": "Product Header",
+    "settings": [
+      {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show Breadcrumb",
+      "default": true
+    },
+       {
+      "type": "checkbox",
+      "id": "show_share",
+      "label": "Show Share Button",
+      "default": true
+    },
+      {
+         "type": "image_picker",
+          "id": "share_button_image",
+          "label": "Share Button Image",
+          "info": "32 x 32px .svg recommended"
+      }
+      
+    ],
+ 
+     "blocks": [
+    {
+      "type": "header",
+      "name": "Variant Type",
+      
+      "settings": [
+        {
+          "type": "text",
+          "id": "namespace",
+          "label": "Name Space",
+          "default": "Custom field"
+        },
+      {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Custom field"
+        },
+      {
+          "type": "select",
+          "id": "cssclass",
+          "label": "CSS Class",
+          "options": [
+    {
+      "value": "seater-sofa",
+      "label": "seater-sofa"
+    },
+        {
+      "value": "cocowalnut",
+      "label": "cocowalnut"
+    }
+      ]
+        }
+     ]
+    }
+      ]
+  }
+       
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

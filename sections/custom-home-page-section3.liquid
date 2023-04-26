@@ -1,0 +1,154 @@
+<div class="product-banner-marker position-relative" id="productbgcontainer">
+    <div class="container-lg productbanner-heading">
+        <h2>{{ section.settings.heading }}</h2>
+    </div>
+    <div class="product-banner-marker-img">
+        <img src="{{ section.settings.section3bgimage |img_url:'original'}}" alt="Product Banner"
+            class="img-fluid w-100">
+    </div>
+    <div class="product-banner-markers ">
+        {% for block in section.blocks %}
+        <span class="showHide" onmouseover="ShowProductDetail('product_div_{{ forloop.index }}');"
+            style="position: absolute;top: {{ block.settings.bgproductY }}%;left: {{ block.settings.bgproductX }}%;">
+            <img src="https://cdn.shopify.com/s/files/1/0623/4567/4925/files/Plus_Icon.svg?v=1670847573" alt="Product"
+                style="z-index:1"
+                onclick="changeProoductInfo({{ block.settings.bgproduct.selected_or_first_available_variant.id }});">
+            <div class="product-banner-info" id="product_div_{{ forloop.index }}" {% if block.settings.bgproductX> 80 %}
+                style="position:absolute;right:0;z-index:9999"
+                {% else %}
+                style="z-index:9999"
+                {% endif %}
+                >
+                <div class="row">
+                    <div class="product-banner-info1  p-1">
+                        <div class="plp-product d-flex p-2" style="background:white;border-radius:4px;">
+                            <div class="plp-inner-products" style="width: 120px;">
+                                <div class="plp-product-image h-100"
+                                    style="width: 120px !important;display: inline-block;">
+                                    <img src="{{ block.settings.bgproduct.featured_image | img_url: 'original' }}"
+                                        alt="product image"
+                                        id="{{ block.settings.bgproduct.selected_or_first_available_variant.id }}_img"
+                                        class="img-fluid w-100"
+                                        style="object-fit:cover;width: 120px !important;height: 100%;">
+                                </div>
+                            </div>
+                            <div class="plp-product-description ps-3">
+                                <div class="plp-product-inner-description">
+                                    <h5
+                                        id="{{ block.settings.bgproduct.selected_or_first_available_variant.id }}_title">
+                                        {{ block.settings.bgproduct.title }}
+                                    </h5>
+                                    <p
+                                        id="{{ block.settings.bgproduct.selected_or_first_available_variant.id }}_vendor">
+                                        {{ block.settings.bgproduct.vendor }}
+                                    </p>
+                                </div>
+                                <div class="plp-product-price d-flex justify-content-between">
+                                    <p id="{{ block.settings.bgproduct.selected_or_first_available_variant.id }}_price">
+                                        {{ block.settings.bgproduct.price | money_without_trailing_zeros }}
+                                        {% if block.settings.bgproduct.compare_at_price > 0
+                                        and block.settings.bgproduct.compare_at_price != block.settings.bgproduct.price
+                                        %}
+                                        <span>{{ block.settings.bgproduct }}</span>
+                                        {%- endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </span>
+        {% if forloop.index == 1 %}
+        <script>
+            $(document).ready(function () {
+                changeProoductInfo({{ block.settings.bgproduct.selected_or_first_available_variant.id }});
+            });
+        </script>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<div class="product-banner-info1 d-md-none d-block p-3" style="background:#9393933d;">
+    <div class="plp-product d-flex p-2" style="background:white;border-radius:4px;">
+        <div class="plp-inner-products" style="width: 120px;">
+            <div class="plp-product-image h-100" style="width: 120px !important;display: inline-block;">
+                <img src="" alt="product image" id="pinfo_img" class="img-fluid w-100"
+                    style="object-fit:cover;width: 120px !important;height: 100%;">
+            </div>
+        </div>
+        <div class="plp-product-description ps-3">
+            <div class="plp-product-inner-description">
+                <h5 id="pinfo_title">Sigma Mesh Back...</h5>
+                <p id="pinfo_vendor">GODREJ INTERIO</p>
+            </div>
+            <div class="plp-product-price d-flex justify-content-between">
+                <p id="pinfo_price">14,850<span>₹ 18,850</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  function changeProoductInfo(variantid)
+    {
+      $('#pinfo_img').attr('src',$('#'+variantid+'_img').attr('src'));
+      $('#pinfo_title').html($('#'+variantid+'_title').html());
+      $('#pinfo_vendor').html($('#'+variantid+'_vendor').html());
+      $('#pinfo_price').html($('#'+variantid+'_price').html());
+    }
+</script>
+{% schema %}
+{
+    "name": "Shop the look",
+    "tag":"section",
+    "settings": [
+      {
+  			"type": "text",
+  			"id": "heading",
+  			"label": "Title"
+  		},
+            {
+                "type": "image_picker",
+                "id": "section3bgimage",
+                "label": "Background Image"
+            }
+        ],
+            "blocks": [
+                {
+                    "type": "header",
+                    "name": "Product",
+                    "settings": [
+                        {
+                            "type": "product",
+                            "id": "bgproduct",
+                            "label": "Product"
+                        },
+                        {
+                            "type": "number",
+                            "id": "bgproductX",
+                            "label": "X Position"
+                        },
+                        {
+                            "type": "number",
+                            "id": "bgproductY",
+                            "label": "Y Position"
+                        }
+                    ]
+                }
+            ],
+  "presets": [
+{
+"name": "Shop the look",
+"category": "Home Page Sections"
+}
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

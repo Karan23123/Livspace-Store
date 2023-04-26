@@ -1,0 +1,41 @@
+ <div id="product-availability">
+      <div class="container-lg">
+        <div class="row d-flex justify-content-between">
+          <div
+            class="col-md-7 col-lg-8 product-feat d-flex flex-wrap justify-content-lg-start justify-content-center align-items-center">
+            <div class="check-your-availability">
+              <p class="m-0">Check your availabilty and Enjoy shipping</p>
+            </div>
+          </div>
+          <div class="col-md-5 col-lg-4 pincode d-flex justify-content-lg-end justify-content-center pt-3 pt-lg-0">
+            <div class="pincode-form position-relative">
+              <input type="text" placeholder="Enter Pincode" class="pincode-input" id="numb" />
+              <button type="submit" class="check" onclick="myvalid()">Check Availabilty</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     <div class="availability-error" id="dn" style="display:none">
+      
+        <p id="demo" class="text-center"></p>
+      
+    </div>
+<script>
+    function myvalid() {
+      let x = document.getElementById("numb").value;
+      let text;
+      if (x.length<6 || isNaN(x) || x < 1 || x > 999999) {
+        text = "<p class='red-error'><img src='https://cdn.shopify.com/s/files/1/0623/4567/4925/files/Error-icon.png?v=1663672875' />Please Enter a Valid Pincode.</p>";
+      } else {
+        text = "<p class='green-success'><img src='https://cdn.shopify.com/s/files/1/0623/4567/4925/files/success-icon.png?v=1663672885' />Delivery Available on this Pincode. </p>";
+      }
+       $(function () {
+        setTimeout(function () { $("#dn").fadeOut(1500); }, 5000)
+      })
+      document.getElementById("dn").style.display = "block";
+      document.getElementById("demo").innerHTML = text;
+    }
+   
+      
+  </script>

@@ -1,0 +1,98 @@
+<div id="image_block_1">
+    <div class="container">
+      <div class="collection-head">
+        <h3> {{ section.settings.text-box }} </h3>
+      
+     {%- if section.settings.text != blank -%}
+    <div class="rte">
+      {{ section.settings.text }}
+    </div>
+  {%- endif -%}
+
+  <a href="{{ section.settings.link }}" class="button">{{ section.settings.linktext }}</a>
+        
+      </div>
+      <div class="row collection-img pt-4 pt-md-5">
+        <div class="col-6 col-sm-6 col-md-3 col-lg-3"> 
+           <img src ="{{ section.settings.upload_image | img_url: '306x'}} "alt=""/>
+
+           </div>
+        <div class="col-6 col-sm-6 col-md-3 col-lg-3"> 
+           <img src ="{{ section.settings.upload_image | img_url: '306x'}} "alt=""/>
+         
+        </div>
+        <div class="col-6 col-sm-6 col-md-3 col-lg-3 mt-3 mt-md-0">
+          <img src ="{{ section.settings.upload_image | img_url: '306x'}} "alt=""/>
+        </div>
+        <div class="col-6 col-sm-6 col-md-3 col-lg-3 mt-3 mt-md-0">
+         <img src ="{{ section.settings.upload_image | img_url: '306x'}} "alt=""/> 
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+{% schema %}
+  {
+    "name": "orange_block",
+     "settings": [
+
+{
+      "type": "image_picker",
+      "id":   "upload_image",
+      "label": "upload a image",
+      "info": "image size will be 306x306px"
+      
+},
+
+{
+      "id": "link",
+      "type": "url",
+      "label": "Button link"
+    },
+
+      
+    {
+      "id": "linktext",
+      "type": "text",
+      "label": "Button text",
+      "default": "Click Here"
+    },
+
+
+{
+      "id": "text-box",
+      "type": "text",
+      "label": "Heading",
+      "default": "Title"
+    },
+
+
+{
+"type": "richtext",
+        "id": "text",
+        "label": "Text",
+        "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+      }
+    
+       
+      
+      
+]
+}
+
+
+
+  
+
+
+  
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,92 @@
+<div class="be-the-known py-lg-5 py-3">
+    <div class="container-lg">
+        <div class="be-the-known-head pb-4">
+            <h5>{{ section.settings.title }}</h5>
+        </div>
+        <div class="be-the-known-blogs">
+            <div class="row blogrow">
+                {% for block in section.blocks %}
+                <div class="col-8 col-sm-6 col-md-4 col-lg-4 blgrows">
+                    <div class="be-the-known-section">
+                        <div class="be-the-known-sec-img">
+                            <a href="{{ block.settings.url }}" target="_blank">
+                                <img src="{{ block.settings.image | img_url:'original' }}" alt="Be the known" class="img-fluid w-100">
+                            </a>
+                        </div>                      
+                        <div class="be-the-known-section-text py-3">
+                            <h6>
+                              <a href="{{ block.settings.categoryurl}}" target="_blank">{{ block.settings.categoryhead }}</a>
+                            </h6>
+                            <p>
+                                <a href="{{ block.settings.url }}" class="d-md-block d-none" target="_blank">{{ block.settings.title }}</a>
+                              <a href="{{ block.settings.url }}" class="d-md-none d-block" target="_blank">{{ block.settings.title | truncate: 40}}</a>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog posts",
+  "tag":"section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Blog posts"
+    }
+  ],
+  "blocks":[
+    {
+      "type": "blog",
+      "name":"Magazine Post Section",
+      "settings":[
+       {
+         "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+     },
+       {
+         "type": "text",
+          "id": "title",
+          "label": "Blog Title"
+     },
+       {
+         "type": "text",
+          "id": "url",
+          "label": "Blog URL"
+     },
+        {
+         "type": "text",
+          "id": "categoryhead",
+          "label": "Blog Category"
+     },
+        {
+         "type": "text",
+          "id": "categoryurl",
+          "label": "Blog Category URL"
+     }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Home Page Section",
+      "name": "Magazine Post Section"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

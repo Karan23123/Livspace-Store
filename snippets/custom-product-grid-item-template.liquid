@@ -1,0 +1,159 @@
+{% assign portraitimages = product.images | where: 'alt', 'Portrait' %}
+{% assign frontimage = '' %}
+{% assign backimage = '' %}
+
+{% if portraitimages.size > 0 %}
+  {% assign frontimage = portraitimages[0] %}
+{% endif %}
+{% assign squareimages = product.images | where: 'alt', 'Square' %}
+
+{% if squareimages.size > 0 %}
+  {% assign backimage = squareimages[0] %}
+{% endif %}
+
+{% if frontimage == '' %}
+  {% assign frontimage = product.featured_image %}
+{% endif %}
+{% if backimage == '' %}
+  {% assign backimage = product.featured_image %}
+{% endif %}
+{% assign coloroptions = '' %}
+{% for variant in product.variants %}
+  {% if variant.metafields.productvariantoption.color.value != blank %}
+    {% assign coloroptions = coloroptions | append: variant.metafields.productvariantoption.color.value | append: ',' %}
+  {% endif %}
+{% endfor %}
+{% assign uniquecolors = coloroptions | split: ',' | uniq | join: ',' %}
+{% assign finalcolors = uniquecolors | split: ',' %}
+{% assign wish_list_meta = customer.metafields.customer.wishlist.value | json %}
+{% assign is_variant_found = false  %}
+{% for item in wish_list_meta %}
+
+  {% if item.variant_id == product.selected_or_first_available_variant.id %}
+    {% assign is_variant_found =true %}
+    {% break %}
+    {% endif %}
+  {% endfor %}
+
+
+<div class="col-6 col-sm-6 col-md-6 col-lg-4 pt-lg-4 pt-4 h-100 pll-Pro">
+  <div class="plp-product">
+    <div class="wishlist-icon">
+      <picture>
+        <svg
+          width="22"
+          height="20"
+          viewBox="0 0 22 20"
+          class="wishlist"
+          xmlns="http://www.w3.org/2000/svg"
+          onclick="addWishList({% if customer %} {{ customer.id }}{% else %}0{% endif %},'{{ product.handle }}',{{ product.selected_or_first_available_variant.id }});"
+        >
+          <path class="heart-icon" d="M11.5039 18.8468C11.2002 19.0511 10.803 19.0511 10.4993 18.8468L10.4964 18.8449L10.4903 18.8408L10.4685 18.8259C10.4498 18.8132
+            10.4228 18.7946 10.388 18.7706C10.3185 18.7224 10.2181 18.6521 10.091 18.5612C9.83708 18.3794 9.4765 18.1151 9.04476 17.7812C8.18274
+            17.1146 7.02982 16.1652 5.87333 15.0379C4.72017 13.9137 3.54225 12.5921 2.64741 11.1788C1.7584 9.77466 1.10156 8.20588
+            1.10156 6.60589C1.10156 3.47005 3.03434 1.42458 5.44612 1.05868C7.42112 0.759057 9.54795 1.60705 11.0016 3.59683C12.4552 1.60705
+            14.5821 0.759057 16.5571 1.05868C18.9688 1.42458 20.9016 3.47005 20.9016 6.60589C20.9016 8.20588 20.2448 9.77466 19.3558 11.1788C18.4609
+            12.5921 17.283 13.9137 16.1298 15.0379C14.9733 16.1652 13.8204 17.1146 12.9584 17.7812C12.5267 18.1151 12.1661 18.3794 11.9121 18.5612C11.7851
+            18.6521 11.6846 18.7224 11.6152 18.7706C11.5804 18.7946 11.5534 18.8132 11.5347 18.8259L11.5128 18.8408L11.5067 18.8449L11.5039 18.8468Z"
+              fill="white" stroke="#666666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </picture>
+    </div>
+
+    <div class="plp-product-image">
+      <a href="/products/{{ product.handle }}">
+        <img
+          src="{{ frontimage | img_url:"original" }}"
+          alt="{{ product.title }}"
+          class="w-100 h-100 img-fluid"
+          id="{{ product.selected_or_first_available_variant.id }}_img"
+        >
+      </a>
+      <div class="product-plp-view-hover text-center py-lg-2 py-md-2 py-sm-2 py-2 w-100">
+        {% if product.variants.size == 1 %}
+          <button
+            class="add-to-cart"
+            onclick="AddtoCartProduct({{ product.selected_or_first_available_variant.id }},1)"
+            {% if product.selected_or_first_available_variant.inventory == 0 %}
+              disabled
+            {% endif %}
+          >
+            Add to cart
+          </button>
+        {% else %}
+          <button class="add-to-cart" onclick="javascript:window.location='/products/{{ product.handle }}'">
+            Customize
+          </button>
+        {% endif %}
+      </div>
+    </div>
+    <div class="plp-product-description">
+      <div class="plp-product-inner-description">
+        <h5>
+          <a class="d-sm-none d-block" href="/products/{{ product.handle }}" id="{{ product.selected_or_first_available_variant.id }}_title">
+            {{ product.title | truncate: 22 }}
+          </a>
+          <a class="d-sm-block d-none" href="/products/{{ product.handle }}" id="{{ product.selected_or_first_available_variant.id }}_title">
+            {{ product.title }}
+          </a>
+        </h5>
+        <p class="d-sm-none d-block" id="{{ product.selected_or_first_available_variant.id }}_vendor">{{ product.vendor | truncate: 22}}</p>
+        <p class="d-sm-block d-none" id="{{ product.selected_or_first_available_variant.id }}_vendor">{{ product.vendor }}</p>
+      </div>
+      <div class="plp-product-price d-flex justify-content-between">
+        <p id="{{ product.selected_or_first_available_variant.id }}_price">
+          {{ product.price | money_without_trailing_zeros }}
+          {% if product.variants.size > 1 %}
+            <span class="ownwards">onwards</span>
+          {% elsif product.compare_at_price > 0 and product.compare_at_price != product.price %}
+            <span> {{ product.compare_at_price | money_without_trailing_zeros }}</span>
+          {% endif %}
+        </p>
+        <ul class="nav nav-pills productswatch align-items-center" id="pills-tab" role="tablist">
+          {% for c in finalcolors %}
+            {% if forloop.index < 4 %}
+              {% assign colorname = c | append: '.jpg' | replace: ' ', '-' %}
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link  {% if forloop.index==1 %}active{% endif %}"
+                  id="pills-home-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#pills-home"
+                  type="button"
+                  role="tab"
+                  aria-controls="pills-home"
+                  aria-selected="true"
+                >
+                  <img
+                    class="img-fluid"
+                    src="{{ colorname | replace:  ' ' ,'-' | file_url  }}"
+                    alt="{{ c }}"
+                    title="{{ c }}"
+                  >
+                </button>
+              </li>
+            {% endif %}
+          {% endfor %}
+          {% if finalcolors.size > 3 %}
+            <li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link moreswatch"
+                  id="pills-contact-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#pills-contact"
+                  type="button"
+                  role="tab"
+                  aria-controls="pills-contact"
+                  aria-selected="false"
+                >
+                  +{{ finalcolors.size | minus: 3 }}
+                </button>
+              </li>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

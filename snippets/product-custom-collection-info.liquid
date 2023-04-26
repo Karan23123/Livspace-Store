@@ -1,0 +1,84 @@
+<div id="explore-collection">
+  <div class="container-lg">
+    <div class="collection-head">
+      <h4>{{ product.collections.last.title }}</h4>
+      <p>
+        {{ product.collections.last.description }}
+      </p>
+      <a class="" href="{{ product.collections.last.url }}"
+        >Explore Collection<i class="fa-solid fa-arrow-right-long"></i
+      ></a>
+    </div>
+    <div class="row collection-img pt-4 pt-md-5">
+      {% assign number_to_show = 4 %}
+      {% capture index %}{{ 'now' | date: '%S' | times: product.collections.last.products.size | divided_by: 60 }}{% endcapture %}
+      {% assign number_product_miss = product.collections.last.products.size | minus: index %}
+      {% assign number_product_miss = number_to_show | minus: number_product_miss %}
+      {% for product in product.collections.last.products offset: index limit: number_to_show %}
+        <div class="col-6 col-sm-6 col-md-3 col-lg-3 mt-3">
+          <div class="plp-product pro_noHvr">
+            <div class="wishlist-icon">
+              <picture>
+                <svg
+                  width="22"
+                  height="20"
+                  viewBox="0 0 22 20"
+                  fill="none"
+                  onclick="addWishList({% if customer %} {{ customer.id }}{% else %}0{% endif %},'{{ product.handle }}',{{ product.selected_or_first_available_variant.id }});"
+                >
+                  <path class="heart-icon" d="M11.5039 18.8468C11.2002 19.0511 10.803 19.0511 10.4993 18.8468L10.4964 18.8449L10.4903 18.8408L10.4685 18.8259C10.4498 18.8132
+                    10.4228 18.7946 10.388 18.7706C10.3185 18.7224 10.2181 18.6521 10.091 18.5612C9.83708 18.3794 9.4765 18.1151 9.04476 17.7812C8.18274
+                    17.1146 7.02982 16.1652 5.87333 15.0379C4.72017 13.9137 3.54225 12.5921 2.64741 11.1788C1.7584 9.77466 1.10156 8.20588
+                    1.10156 6.60589C1.10156 3.47005 3.03434 1.42458 5.44612 1.05868C7.42112 0.759057 9.54795 1.60705 11.0016 3.59683C12.4552 1.60705
+                    14.5821 0.759057 16.5571 1.05868C18.9688 1.42458 20.9016 3.47005 20.9016 6.60589C20.9016 8.20588 20.2448 9.77466 19.3558 11.1788C18.4609
+                    12.5921 17.283 13.9137 16.1298 15.0379C14.9733 16.1652 13.8204 17.1146 12.9584 17.7812C12.5267 18.1151 12.1661 18.3794 11.9121 18.5612C11.7851
+                    18.6521 11.6846 18.7224 11.6152 18.7706C11.5804 18.7946 11.5534 18.8132 11.5347 18.8259L11.5128 18.8408L11.5067 18.8449L11.5039 18.8468Z" fill="white" stroke="#666666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </picture>
+            </div>
+
+            <div class="plp-product-image">
+              <a href="/products/{{ product.handle }}">
+                <img
+                  src="{{ product.featured_image | product_img_url: "original" }}"
+                  alt="{{ product.title }}"
+                  title="{{ product.title }}"
+                  class="img-fluid w-100"
+                >
+              </a>
+            </div>
+            <div class="plp-product-description">
+              <div class="plp-product-inner-description">
+                <h5>
+                  <a class="d-sm-none d-block" href="/products/sfsols0213-1" id="43620016980208_title">
+                    {{ product.title | truncate: 10 }}
+                  </a>
+                  <a class="d-sm-block d-none" href="/products/sfsols0213-1" id="43620016980208_title">
+                    {{ product.title }}
+                  </a>
+                </h5>
+              </div>
+              <div class="plp-product-price d-flex justify-content-between">
+                <p id="43620016980208_price"> {{ product.price | money }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      {% if number_product_miss > 0 %}
+        {% for product in product.collections.last.products offset: 0 limit: number_product_miss %}
+          <div class="col-6 col-sm-6 col-md-3 col-lg-3 mt-3">
+            <a href="/products/{{ product.handle }}">
+              <img
+                src="{{ product.featured_image | product_img_url: "original" }}"
+                alt="{{ product.title }}"
+                title="{{ product.title }}"
+                class="img-fluid w-100"
+              >
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>

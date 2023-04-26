@@ -1,0 +1,62 @@
+<div class="plp-products py-3">
+    <div class="container-lg">
+        {% assign advertisementbanners=collection.metafields.banner.advertisement_collections.value %}
+        {% assign advertisementbannertemparray='' %}
+        {%- for banner in advertisementbanners -%}
+        {% assign advertisementbannertemparray=advertisementbannertemparray| append: banner.handle | append:',' %}
+        {% endfor %}
+        {% assign advertisementbannerarray=advertisementbannertemparray|split:',' %}
+
+        {% assign bannercounter=0 %}
+        {%- for product in collection.products -%}
+        {% if forloop.index==1 or remaining ==0 %}
+        <div class="row plp-row">
+            {% endif %}
+            {%- render 'custom-product-grid-item-template', product: product -%}
+            {% assign remaining=forloop.index | modulo: 6 %}
+            {% if remaining ==0 %}
+        </div>
+        {% endif %}
+        {% assign checkadvertisementbanner = forloop.index | modulo: 6 %}
+
+        {% if checkadvertisementbanner==0 %}
+
+        {% if bannercounter < advertisementbannerarray.size and advertisementbannerarray[bannercounter]!=blank %} {% if
+            collections[advertisementbannerarray[bannercounter]].metafields.banner.image !=blank %} <div
+            class="ottomns mt-5 mb-4"
+            style="background-color:{{collections[advertisementbannerarray[bannercounter]].metafields.banner.background_colour }};border-radius: 4px;">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="ottomns-content">
+                        <h5>{{ collections[advertisementbannerarray[bannercounter]].metafields.banner.title }}</h5>
+                        <p>{{ collections[advertisementbannerarray[bannercounter]].metafields.banner.subtitle }}</p>
+                        <button class="collection-plp"
+                            onclick="window.location='{{ collections[advertisementbannerarray[bannercounter]].url}}'">
+                            View Collection
+                            <picture style="margin-left: 10px;">
+                                <svg width="24" height="11" viewBox="0 0 24 11" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M23.3694 6.0485C23.6248 5.79303 23.6248 5.37884 23.3694 5.12338L19.2063 0.960347C18.9509 0.704882 18.5367 0.704882 18.2812 0.960347C18.0258 1.21581 18.0258 1.63 18.2812 1.88546L21.9817 5.58594L18.2812 9.28641C18.0258 9.54187 18.0258 9.95606 18.2812 10.2115C18.5367 10.467 18.9509 10.467 19.2063 10.2115L23.3694 6.0485ZM0.621094 6.24009H22.9068V4.93178H0.621094V6.24009Z"
+                                        fill="white" />
+                                </svg>
+                            </picture>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-5 text-end">
+                    <div class="advertisementbanner">
+                        <img
+                            src="{{ collections[advertisementbannerarray[bannercounter]].metafields.banner.image | img_url:'original' }}" />
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endif %}
+{% assign bannercounter=bannercounter | plus:1 %}
+{% endif %}
+{% endif %}
+{%- endfor -%}
+
+</div>
+</div>

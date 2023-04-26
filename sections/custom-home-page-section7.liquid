@@ -1,0 +1,112 @@
+<div class="elevate-your-interior" style="background-color:{{ section.settings.divsectionbg }}">
+  <div class="container-lg">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="get-inspired-head-text h-100 d-flex align-items-center">
+          <h5>{{ section.settings.heading }}</h5>
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-6 col-lg-6 order-5 order-md-0 pt-md-0">
+        <div class="get-inspired-head-text-button d-flex justify-content-center justify-content-md-end">
+          <button type="button">Shop All</button>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="getinspiredinner-row pt-lg-2">
+          <div class="row">
+             {% for block in section.blocks %}
+              <div class="col-8 col-md-4 col-lg-4 pt-lg-5 pt-4">
+                <a href="{{  block.settings.collection.url }}">
+                  <div class="elevate-sections-img position-relative">
+                    <div class="elevate-inner-section-img">
+                      {% if block.settings.collection_image != nil %}
+                  <img src="{{ block.settings.collection_image | img_url: 'original'}}"  class="img-fluid w-100" alt="">
+                     {% else %}
+                     <img src="{{ block.settings.collection.image | img_url: 'original'}}"  class="img-fluid w-100" alt="">
+                     {% endif %}
+                    </div>
+
+                    <div class="elevate-hover-div py-4 px-4 px-md-2 position-absolute w-100">
+                      <div class="elevate-hover-inner-div">
+                        <div class="elevate-hover-img text-center">
+                          <img src="{{ block.settings.hover_image | img_url: 'original'}}"  class="img-fluid w-100" alt="">
+                        </div>
+                        <div class="elevate-hover-text text-center">
+                          <h5>{{ block.settings.collection.title }}</h5>
+                          <p>{{ block.settings.collection.description }}</p>
+                        </div>
+                        <div class="elevate-play-button text-center py-3">
+                          <picture>
+                            <svg version="1.1" id="Capa_1" viewBox="0 0 17.804 17.804" style="width:10%;fill:white;">
+                              <path d="M2.067,0.043C2.21-0.028,2.372-0.008,2.493,0.085l13.312,8.503c0.094,0.078,0.154,0.191,0.154,0.313
+                               c0,0.12-0.061,0.237-0.154,0.314L2.492,17.717c-0.07,0.057-0.162,0.087-0.25,0.087l-0.176-0.04
+                               c-0.136-0.065-0.222-0.207-0.222-0.361V0.402C1.844,0.25,1.93,0.107,2.067,0.043z" ></path>
+                            </svg>
+                          </picture>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+     "name":"Single Sub Category",
+     "tag":"section",
+     "settings": [
+       {
+			"type": "text",
+			"id": "heading",
+			"label": "Title"
+		},
+       
+         {
+          			"type": "color",
+          			"id": "divsectionbg",
+          			"label": "Section Background Color"
+            		}
+     ],
+     "blocks": [
+                {
+                    "type": "header",
+                    "name": "Collection",
+                    "settings":[
+                      {
+                  "type": "collection",
+                  "id": "collection",
+                  "label": "Collection"
+                      },
+                      {
+                "type": "image_picker",
+                "id": "collection_image",
+                "label": "Collection Image"
+                },
+                              {
+                "type": "image_picker",
+                "id": "hover_image",
+                "label": "Hover Image"
+                }
+                    ]
+                }
+     ],
+      "presets": [
+    {
+    "name": "Single Sub Category",
+    "category": "Home Page Section"
+    }
+    ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

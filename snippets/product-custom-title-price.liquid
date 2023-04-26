@@ -1,0 +1,126 @@
+{% assign isfurniture = product.collections.last.metafields.type.is_furniture.value %}
+<div class="out-ofstock p-3" id="outofstockmsg">
+    <p class="text-center mb-0">This product is currently not available.</p>
+</div>
+<div class="container-lg py-md-4 py-3 pb-4">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="product-name d-flex flex-wrap">
+                <h1>{{ product.title }}</h1>
+                <span class="shopify-product-reviews-badge review list-unstyled d-flex m-0"
+                    data-id="{{ product.id }}"></span>
+            </div>
+            <div class="left-info">
+                <div class="product-innerInfo d-flex align-items-center pt-2 pb-3">
+                    <span class="product-dec-1">{{ product.vendor }}</span>
+                    {% if isfurniture == true %}
+                    <span>|</span>
+                    <span class="product-dec-2">
+                        W {{ product.first_available_variant.metafields.productvariant.item_width }} x D
+                        {{ product.first_available_variant.metafields.productvariant.item_depth }} x H
+                        {{ product.first_available_variant.metafields.productvariant.item_height }} inch
+                    </span>
+                    {%- endif %}
+                    <span class="badgeCustom d-md-flex d-none">
+                        <span class="innerBAdgeSPan">Seasonal</span>
+                    </span>
+                </div>
+                <div class="customizer-option-header">
+                    <ul class="customize-list nav nav-pills" role="tablist" id="selectedvariantvalues"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="productHr d-inline-block my-4">                
+            </div>
+            <div class="pb-2 product-price d-flex align-items-center justify-content-lg-end">
+                {%- if product.first_available_variant -%}
+                {%- assign price = product.selected_or_first_available_variant.price -%}
+                {%- assign originalprice = product.selected_or_first_available_variant.compare_at_price -%}
+                {%- else -%}
+                {%- assign price = product.price -%}
+                {% assign originalprice = product.compare_at_price %}
+                {%- endif -%}
+                <p class="m-0" id="originalprice">
+                    {% if product.selected_or_first_available_variant.compare_at_price > 0
+                    and product.selected_or_first_available_variant.compare_at_price
+                    != product.selected_or_first_available_variant.price
+                    %}
+                    {{ product.selected_or_first_available_variant.compare_at_price | money_without_trailing_zeros }}
+                    {%- endif -%}
+                </p>
+                <span id="price">
+                    {{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}
+                </span>
+            </div>
+            <div class="right-info d-flex justify-content-lg-end">
+                <p class="m-0">
+                    EMI options at ₹ 1,655<span><a href="">View Plans</a></span>
+                </p>
+            </div>
+
+            <div class="py-3 right-filters d-flex justify-content-sm-end justify-content-between flex-wrap">
+                <div class="quantity dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="qtyselection"
+                        data-bs-toggle="dropdown" aria-expanded="false" value="1">
+                        1
+                    </button>
+                    <ul class="dropdown-menu qtyselection" aria-labelledby="qtyselection">
+                        {% for i in (1..20) %}
+                        <li>
+                            <a class="dropdown-item"
+                                onclick="javascript:document.getElementById('qtyselection').innerHTML ='{{ i }}';document.getElementById('qtyselection').value ='{{ i }}';">
+                                {{- i -}}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <button class="btn btn-secondary heart" type="button"
+                    onclick="addWishList({% if customer %} {{ customer.id }}{% else %}0{% endif %},'{{ product.handle }}',{{ product.selected_or_first_available_variant.id }});"
+                    id="btnwishlist">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+                <button class="btn btn-secondary add-to-cart" type="button" onclick="CustomAddtoCart();"
+                    id="btnaddcart">
+                    Add to Cart
+                </button>              
+            </div>
+
+          <ul class="product-feat d-flex m-0 list-unstyled">
+                <li class="d-flex align-items-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M12.7106 3.7754C12.2768 3.66463 11.7414 3.66463 11.3075 3.7754L6.12909 5.54771C5.2614 5.88001 4.61523 6.76617 4.61523 7.65232V13.4123C4.61523 15.7385 6.1291 17.4 7.63371 18.3969C9.14756 19.3939 10.8737 19.9477 11.5199 20.1692C11.843 20.28 12.166 20.28 12.4891 20.1692C13.1353 19.9477 14.8614 19.3939 16.3753 18.3969C17.8891 17.4 19.3937 15.7385 19.3937 13.4123V7.65232C19.3937 6.6554 18.7476 5.76924 17.8799 5.54771L12.7014 3.7754H12.7106Z"
+                            stroke="#666666" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M9 11.7877L11.1324 13.92L15.0092 10.0431" stroke="#666666" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <p class="m-0">1 year warranty</p>
+                </li>
+                <li class="d-flex align-items-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M11.4369 19.4585H13.4123C16.8646 19.4585 19.6615 17.0215 19.6615 14.0123C19.6615 11.0031 16.8646 8.56616 13.4123 8.56616H5.89844"
+                            stroke="#666666" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M9.8214 3.69232L4.61523 8.89848L10.0245 14.3077" stroke="#666666"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p class="m-0">30 days return</p>
+                </li>
+                <li class="d-flex align-items-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M14.7055 10.7816C14.7055 11.04 14.5024 11.2431 14.2439 11.2431H13.1824C13.1362 11.4831 13.0716 11.7139 13.0162 11.8523C12.9147 12.1754 12.6931 12.5262 12.4439 12.7754C12.1947 13.0246 11.8531 13.2369 11.5301 13.3477C11.3178 13.4123 11.087 13.4862 10.8101 13.5323L12.3516 15.0739C12.5362 15.2493 12.5362 15.5446 12.3516 15.72C12.2685 15.8123 12.1485 15.8585 12.0285 15.8585C11.9085 15.8585 11.7885 15.8123 11.7055 15.72L9.39776 13.4123C9.2593 13.2831 9.22236 13.0893 9.29621 12.9139C9.36082 12.7385 9.5362 12.6277 9.72082 12.6277H10.4593C10.7547 12.6277 10.9762 12.5539 11.2347 12.4708C11.4285 12.4062 11.6408 12.2677 11.7977 12.12C11.9454 11.9723 12.0839 11.7508 12.1485 11.5569C12.1854 11.4554 12.2131 11.3446 12.2316 11.2431H9.62853C9.37007 11.2431 9.16699 11.04 9.16699 10.7816C9.16699 10.5231 9.37007 10.32 9.62853 10.32H12.2408C12.2131 10.2185 12.1854 10.1262 12.1485 10.0154C12.0839 9.81233 11.9454 9.60002 11.7977 9.45233C11.65 9.29541 11.4285 9.15694 11.2347 9.10156C10.9393 9.00002 10.6347 8.93541 10.4593 8.93541H9.62853C9.37007 8.93541 9.16699 8.73233 9.16699 8.47387C9.16699 8.21541 9.37007 8.01233 9.62853 8.01233H14.2439C14.5024 8.01233 14.7055 8.21541 14.7055 8.47387C14.7055 8.73233 14.5024 8.93541 14.2439 8.93541H12.5731C12.767 9.16618 12.9331 9.4431 13.0162 9.71079C13.0808 9.89541 13.1454 10.0893 13.1824 10.32H14.2439C14.5024 10.32 14.7055 10.5231 14.7055 10.7816Z"
+                            fill="#939393" />
+                        <path
+                            d="M11.9355 20.1785C16.488 20.1785 20.1786 16.4879 20.1786 11.9354C20.1786 7.38287 16.488 3.69232 11.9355 3.69232C7.38296 3.69232 3.69238 7.38287 3.69238 11.9354C3.69238 16.4879 7.38296 20.1785 11.9355 20.1785Z"
+                            stroke="#666666" stroke-miterlimit="10" />
+                    </svg>
+                    <p class="m-0">Cash on delivery available</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

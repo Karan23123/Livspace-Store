@@ -1,0 +1,197 @@
+<!doctype html>
+
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="{{ settings.accent_color }}">
+    <link rel="stylesheet" href="{{ 'bootstrap.min.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'fonts.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+    <link rel="icon" href="{{ "fav.svg" | asset_url }}">
+    <script src="{{ 'bootstrap.bundle.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'fontawesome.js' | asset_url }}" defer></script>
+
+    {%- capture seo_page_title -%}
+    {%- if request.page_type == 'search' and search.terms != blank -%}
+    {{ search.terms | split: ' AND ' | last | split: 'product_type:' | last }} - {{ shop.name }}
+    {%- else -%}
+    {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{
+    'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t:
+    page: current_page }}{% endif %}
+    {%- endif -%}
+    {%- endcapture -%}
+
+    <title>{{- seo_page_title -}}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.favicon -%}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '96x96' }}" type="image/png">
+    {%- endif -%}
+
+    {%- comment -%}Few prefech to increase performance on commonly used third-parties{%- endcomment -%}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <link rel="preconnect" href="https://cdn.shopify.com">
+    <link rel="preconnect" href="https://fonts.shopifycdn.com">
+    <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">
+    <link rel="dns-prefetch" href="https://ajax.googleapis.com">
+    <link rel="dns-prefetch" href="https://maps.googleapis.com">
+    <link rel="dns-prefetch" href="https://maps.gstatic.com">
+
+    {% render 'social-meta-tags' %}
+
+    <!-- starapps_scripts_start -->
+    <!-- This code is automatically managed by StarApps Studio -->
+    <!-- Please contact support@starapps.studio for any help -->
+    {% render 'starapps-product-json', product: product, starapps_app: 'VIA', starapps_attribute: 'sa-product-json' %}
+    <script type="text/javascript"
+        src="https://bcdn.starapps.studio/apps/via/livspaced2c/script-1649141097.js?shop={{shop.permanent_domain}}"
+        async></script>
+    <!-- starapps_scripts_end -->
+    {{ content_for_header }}
+    <script id="vopo-head">
+        (function () { if (((document.documentElement.innerHTML.includes('asyncLoad') && !document.documentElement.innerHTML.includes('\\/obscure' + '-escarpment-2240')) || (window.bcpo && bcpo.disabled)) && !window.location.href.match(/[&?]yesbcpo/)) return; var script = document.createElement('script'); script.src = "https://obscure-escarpment-2240.herokuapp.com/js/best_custom_product_options.js?shop={{shop.permanent_domain}}"; var vopoHead = document.getElementById('vopo-head'); vopoHead.parentNode.insertBefore(script, vopoHead); })();
+    </script>
+
+    {% render 'microdata-schema' %}
+
+    <script>
+        // This allows to expose several variables to the global scope, to be used in scripts
+        window.theme = {
+            title: "{{ page_title }}",
+            livspaceApp: navigator.userAgent.includes("livspace-app"),
+            pageType: {{ request.page_type | json }},
+        cartCount: { { cart.item_count | json } },
+        moneyFormat: { { shop.money_format | json } },
+        moneyWithCurrencyFormat: { { shop.money_with_currency_format | json } },
+        showDiscount: {% if settings.show_discount %} true{% else %} false{% endif %},
+        discountMode: { { settings.discount_mode | json } },
+        searchMode: { { settings.search_mode | json } },
+        cartType: { { settings.cart_type | json } }
+      };
+
+        window.routes = {
+            rootUrl: {{ routes.root_url | json }},
+        cartUrl: { { routes.cart_url | json } },
+        cartAddUrl: { { routes.cart_add_url | json } },
+        cartChangeUrl: { { routes.cart_change_url | json } },
+        searchUrl: { { routes.search_url | json } },
+        productRecommendationsUrl: { { routes.product_recommendations_url | json } }
+      };
+
+        window.languages = {
+            productRegularPrice: {{ 'product.general.regular_price' | t | json }},
+
+        productSalePrice: { { 'product.general.sale_price' | t | json } },
+        collectionOnSaleLabel: { { 'collection.product.discount_html' | t | json } },
+        productFormUnavailable: { { 'product.form.unavailable' | t | json } },
+        productFormAddToCart: {% if product.template_suffix == 'pre-order' %} { { 'product.form.pre_order' | t | json } } {% else %} { { 'product.form.add_to_cart' | t | json } } {% endif %},
+        productFormSoldOut: { { 'product.form.sold_out' | t | json } },
+        shippingEstimatorNoResults: { { 'cart.shipping_estimator.no_results_title' | t | json } },
+        shippingEstimatorOneResult: { { 'cart.shipping_estimator.one_result_title' | t | json } },
+        shippingEstimatorMultipleResults: { { 'cart.shipping_estimator.multiple_results_title' | t | json } },
+        shippingEstimatorErrors: { { 'cart.shipping_estimator.errors' | t | json } }
+      };
+
+        window.lazySizesConfig = {
+            loadHidden: false,
+            hFac: 0.8,
+            expFactor: 3,
+            customMedia: {
+                '--phone': '(max-width: 640px)',
+                '--tablet': '(min-width: 641px) and (max-width: 1023px)',
+                '--lap': '(min-width: 1024px)'
+            }
+        };
+
+        document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    </script>
+
+    {%- if request.page_type == 'customers/addresses' -%}
+    <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer></script>
+    <script src="{{ 'customer_area.js' | shopify_asset_url }}" defer></script>
+    {%- endif -%}
+
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    <script src="{{ 'custom.js' | asset_url }}" defer></script>
+
+    {%- if request.page_type != 'cart' -%}
+    <script>
+        (function () {
+            window.onpageshow = function () {
+                // We force re-freshing the cart content onpageshow, as most browsers will serve a cache copy when hitting the
+                // back button, which cause staled data
+                document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', {
+                    bubbles: true,
+                    detail: { scrollToTop: false }
+                }));
+            };
+        })();
+    </script>
+    {%- endif -%}
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    {% include 'booster-common' %}
+    {% render 'shogun-head' %}
+    {% include 'judgeme_core' %}
+    {% include 'bss-store-locator-header' %}
+    {% include 'bss-product-labels-configs' %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Allison&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="warehouse--v1 {% if settings.animation_image_zoom %}features--animate-zoom{% endif%} template-{{ request.page_type | handle }} {% if request.page_type contains '/' %}template-{{ request.page_type | split: '/' | last | handle }}{% endif %}"
+    data-instant-intensity="viewport">
+    <script>
+        if (window.theme.livspaceApp) {
+            document.body.classList.add('livspace-app');
+        }
+    </script>
+    <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+
+    {% section 'custom-header' %}
+
+    <main id="main" role="main">
+        <div id="backroun-blk"></div>
+        {{ content_for_layout }}
+    </main>
+
+    {%- if request.page_type == 'blog' or request.page_type == 'article' or request.page_type == 'page' -%}
+    {% section 'static-newsletter' %}
+    {%- endif -%}
+    <ul hidden>
+        <li id="a11y-new-window-message">{{ 'general.accessibility.new_window' | t }}</li>
+    </ul>
+
+
+
+    {% if content_for_header contains 'product_label' -%}
+    {%- include 'bss-product-label-js' -%}
+    {%- include 'bss-label-style-css' -%}
+    {%- endif %}
+    {% section 'custom-footer' %}
+
+    <script type="text/javascript" async=""
+        src="https://reviews.enormapps.com/product-reviews/frontend/embed.js"></script>
+    {% if template contains 'product' %}
+    {{ '//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js' | script_tag }}
+    {{ 'jquery.products.min.js' | asset_url | script_tag }}
+
+    <script>
+        Shopify.Products.recordRecentlyViewed();
+    </script>
+    {% endif %}
+</body>
+
+</html>

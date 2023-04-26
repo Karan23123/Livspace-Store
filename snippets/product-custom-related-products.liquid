@@ -1,0 +1,75 @@
+{% assign relatedproducts=product.metafields.product.relatedproducts.value|split:',' %}
+{% if relatedproducts.size > 0 %}
+<div id="product-slider" class="mx-3">
+    <div class="container-lg ">
+        <div class="swiper-head">
+            <p>You may also like</p>
+        </div>
+    </div>
+    <div class="container-lg swiper relatedprdouctswiper">
+        <div class="swiper-wrapper py-4">
+            {% for rp in relatedproducts %}
+            {% assign rpproducts=rp| handle %}
+            <div class="swiper-slide">
+                <div class="card">
+                    <img src="{{ all_products[rpproducts].images[0].src |  product_img_url: " original" }}"
+                        class="card-img-top w-100" alt="{{ all_products[rpproducts].title }}" />
+                    <div class="card-body">
+                        <h5 class="card-teitle">{{ all_products[rpproducts].title }}</h5>
+                        <p>{{ all_products[rpproducts].vendor }}</p>
+                        <div class="product-colors d-flex justify-content-between">
+                            <p class="card-text">{{ all_products[rpproducts].first_available_variant.price |money}}
+                                {% if all_products[rpproducts].first_available_variant.compare_at_price>0 %}
+                                <span>₹ {{ all_products[rpproducts].first_available_variant.compare_at_price |money
+                                    }}</span>
+                            </p>{% endif %}
+                            </p>
+                            <form>
+                                <a href="#" class="product-slider-color product-slider-colorswatche-1"></a>
+                                <a href="#" class="product-slider-color product-slider-colorswatche-1"></a>
+                                <a href="#" class="product-slider-color product-slider-colorswatche-2"></a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class=" swiper-pagination1"></div>
+    </div>
+    <div class="container-lg">
+
+    </div>
+</div>
+<script>
+    var swiper = new Swiper(".relatedprdouctswiper", {
+        slidesPerView: 5,
+        breakpoints: {
+            200: {
+                slidesPerView: 2,
+                spaceBetween: 15,
+            },
+            320: {
+                slidesPerView: 2,
+                spaceBetween: 15,
+            },
+            480: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+            },
+            768: {
+                slidesPerView: 4,
+                spaceBetween: 40,
+            },
+            992: {
+                slidesPerView: 4,
+                spaceBetween: 40,
+            },
+        },
+        pagination: {
+            el: ".swiper-pagination1",
+            type: "progressbar",
+        },
+    });
+</script>
+{% endif %}

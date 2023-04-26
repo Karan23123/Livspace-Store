@@ -1,0 +1,341 @@
+<div id="product-tabs">
+      <div class="container-lg">
+        <ul class="nav nav-pills mx-auto justify-content-around" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link position-relative active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+              <h2> {{ section.settings.custom_text_title }} </h2>
+              
+              Product Details
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link position-relative" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+              Care Insturctions
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link position-relative" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">
+              Returns &amp; Cancellation
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link position-relative" id="pills-Installation-tab" data-bs-toggle="pill" data-bs-target="#pills-Installation" type="button" role="tab" aria-controls="pills-Installation" aria-selected="false">
+              Warranty &amp; Installation
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+
+    <div id="product-description" class="py-5">
+    <div class="container">
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade active show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+          <div class="product-details">
+            <div class="row details">
+              <div class="col-lg-6">
+               <h4>About the Product</h4>
+                 <p class="pt-2 pt-md-4">
+                  With its clean lines and streamlined design, the
+                  biscuit-tufted Matteo will take center stage in your living
+                  room. Effortlessly elegant, this stylish sofa is a god-send
+                  when guests are over and offers the best of comfort and
+                  durability.
+                </p>
+                <p>
+                  Available in multiple upholstery options. Folds out to a
+                  comfortable bed. Legs made of solid wood, available in two
+                  finish options
+                </p>
+                <p>Buffers prevent abrasion.</p>
+              </div>
+              <div class="col-lg-6">
+                <h4>Features</h4>
+                <ul class="product-list pt-2 pt-md-4">
+                  <li>
+                   
+                      <span class="pro-h">Primary Material:</span>
+                      <span class="pro-h2">Fabric (Polyester)</span>
+                    
+                  </li>
+                  <li>
+                    
+                      <span class="pro-h">Secondary Material:</span>
+                      <span class="pro-h2">Solid Wood (Pine Wood)</span>
+                   
+                  </li>
+                  <li>
+                   
+                      <span class="pro-h">Leg Material:</span>
+                      <span class="pro-h2">Solid Wood</span>
+                   
+                  </li>
+                  <li>
+                    
+                      <span class="pro-h">Seating Capacity:</span>
+                      <span class="pro-h2">3</span>
+                    
+                  </li>
+                  <li>
+                    
+                      <span class="pro-h">Upholstery Material:</span>
+                      <span class="pro-h2">Fabric</span>
+                    
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="row product-photos pt-2 pt-md-4">
+              <div class="col-6 col-sm-6 col-md-3 col-lg-3">
+                 <img src ="{{ section.settings.upload_image2 | img_url: '306x329'}} "alt=""/>
+              </div>
+              <div class="col-6 col-sm-6 col-md-3 col-lg-3">
+                <img src ="{{ section.settings.upload_image2 | img_url: '306x329'}} "alt=""/>
+              </div>
+              <div class="col-6 col-sm-6 col-md-3 col-lg-3 mt-3 mt-md-0">
+                <img src ="{{ section.settings.upload_image3 | img_url: '306x329'}} "alt=""/>
+              </div>
+              <div class="col-6 col-sm-6 col-md-3 col-lg-3 mt-3 mt-md-0">
+             <img src ="{{ section.settings.upload_image4 | img_url: '306x329'}} "alt=""/>
+              </div>
+            </div>
+
+            <div class="row product-dimension pt-3 pt-md-5"> 
+              <div class="col-lg-6">
+                <h4>Dimensions</h4>
+                <p class="pt-0 pt-sm-4">3 Seater Sofa With Chaise</p>
+                <div class="tb table-responsive">
+                  <table class="position-relative">
+                    <tbody>
+                      <tr>
+                        <th>Width</th>
+                        <th class="bef">Depth</th>
+                        <th class="bef">Height</th>
+                      </tr>
+                      <tr>
+                        <td>61 inch</td>
+                        <td class="bef">61 inch</td>
+                        <td class="bef">61 inch</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="pt-0 pt-sm-4">Ottoman</p>
+                <div class="tb table-responsive">
+                  <table class="position-relative">
+                    <tbody><tr>
+                      <th>Width</th>
+                      <th class="bef">Depth</th>
+                      <th class="bef">Height</th>
+                    </tr>
+                    <tr>
+                      <td>61 inch</td>
+                      <td class="bef">61 inch</td>
+                      <td class="bef">61 inch</td>
+                    </tr>
+                  </tbody></table>
+                </div>
+              </div>
+              <div class="col-lg-6 d-flex align-items-center pt-3 pt-md-0">
+                 <img src ="{{ section.settings.upload_image | img_url: '100x'}} "alt=""/>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+          <p>Care Insturctions Content Comes Here</p>
+        </div>
+        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+          Returns &amp; Cancellation Content Comes Here
+        </div>
+        <div class="tab-pane fade" id="pills-Installation" role="tabpanel" aria-labelledby="pills-Installation-tab">
+          Warranty &amp; Installation Content Comes Here
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{%- if section.blocks.size > 0 -%}
+    {%- assign tabs_count = 0 -%}
+    {%- capture product_tabs -%}
+        {%- for block in section.blocks -%}
+            {%- assign current_product = all_products[block.settings.product] -%}
+
+            {%- if current_product == product -%}
+
+                {%- capture tabs_headings -%}
+                    {%- assign is_first_tab_heading = true -%}
+                    {%- for i in (1..5) -%}
+                        {%- assign tab_heading_key = i | prepend: 'heading_' -%}
+                        {%- assign tab_heading = block.settings[tab_heading_key] -%}
+
+                        {%- if tab_heading != blank -%}
+                            <button class="product-tab-title{% if is_first_tab_heading %} is-active{% endif %}">
+                                {{- tab_heading -}}
+                                <span class="button-toggle">
+                                    {%- render 'icon-plus' -%}
+                                    {%- render 'icon-minus' -%}
+                                </span>
+                            </button>
+
+                            {%- assign is_first_tab_heading = false -%}
+                            {%- assign tabs_count = tabs_count | plus: 1 -%}
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- endcapture -%}
+
+                {%- capture tabs_contents -%}
+                    {%- assign is_first_tab_content = true -%}
+                    {%- for i in (1..5) -%}
+                        {%- assign tab_heading_key = i | prepend: 'heading_' -%}
+                        {%- assign tab_heading = block.settings[tab_heading_key] -%}
+
+                        {%- assign tab_content_key = i | prepend: 'content_' -%}
+                        {%- assign tab_content = block.settings[tab_content_key] -%}
+
+                        {%- if tab_heading != blank -%}
+                            <div class="product-tab-content rte{% if is_first_tab_content %} is-active{% endif %}">
+                                {{- tab_content -}}
+                            </div>
+                            {%- if is_first_tab_content -%}
+                                {%- assign is_first_tab_content = false -%}
+                            {%- endif -%}
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- endcapture -%}
+
+                <div class="product-tabs js-product-tabs{% if tabs_count == 1 %} product-tabs--single{% endif %}">
+                    {%- if tabs_headings != blank -%}
+                        <div class="product-tabs-nav">
+                            {{- tabs_headings -}}
+                        </div>
+
+                        <div class="product-tabs-contents">
+                            {{- tabs_contents -}}
+                        </div>
+                    {%- endif -%}
+                </div>
+
+            {%- endif -%}
+        {%- endfor -%}
+    {%- endcapture -%}
+
+    {%- if product_tabs != blank -%}
+        <div class="product__tabs" data-section-type="product__additional-details" data-section-id="{{ section.id }}">
+            <div class="container">
+                {{- product_tabs -}}
+      
+            </div>
+        </div>
+    {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+    {
+        "name": "Product_tab",
+        "settings": [
+
+        ],
+        "blocks": [
+            {
+                "type": "tabs",
+                "name": "Product tabs",
+                "settings": [
+                    {
+                        "type": "product",
+                        "id": "product-description",
+                        "label": "Product"
+                    },
+    
+
+                          {
+                        "type": "image_picker",
+                        "id":  "upload_image",
+                        "label":"upload a image",
+                        "info": "image size will be 306x329px"
+                
+                  },
+
+                   {
+                        "type": "image_picker",
+                        "id":  "upload_image2", 
+                        "label":"upload a image",
+                        "info": "image size will be 306x329px"
+                
+                  },
+
+                   {
+                        "type": "image_picker",
+                        "id":  "upload_image3",
+                        "label":"upload a image",
+                        "info": "image size will be 306x329px"
+                
+                  },
+
+                   {
+                        "type": "image_picker",
+                        "id":  "upload_image4",
+                        "label":"upload a image",
+                        "info": "image size will be 306x329px"
+                
+                  }, 
+                     {
+                        "type": "text",
+                        "id": "heading_1",
+                        "label": "First Tab Heading"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "content_1",
+                        "label": "First Tab Text"
+                    },
+                    {
+                        "type": "text",
+                        "id": "heading_2",
+                        "label": "Second Tab Heading"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "content_2",
+                        "label": "Second Tab Text"
+                    },
+                    {
+                        "type": "text",
+                        "id": "heading_3",
+                        "label": "Third Tab Heading"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "content_3",
+                        "label": "Third Tab Text"
+                    },
+                    {
+                        "type": "text",
+                        "id": "heading_4",
+                        "label": "Fourth Tab Heading"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "content_4",
+                        "label": "Fourth Tab Text"
+                    },
+                    {
+                        "type": "text",
+                        "id": "heading_5",
+                        "label": "Fifth Tab Heading"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "content_5",
+                        "label": "Fifth Tab Text"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

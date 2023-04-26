@@ -1,0 +1,100 @@
+{% assign min = 0 %}
+{% assign max = collections.size | minus:1 %}
+{% assign diff = max | minus: min %}
+{% assign arraystring="" %}
+{% assign productcounter=0 %}
+{% for i in (0..max) %}
+
+{% assign randomNumber = "now" | date: "%N" | modulo: diff | plus: i %}
+{% assign randomNumbercheck = randomNumber| append: ',' %}
+
+{% if arraystring contains randomNumbercheck and arraystring!="" %}
+
+{% continue %}
+{% else %}
+{% assign arraystring =arraystring | append:randomNumber | append:"," %}
+
+{% endif %}
+
+{% assign arraylength = arraystring|split:',' %}
+ 
+{% if arraylength.size > 6 %}
+{% break %}
+{% endif %}
+
+{% endfor %}
+
+{% assign arraylength = arraystring|split:',' %}
+<div class="search-main">
+    <div id="product-slider" class="px-md-3">
+        <div class="container-lg">
+            <div class="swiper-head">
+                <p>Explore Our Categories</p>
+            </div>
+          <div class="swiper explore-our-category">
+            <div class="swiper-wrapper pt-4 pb-5">
+                {% for key in arraylength %}
+                {% for cat in collections offset: key limit:1 -%}
+                <div class="swiper-slide">
+                    <div class="card w-100">
+                        <a href="cat.url">
+                            <img src="{{ cat.image.src | collection_img_url: 'medium' }}" class="card-img-top w-100"
+                                alt="{{ cat.title }}" />
+                        </a>
+                        <div class="text-start explore-category-name p-3">
+                            <p>{{ cat.title | link_to: cat.url }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endfor %}
+            </div>
+            <div class="explore-our-category-swiper-pagination"></div>
+        </div>
+    </div>
+</div>
+<script>
+    var swiper = new Swiper(".explore-our-category", {
+        slidesPerView: 5,
+        breakpoints: {
+            200: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+            },
+            320: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+            },
+            480: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+            },
+            768: {
+                slidesPerView: 4,
+                spaceBetween: 40,
+            },
+            992: {
+                slidesPerView: 4,
+                spaceBetween: 40,
+            },
+        },
+        pagination: {
+            el: ".explore-our-category-swiper-pagination",
+            type: "progressbar",
+        },
+    });
+
+</script>
+
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

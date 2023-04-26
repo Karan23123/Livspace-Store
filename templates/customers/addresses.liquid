@@ -1,0 +1,456 @@
+<section data-section-id="account" data-section-type="account">
+    <div class="breadcrumbs py-3 d-sm-block d-none">
+        <div class="container-lg">
+            <nav class="breadcrum">
+                <ul class="breadcrumb-list list-unstyled d-flex m-0 flex-wrap">
+                    <li><a href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a></li>
+                    <li><a href="{{ routes.account_url }}"> {{ 'general.breadcrumb.account' | t }}</a></li>
+                    <li>{{ 'customer.general.addresses' | t }}</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="empty-address order-details">
+        <div class="container-lg" id="account-selector">
+            <div
+                class="order-detail-head d-flex justify-content-between align-items-center">
+                <h5>My Address</h5>
+                <button class="add-new-address" data-bs-toggle="modal" data-bs-target="#modal-address-new">
+                    Add New Address</button>
+            </div>
+            {%- if customer.addresses_count > 0 -%}
+            <div class="new-addresses-added">
+                <div class="row">
+                    {%- for address in customer.addresses -%}
+
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 pb-md-0 pb-3">
+                        <div
+                            class="{%- if address.id == customer.default_address.id -%}address-card px-3 py-4 h-100 primary-address-card {% else %} address-card px-3 py-4 h-100{% endif %}">
+                            <div class="address-head-inner-card pb-2 d-flex justify-content-between">
+                                <h6>
+                                    <span class="home-address-images">
+                                      {%- if address.id == customer.default_address.id -%}                                        
+                                          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M10 14.0007L16 9.33398L22 14.0007V21.334C22 21.6876 21.8595 22.0267 21.6095 22.2768C21.3594 22.5268 21.0203 22.6673 20.6667 22.6673H11.3333C10.9797 22.6673 10.6406 22.5268 10.3905 22.2768C10.1405 22.0267 10 21.6876 10 21.334V14.0007Z" stroke="#BC9FBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                          <path d="M14 22.6667V16H18V22.6667" stroke="#BC9FBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                          <rect x="0.75" y="0.75" width="30.5" height="30.5" rx="15.25" stroke="#BC9FBD" stroke-width="1.5"/>
+                                          </svg>
+                                        {% else %}                                       
+                                          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M10 14.0007L16 9.33398L22 14.0007V21.334C22 21.6876 21.8595 22.0267 21.6095 22.2768C21.3594 22.5268 21.0203 22.6673 20.6667 22.6673H11.3333C10.9797 22.6673 10.6406 22.5268 10.3905 22.2768C10.1405 22.0267 10 21.6876 10 21.334V14.0007Z" stroke="#343434" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                          <path d="M10 14.0007L16 9.33398L22 14.0007V21.334C22 21.6876 21.8595 22.0267 21.6095 22.2768C21.3594 22.5268 21.0203 22.6673 20.6667 22.6673H11.3333C10.9797 22.6673 10.6406 22.5268 10.3905 22.2768C10.1405 22.0267 10 21.6876 10 21.334V14.0007Z" stroke="black" stroke-opacity="0.2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                          <path d="M14 22.6667V16H18V22.6667" stroke="#343434" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                          <path d="M14 22.6667V16H18V22.6667" stroke="black" stroke-opacity="0.2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                          <rect x="0.75" y="0.75" width="30.5" height="30.5" rx="15.25" stroke="#343434" stroke-width="1.5"/>
+                                          <rect x="0.75" y="0.75" width="30.5" height="30.5" rx="15.25" stroke="black" stroke-opacity="0.2" stroke-width="1.5"/>
+                                          </svg>                                      
+                                        {% endif %}                                        
+                                    </span>Address - {{ forloop.index }}
+                                </h6>
+                                <div class="dropdown{% if address.id == customer.default_address.id %} primaryDrpIcn{% else %} whiteDrpIcn{% endif %}">
+                                    <i class="dropdownIcon" id="kdfsgks" data-bs-toggle="dropdown">
+                                        {% if address.id == customer.default_address.id %} 
+                                        
+                                          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <ellipse cx="9.19087" cy="15.9746" rx="2.45455" ry="2.5" fill="#9F76A1"/>
+                                          <ellipse cx="15.7377" cy="15.9746" rx="2.45455" ry="2.5" fill="#9F76A1"/>
+                                          <ellipse cx="22.2827" cy="15.9746" rx="2.45455" ry="2.5" fill="#9F76A1"/>
+                                          <rect x="0.5" y="0.5" width="31" height="31" rx="3.5" stroke="#9F76A1"/>
+                                          </svg>
+                                          
+                                          {% else %} 
+
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                          <rect x="0.5" y="0.5" width="31" height="31" rx="3.5" fill="#F5F4F5"/>
+                                          <ellipse cx="9.19087" cy="15.9746" rx="2.45455" ry="2.5" fill="#666666"/>
+                                          <ellipse cx="15.7377" cy="15.9746" rx="2.45455" ry="2.5" fill="#666666"/>
+                                          <ellipse cx="22.2827" cy="15.9746" rx="2.45455" ry="2.5" fill="#666666"/>
+                                          <rect x="0.5" y="0.5" width="31" height="31" rx="3.5" stroke="#E6E6E6"/>
+                                          </svg>
+                                          
+                                          {% endif %}
+                                      
+                                    </i>
+                                    <ul class="dropdown-menu" aria-labelledby="kdfsgks">
+                                        <li>
+                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-address-{{ address.id }}">Edit</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="Shopify.CustomerAddress.destroy({{ address.id }}); return false">Delete</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" onclick="">Make as primary address</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="address-name-phone">
+                                <p>{{ address.first_name }}&nbsp;{{ address.last_name }} <span>{{ address.phone
+                                        }}</span></p>
+                            </div>
+                            <div class="added-address">
+                                <p>{{ address.address1 }}
+                                    {% if address.address2 != '' %}
+                                    , {{ address.address2 }}
+                                    {% endif %}
+                                    {% if address.city != '' %}
+                                    , {{ address.city }}
+                                    {% endif %}
+                                    {% if address.province != '' %}
+                                    , {{ address.province }}
+                                    {% endif %}
+                                    {% if address.country != ''%}
+                                    , {{ address.country }}
+                                    {% endif %}
+                                    {% if address.zip != '' %}
+                                    , {{ address.zip }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="customer-email-id">
+                                <p>Email ID : <span>{{ customer.email }}</span></p>
+                            </div>
+                            <div class="alternate-address-text">
+                                <p>{%- if address.id == customer.default_address.id -%}
+                                    <svg width="16" height="16" viewBox="0 0 16 16" style="margin-right:10px;">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM11.8047 5.5286C12.0651 5.78894 12.0651 6.21106 11.8047 6.4714L7.13807 11.1381C6.87772 11.3984 6.45561 11.3984 6.19526 11.1381L3.5286 8.47141C3.26825 8.21105 3.26825 7.78894 3.5286 7.5286C3.78894 7.26825 4.21105 7.26825 4.4714 7.5286L6.66667 9.72386L10.8619 5.5286C11.1223 5.26825 11.5444 5.26825 11.8047 5.5286Z"
+                                            fill="#402F40;"></path>
+                                    </svg>
+                                    Primary Address
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% comment %}Popup Code{% endcomment %}
+                    <div id="modal-address-{{ address.id }}" class="modal fade p-0" aria-hidden="true"
+                        data-bs-backdrop="static" data-bs-keyboard="false"
+                        aria-labelledby="edit-new-address-{{ forloop.index }}">
+                        <div class="modal-dialog modal-dialog-centered my-md-4 my-0">
+                            <div class="modal-content p-lg-4 p-3">
+                                <div class="add-address-head  d-flex align-items-center justify-content-between">
+                                    <h6 class="modal-title" id="add-new-address">Edit Address</h6>
+                                    <button data-bs-dismiss="modal" aria-label="Close"
+                                        style="font-size:22px;">&#10005;</button>
+                                </div>
+                                <div class="add-new-adddress-body-content modal-body px-0">
+                                    <div id="addnewaddressform">
+                                        {% form 'customer_address', address, class: 'form' %}
+                                        {%- if form.errors -%}
+                                        <div class="alert alert--error">
+                                            <ul class="alert__error-list" role="list">
+                                                {%- for field in form.errors -%}
+                                                {%- if field == 'form' -%}
+                                                <li class="alert__error-item">{{ form.errors.messages[field] }}</li>
+                                                {%- else -%}
+                                                <li class="alert__error-item"><strong>{{
+                                                        form.errors.translated_fields[field] }}</strong> {{
+                                                    form.errors.messages[field] }}</li>
+                                                {%- endif -%}
+                                                {%- endfor -%}
+                                            </ul>
+                                        </div>
+                                        {%- endif -%}
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-floating mb-3">
+                                                    <input id="address-{{ address.id }}[first_name]" type="text"
+                                                        class="form-control" name="address[first_name]"
+                                                        value="{{ form.first_name }}" autofocus>
+                                                    <label for="address-{{ address.id }}[first_name]">{{
+                                                        'customer.addresses.first_name' | t }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-floating mb-3">
+                                                    <input id="address-{{ address.id }}[last_name]" type="text"
+                                                        class="form-control" name="address[last_name]"
+                                                        value="{{ form.last_name }}">
+                                                    <label for="address-{{ address.id }}[last_name]">{{
+                                                        'customer.addresses.last_name' | t }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-floating mb-3">
+                                                    <input id="address-{{ address.id }}[company]" type="text"
+                                                        class="form-control {% if form.company != blank %}is-filled{% endif %}"
+                                                        name="address[company]" value="{{ form.company }}">
+                                                    <label for="address-{{ address.id }}[company]">{{
+                                                        'customer.addresses.company' | t }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-floating mb-3">
+                                                    <input id="address-{{ address.id }}[phone]" type="text"
+                                                        class="form-control {% if form.phone != blank %}is-filled{% endif %}"
+                                                        name="address[phone]" value="{{ form.phone }}">
+                                                    <label for="address-{{ address.id }}[phone]">{{
+                                                        'customer.addresses.phone' | t }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-floating mb-3">
+                                                    <input id="address-{{ address.id }}[address1]" type="text"
+                                                        class="form-control {% if form.address1 != blank %}is-filled{% endif %}"
+                                                        name="address[address1]" value="{{ form.address1 }}">
+                                                    <label for="address-{{ address.id }}[address1]">{{
+                                                        'customer.addresses.address1' | t }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-floating mb-3">
+                                                    <input id="address-{{ address.id }}[address2]" type="text"
+                                                        class="form-control {% if form.address2 != blank %}is-filled{% endif %}"
+                                                        name="address[address2]" value="{{ form.address2 }}">
+                                                    <label for="address-{{ address.id }}[address2]">{{
+                                                        'customer.addresses.address2' | t }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-floating mb-3">
+                                                    <input id="address-{{ address.id }}[city]" type="text"
+                                                        class="form-control {% if form.city != blank %}is-filled{% endif %}"
+                                                        name="address[city]" value="{{ form.city }}">
+                                                    <label for="address-{{ address.id }}[city]">{{
+                                                        'customer.addresses.city' | t }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-floating mb-3">
+                                                    <input id="address-{{ address.id }}[zip]" type="text"
+                                                        class="form-control {% if form.zip != blank %}is-filled{% endif %}"
+                                                        name="address[zip]" value="{{ form.zip }}">
+                                                    <label for="address-{{ address.id }}[zip]">{{
+                                                        'customer.addresses.zip' | t }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-floating mb-3">
+
+                                                    <select class="form-control" name="address[country]"
+                                                        id="address-{{ address.id }}[country]"
+                                                        data-default="{{ form.country }}">
+                                                        {{ all_country_option_tags }}</select>
+
+                                                    <label for="address-{{ address.id }}[country]">{{
+                                                        'customer.addresses.country' | t }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-floating mb-3">
+
+                                                    <select class="form-control" name="address[province]"
+                                                        id="address-{{ address.id }}[province]"
+                                                        data-default="{{ form.province }}"></select>
+                                                    <label for="address-{{ address.id }}[province]"
+                                                        class="form__floating-label">State</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="make-default-address d-flex">
+                                            <input type="checkbox" class="form-check-input" name="address[default]"
+                                                id="address-{{ address.id }}[default]"
+                                                value="{% if address.id==customer.default_address.id %}1{% else %}0{% endif %}">
+                                            <label for="address-{{ address.id }}[default]" class="form-check-label">{{
+                                                'customer.addresses.set_default' | t }}</label>
+                                        </div>
+                                        <div class="modal-footer p-0 justify-content-md-end justify-content-between mt-4 flex-nowrap">
+                                            <button type="button" class="add-new-address-cancel-button"
+                                                data-bs-dismiss="modal">Cancel</button>
+                                            <button class="add-new-address-cancel-save ms-3">Save</button>
+                                        </div>
+                                        {% endform %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {%- assign address_count = address_count | plus: 1 -%}
+                    {%- endfor -%}
+                </div>
+            </div>
+            {% else %}
+            <div class="order-details-content-empty text-center py-lg-5 py-md-4 py-sm-3 py-2">
+                <picture>
+                    <img src="{{ 'no-address.svg' |asset_url }}" alt="Empty Address" class="img-fluid">
+                </picture>
+                <h6 class="py-lg-3 py-2 d-md-block d-none">Destination, Nowhere? <br>
+                    <span>We don't know your address yet</span>
+                </h6>
+                <p class="no-address-added-yet-mobile d-md-none d-block">No Address added yet </p>
+                <button class="mobile-add-address m-auto d-sm-none d-block" data-bs-toggle="modal"
+                    data-bs-target="#new-address">Add New Address</button>
+
+            </div>
+
+            {% endif %}
+        </div>
+    </div>
+
+
+    {% comment %}FORM FOR NEW ADDRESS{% endcomment %}
+
+
+    <div id="modal-address-new" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="add-new-address" aria-hidden="{% if new_form_errored %}false{% else %}true{% endif %}">
+        <div class="modal-dialog modal-dialog-centered my-md-4 my-0">
+            <div class="modal-content p-lg-4 p-3">
+                <div class="add-address-head  d-flex align-items-center justify-content-between">
+                    <h6 class="modal-title" id="add-new-address">Add New Address</h6>
+                    <button data-bs-dismiss="modal" aria-label="Close" style="font-size:22px;">&#10005;</button>
+                </div>
+
+                <div class="add-new-adddress-body-content modal-body px-0">
+                    <div id="addnewaddressform">
+                        {%- form 'customer_address', customer.new_address, class: 'form' -%}
+                        {%- if form.errors -%}
+                        <div class="alert alert--error">
+                            <ul class="alert__error-list" role="list">
+                                {%- for field in form.errors -%}
+                                {%- if field == 'form' -%}
+                                <li class="alert__error-item">{{ form.errors.messages[field] }}</li>
+                                {%- else -%}
+                                <li class="alert__error-item"><strong>{{ form.errors.translated_fields[field]
+                                        }}</strong> {{ form.errors.messages[field] }}</li>
+                                {%- endif -%}
+                                {%- endfor -%}
+                            </ul>
+                        </div>
+                        {%- endif -%}
+
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input id="address-new[first_name]" type="text" class="form-control"
+                                        name="address[first_name]" value="{{ form.first_name }}"
+                                        placeholder={{ 'customer.addresses.first_name' | t }} autofocus>
+                                    <label for="address-new[first_name]">{{ 'customer.addresses.first_name' | t
+                                        }}</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input id="address-new[last_name]" type="text" class="form-control"
+                                        name="address[last_name]" value="{{ form.last_name }}"
+                                        placeholder={{ 'customer.addresses.last_name' | t }}>
+                                    <label for="address-new[last_name]">{{ 'customer.addresses.last_name' | t }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input id="address-new[company]" type="text"
+                                        class="form-control {% if form.company != blank %}is-filled{% endif %}"
+                                        name="address[company]" value="{{ form.company }}"
+                                        placeholder={{ 'customer.addresses.company' | t }}>
+                                    <label for="address-new[company]" class="form__floating-label">{{
+                                        'customer.addresses.company' | t }}</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input id="address-new[phone]" type="text"
+                                        class="form-control {% if form.phone != blank %}is-filled{% endif %}"
+                                        name="address[phone]" value="{{ form.phone }}"
+                                        placeholder={{ 'customer.addresses.phone' | t }}>
+                                    <label for="address-new[phone]">{{ 'customer.addresses.phone' | t }}</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input id="address-new[address1]" type="text"
+                                        class="form-control {% if form.address1 != blank %}is-filled{% endif %}"
+                                        name="address[address1]" value="{{ form.address1 }}"
+                                        placeholder={{ 'customer.addresses.address1' | t }}>
+                                    <label for="address-new[address1]">{{ 'customer.addresses.address1' | t }}</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input id="address-new[address2]" type="text"
+                                        class="form-control {% if form.address2 != blank %}is-filled{% endif %}"
+                                        name="address[address2]" value="{{ form.address2 }}"
+                                        placeholder={{ 'customer.addresses.address2' | t }}>
+                                    <label for="address-new[address2]">{{ 'customer.addresses.address2' | t }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input id="address-new[city]" type="text"
+                                        class="form-control {% if form.city != blank %}is-filled{% endif %}"
+                                        name="address[city]" value="{{ form.city }}"
+                                        placeholder={{ 'customer.addresses.city' | t }}>
+                                    <label for="address-new[city]">{{ 'customer.addresses.city' | t }}</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input id="address-new[zip]" type="text"
+                                        class="form-control {% if form.zip != blank %}is-filled{% endif %}"
+                                        name="address[zip]" value="{{ form.zip }}"
+                                        placeholder={{ 'customer.addresses.zip' | t }}>
+                                    <label for="address-new[zip]">{{ 'customer.addresses.zip' | t }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+
+                                    <select class="form-control" name="address[country]" id="address-new[country]">{{
+                                        all_country_option_tags }}</select>
+
+                                    <label for="address-new[country]">{{ 'customer.addresses.country' | t }}</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+
+                                    <select class="form-control" name="address[province]"
+                                        id="address-new[province]"></select>
+                                    <label for="address-new[province]">State</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="make-default-address d-flex">
+                            <input type="checkbox" class="form-check-input" name="address[default]"
+                                id="address-new[default]" value="0">
+                            <label for="address-new[default]">{{ 'customer.addresses.set_default' | t }}</label>
+                        </div>
+                        <div class="modal-footer justify-content-md-end justify-content-between mt-4 p-0 flex-nowrap">
+                            <button type="button" class="add-new-address-cancel-button"
+                                data-bs-dismiss="modal">Cancel</button>
+                            <button class="add-new-address-cancel-save ms-3">Save</button>
+                        </div>
+                        {%- endform -%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% section 'custom-my-account-footer' %}

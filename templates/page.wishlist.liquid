@@ -1,0 +1,436 @@
+{% assign wish_list_data = customer.metafields.customer.wishlist.value %}
+{% assign total_cart_price=0 %}
+<div class="cart-Wrap ">
+    <div class="container-lg">
+        <div class="cartWrapInner">
+            {% if wish_list_data != blank %}
+            <div class="whislistHead d-flex align-items-center justify-content-between">
+                <div class="cartHeading d-flex align-items-center">
+                    <h2 class="shopingCart mb-0 me-3">My Wishlist</h2>
+                    <span class="cartItems">({{ wish_list_data.size }} Items)</span>
+
+                </div>
+                <div class="whislist-filter showondesktop" onclick="showwishlistFilter()">
+                    <img src="//cdn.shopify.com/s/files/1/0634/1243/7232/t/5/assets/Filter.svg?v=57684730086268200481671704314"
+                        alt="Filter">
+                    <span class="whislistfilter-text">Filter</span>
+                    <span class="wishlistNumber">3</span>
+                </div>
+                <div class="whislist-filter hideondesktop" onclick="showSidewishfilter()">
+                    <img src="//cdn.shopify.com/s/files/1/0634/1243/7232/t/5/assets/Filter.svg?v=57684730086268200481671704314"
+                        alt="Filter">
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="brands-dropdown-filters pb-4" id="wishlistFilter" style="display:none">
+        <div class="container-lg">
+            <hr class="m-0">
+            <div class="innerFilterWishlist">
+                <div class="brnds-dropdown-filters-head pb-3">
+                    <h5>Select Color Map <span style="float: right;cursor: pointer;"
+                            onclick="hidewishlistFilter()">✕</span></h5>
+                </div>
+                <div class="brand-filterShow d-flex flex-wrap flex-row">
+                    <div class="form-check">
+                        <label for="Filter-filter.v.m.productvariant.color_map-1" class="form-check-label">
+                            Beige</label>
+                        <input type="checkbox" class="form-check-input" name="filter.v.m.productvariant.color_map"
+                            onclick="FilterValueSelect()" value="Beige"
+                            id="Filter-filter.v.m.productvariant.color_map-1">
+                    </div>
+                    <div class="form-check">
+                        <label for="Filter-filter.v.m.productvariant.color_map-2" class="form-check-label">
+                            Blue</label>
+                        <input type="checkbox" class="form-check-input" name="filter.v.m.productvariant.color_map"
+                            onclick="FilterValueSelect()" value="Blue"
+                            id="Filter-filter.v.m.productvariant.color_map-2">
+                    </div>
+                    <div class="form-check">
+                        <label for="Filter-filter.v.m.productvariant.color_map-3" class="form-check-label">
+                            Brown</label>
+                        <input type="checkbox" class="form-check-input" name="filter.v.m.productvariant.color_map"
+                            onclick="FilterValueSelect()" value="Brown"
+                            id="Filter-filter.v.m.productvariant.color_map-3">
+                    </div>
+                    <div class="form-check">
+                        <label for="Filter-filter.v.m.productvariant.color_map-4" class="form-check-label">
+                            Green</label>
+                        <input type="checkbox" class="form-check-input" name="filter.v.m.productvariant.color_map"
+                            onclick="FilterValueSelect()" value="Green"
+                            id="Filter-filter.v.m.productvariant.color_map-4">
+                    </div>
+                    <div class="form-check">
+                        <label for="Filter-filter.v.m.productvariant.color_map-5" class="form-check-label">
+                            Grey</label>
+                        <input type="checkbox" class="form-check-input" name="filter.v.m.productvariant.color_map"
+                            onclick="FilterValueSelect()" value="Grey"
+                            id="Filter-filter.v.m.productvariant.color_map-5">
+                    </div>
+                    <div class="form-check">
+                        <label for="Filter-filter.v.m.productvariant.color_map-6"
+                            class="form-check-label">Multicolor</label>
+                        <input type="checkbox" class="form-check-input" name="filter.v.m.productvariant.color_map"
+                            onclick="FilterValueSelect()" value="Multicolor"
+                            id="Filter-filter.v.m.productvariant.color_map-6">
+                    </div>
+                    <div class="form-check">
+                        <label for="Filter-filter.v.m.productvariant.color_map-7" class="form-check-label">
+                            Pink</label>
+                        <input type="checkbox" class="form-check-input" name="filter.v.m.productvariant.color_map"
+                            onclick="FilterValueSelect()" value="Pink"
+                            id="Filter-filter.v.m.productvariant.color_map-7">
+                    </div>
+                    <div class="form-check">
+                        <label for="Filter-filter.v.m.productvariant.color_map-8" class="form-check-label">
+                            Red</label>
+                        <input type="checkbox" class="form-check-input" name="filter.v.m.productvariant.color_map"
+                            onclick="FilterValueSelect()" value="Red" id="Filter-filter.v.m.productvariant.color_map-8">
+                    </div>
+                    <div class="form-check">
+                        <label for="Filter-filter.v.m.productvariant.color_map-9" class="form-check-label">
+                            White</label>
+                        <input type="checkbox" class="form-check-input" name="filter.v.m.productvariant.color_map"
+                            onclick="FilterValueSelect()" value="White"
+                            id="Filter-filter.v.m.productvariant.color_map-9">
+                    </div>
+                    <div class="form-check">
+                        <label for="Filter-filter.v.m.productvariant.color_map-10" class="form-check-label">
+                            Yellow</label>
+                        <input type="checkbox" class="form-check-input" name="filter.v.m.productvariant.color_map"
+                            onclick="FilterValueSelect()" value="Yellow"
+                            id="Filter-filter.v.m.productvariant.color_map-10">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+        {% if wish_list_data.size > 0 %}
+        <div class="container-lg cartinner-Wrap">
+            {% for item in wish_list_data %}
+            {% assign wl_variant_id = item.variant_id | strip %}
+            {% assign product = all_products[item.parent_sku] %}
+            {% for v in product.variants %}
+            {% assign loop_variant_id = v.id | strip %}
+            {%- if loop_variant_id == wl_variant_id -%}
+            {% assign variant = v %}
+            {% break %}
+            {% endif %}
+            {% endfor %}
+            {% assign is_item_available_in_cart= false %}
+            {% for citem in cart.items %}
+            {% assign citem_loop_variant_id = citem.variant_id| strip %}
+            {% if citem_loop_variant_id == wl_variant_id %}
+            {% assign is_item_available_in_cart=true %}
+            {% break %}
+            {% endif %}
+            {% endfor %}
+            {% assign is_notify_tag_exists= false %}
+            {% assign all_tags = customer.tags | split: ", " %}
+            {% for t in all_tags %}
+            {% if t contains variant.id %}
+            {% assign is_notify_tag_exists = true %}
+            {% break %}
+            {% endif %}
+            {% endfor %}
+            <div
+                class="d-flex flex-md-row flex-column justify-content-between wishlistPro {% if is_notify_tag_exists == true %} cartwrap1 cartwrap2 {% elsif is_item_available_in_cart == false and variant.inventory_quantity <= 0 %}cartwrap1{% endif %}">
+                <div class="cartDetailProduct d-flex">
+                    <div class="Cartproduct-wrap">
+                        <img src="{{ product.featured_image |  product_img_url: 'medium' }}"
+                            alt="{{ product.image.alt | escape }}" class="cartProd-Img">
+                    </div>
+                    <div class="cartProductDetail-wrap">
+                        <h5 class="Cart-prodname mb-0">
+                            <a href="{{ variant.url }}">{{ product.title }}</a>
+                            <div class="d-block d-md-none">
+                                <button class="btn btn-white iconWrap p-0" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" data-bs-target="#cartoptions{{ forloop.index }}">
+
+                                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="0.5" y="0.5" width="31" height="31" rx="3.5" fill="#F5F4F5" />
+                                        <path
+                                            d="M10 16C10 17.1046 9.10457 18 8 18C6.89543 18 6 17.1046 6 16C6 14.8954 6.89543 14 8 14C9.10457 14 10 14.8954 10 16Z"
+                                            fill="#666666" />
+                                        <path
+                                            d="M18 16C18 17.1046 17.1046 18 16 18C14.8954 18 14 17.1046 14 16C14 14.8954 14.8954 14 16 14C17.1046 14 18 14.8954 18 16Z"
+                                            fill="#666666" />
+                                        <path
+                                            d="M24 18C25.1046 18 26 17.1046 26 16C26 14.8954 25.1046 14 24 14C22.8954 14 22 14.8954 22 16C22 17.1046 22.8954 18 24 18Z"
+                                            fill="#666666" />
+                                        <rect x="0.5" y="0.5" width="31" height="31" rx="3.5" stroke="#E6E6E6" />
+                                    </svg>
+
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="cartoptions{{ forloop.index }}">
+                                    <li>
+                                        <a class="dropdown-item"
+                                            onclick="deleteWishList({{ customer.id }},{{ variant.id }});"
+                                            rel="{{ item.id }}">Delete</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Share</a></li>
+                                </ul>
+                            </div>
+                        </h5>
+                        <p class="carttag mb-0 d-flex align-items-center">
+                            {{ product.vendor | link_to_vendor }}
+                            <span class="badgeCustom">
+                                <span class="innerBAdgeSPan">Seasonal</span>
+                            </span>
+                        </p>
+                        <div class="d-flex align-items-start">
+                            <p class="carttag-Category mb-0">
+                                {% assign variantoptioncounter = 0 %}
+                                {% for key in variant.metafields.productvariantoption %}
+                                {% if key[1] != '' %}
+                                <span class="tagLink">
+                                    {{ key[1] }}{% if forloop.index != forloop.length %}<span>|</span>{% endif %}
+                                </span>
+                                {% assign variantoptioncounter = 1 %}
+                                {% endif %}
+                                {% endfor %}
+                                {% if variantoptioncounter > 0 %}
+                                <span class="selectit ps-3">
+                                    <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
+                                        onclick="window.location='{{ variant.url }}'">
+                                        <path d="M11.6055 18.5244H18.1153" stroke="#EB6162" stroke-width="1.38462"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M3.41016 15.8655L13.8225 3.4082L16.8814 5.96442L6.46909 18.4217L3.79357 18.5239L3.41016 15.8655Z"
+                                            stroke="#EB6162" stroke-width="1.38462" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg></span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="wishlist-products-information d-flex flex-md-column flex-row justify-content-between align-items-end">
+                    <div class="cartBtnPrice dropdown d-md-block d-none">
+                        <button class="btn btn-white iconWrap d-flex p-0" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false" data-bs-target="#cartoptions{{ forloop.index }}">
+
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect x="0.5" y="0.5" width="31" height="31" rx="3.5" fill="#F5F4F5" />
+                                <path
+                                    d="M10 16C10 17.1046 9.10457 18 8 18C6.89543 18 6 17.1046 6 16C6 14.8954 6.89543 14 8 14C9.10457 14 10 14.8954 10 16Z"
+                                    fill="#666666" />
+                                <path
+                                    d="M18 16C18 17.1046 17.1046 18 16 18C14.8954 18 14 17.1046 14 16C14 14.8954 14.8954 14 16 14C17.1046 14 18 14.8954 18 16Z"
+                                    fill="#666666" />
+                                <path
+                                    d="M24 18C25.1046 18 26 17.1046 26 16C26 14.8954 25.1046 14 24 14C22.8954 14 22 14.8954 22 16C22 17.1046 22.8954 18 24 18Z"
+                                    fill="#666666" />
+                                <rect x="0.5" y="0.5" width="31" height="31" rx="3.5" stroke="#E6E6E6" />
+                            </svg>
+
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="cartoptions{{ forloop.index }}">
+                            <li>
+                                <a class="dropdown-item" onclick="deleteWishList({{ customer.id }},{{ variant.id }});"
+                                    rel="{{ item.id }}">Delete</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#">Share</a></li>
+                        </ul>
+                        <br>
+                    </div>
+
+                    <div class="wishlist-prices-button d-flex align-items-end flex-column">
+                        <h4 class="price">
+                            {% assign total_cart_price=total_cart_price|plus:variant.price %}
+                            {{ variant.price | money_without_trailing_zeros }}
+                            {% if variant.compare_at_price>0 and variant.price != variant.compare_at_price
+                            %}
+                            <span> {{ variant.compare_at_price | money_without_trailing_zeros }}</span>
+                            {% endif %}
+                        </h4>
+                    </div>
+
+
+                    <div class="innerwishlist-buttons d-flex align-items-end flex-column">
+                        {% if is_item_available_in_cart == true %}
+                        <div class="moved-to-cart">
+                            <span>
+                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="margin-right:10px">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M11 22C17.0751 22 22 17.0751 22 11C22 4.92487 17.0751 0 11 0C4.92487 0 0 4.92487 0 11C0 17.0751 4.92487 22 11 22ZM16.2315 7.60182C16.5895 7.9598 16.5895 8.5402 16.2315 8.89818L9.81485 15.3148C9.45687 15.6728 8.87647 15.6728 8.51849 15.3148L4.85182 11.6482C4.49384 11.2902 4.49384 10.7098 4.85182 10.3518C5.2098 9.99384 5.7902 9.99384 6.14818 10.3518L9.16667 13.3703L14.9352 7.60182C15.2931 7.24384 15.8735 7.24384 16.2315 7.60182Z"
+                                        fill="#EB6162" />
+                                </svg>
+                                Moved to cart
+                            </span>
+                        </div>
+
+                        {% elsif variant.inventory_quantity <=0 %} <div class="notifyme">
+                            <div class="inner-notify">
+                                <span>Out of stock</span>
+                                <button type="button" class="ms-2"
+                                    onclick="notifyWishList({{ customer.id }},{{ variant.id }})" {% if
+                                    is_notify_tag_exists==true %}disabled{% endif %} data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">Notify me</button>
+                            </div>
+
+                    </div>
+
+                    {% else %}
+                    <div class="move-to-cart">
+                        <a href="#" onclick="AddtoCartProduct({{ variant.id }},1)">Move to cart</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+</div>
+
+<div class="wishlist-slider">
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="wishlist-slidercenter py-3 text-center">
+                    <p>
+                        20% off on your first purchase - Use code LIVSPACE20
+                    </p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="wishlist-slidercenter py-3 text-center">
+                    <p>
+                        20% off on your first purchase - Use code LIVSPACE20
+                    </p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="wishlist-slidercenter py-3 text-center">
+                    <p>
+                        20% off on your first purchase - Use code LIVSPACE20
+                    </p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="wishlist-slidercenter py-3 text-center">
+                    <p>
+                        20% off on your first purchase - Use code LIVSPACE20
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+
+<div class="subtotalwrap">
+    <div class="container-lg">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <h4 class="subTotalHead">
+                    Sub Total ({{ wish_list_data.size }} items)
+                    <svg width="20" height="21" viewBox="0 0 20 21" fill="none">
+                        <circle cx="10" cy="10.5" r="9.16667" stroke="#F8F8F8" stroke-width="1.66667"></circle>
+                        <path d="M10 9.38867L10 14.3887" stroke="#F8F8F8" stroke-width="1.66667" stroke-linecap="round">
+                        </path>
+                        <path d="M10 5.77734L10 6.3329" stroke="#F8F8F8" stroke-width="1.66667" stroke-linecap="round">
+                        </path>
+                    </svg>
+                    </i>
+                </h4>
+                <p class="taxInclude mb-0">
+                    Tax included. Shipping calculated at checkout
+                </p>
+            </div>
+            <div
+                class="col-12 col-sm-6 d-flex align-items-center justify-content-md-end  justify-content-between mt-2 mt-md-0">
+                <h4 class="price">
+                    {{ total_cart_price| | money_without_trailing_zeros }}
+                </h4>
+                <button type="button" class="btn btn-primary" id="ptocheckout"
+                    onclick="window.location='/checkout';">View Cart
+                    <span class="ps-3 d-lg-inline-block d-none">
+                        <svg width="24" height="23" viewBox="0 0 24 23" fill="none">
+                            <path d="M0.923103 11.5002L23.0769 11.5002" stroke="white" stroke-width="1.84615"
+                                stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M17.2567 5.68197L23.0745 11.4997L16.9141 17.6602" stroke="white"
+                                stroke-width="1.84615" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="wishlistthanks" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content mx-md-0 mx-3">
+            <div class="modal-header justify-content-end">
+                <span data-bs-dismiss="modal" aria-label="Close"><img src="{{ " crosss.svg" | asset_url }}"
+                        onclick="window.location='/pages/wishlist';"></img></span>
+            </div>
+            <div class="modal-body">
+                <div class="main-continue text-center">
+                    <img src={{ "Frame.svg" | asset_url }}></img>
+                    <h2>Product Available Notification</h2>
+                    <p>When the product is available you will get notification to your email id "{{ customer.email
+                        }}"</p>
+                    <button id="continueSHop" onclick="window.location='/';">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'custom-recently-viewed-products' %}
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 30,
+        centeredSlides: true,
+        loop: true,
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
+</script>
+<script>
+    function showwishlistFilter() {
+        document.getElementById("wishlistFilter").style.display = "block";
+    }
+    function hidewishlistFilter() {
+        document.getElementById("wishlistFilter").style.display = "none";
+    }
+
+    function showSidewishfilter() {
+        document.getElementById("wishlistFilter").style.display = "block";
+        document.getElementById("wishlistFilter").style.left = 0;
+        document.getElementById("wishlistFilter").style.transition = "all .4s ease-in-out";
+    }
+</script>
+
+{% else %}
+<div class="container-lg pt-2">
+    <div class="cartHeading d-flex align-items-center">
+        <h2 class="shopingCart mb-0 me-3">My Wishlist</h2>
+    </div>
+</div>
+<div class="noProductCart text-center align-items-center">
+    <img class="img-fluid" src="{{ 'no-wishlist.svg' | asset_url }}" alt="Empty Shopping Cart">
+    <h4 class="noprod-head">
+        Items added to your wishlist will appear here!
+    </h4>
+    <button type="button" class="mt-2" id="repOrder" onclick="javascript:window.location='/'">
+        Explore Now
+    </button>
+</div>
+
+{% include 'custom-recently-viewed-products' %}
+{% endif %}

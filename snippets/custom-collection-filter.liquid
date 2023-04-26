@@ -1,0 +1,314 @@
+<form class="filter-form" id="filterSicky">
+    <div class="plp-filters" id="plpfil" style='padding:40px 0px'>
+        <div class="container-lg">
+            <div class="plp-filters-inner d-flex justify-content-between">
+                <div class="first-filters">
+                    <div class="inner-filter-plp-page flex-wrap d-lg-flex d-none align-items-center">
+                        {%- for filter in collection.filters -%}
+                        {% if forloop.index > 4 %}
+                        {% break %}
+                        {% endif %}
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="btncollectionfiler{{ forloop.index }}"
+                                onclick="ShowFilterValues('collectionfiler{{ forloop.index }}');">
+                                {{ filter.label }}
+                                {%- if filter.active_values.size > 0 -%}
+                                <span class="badge">{{ filter.active_values.size }}</span>
+                                {% endif %}
+                            </button>
+                        </div>
+                        {% endfor %}
+                        <div class="dropdown">
+                            <a href="{{ collection.url }}?sort_by={{ collection.sort_by }}" class="clear-filter">Clear
+                                All</a>
+                        </div>
+                        {% if collection.filters.size > 4 %}
+                        <p id="Click">
+                            <span id="innerText">
+                                More
+                            </span>
+                            <i class="fa fa-angle-down" aria-hidden="true" id="angleDown"></i>
+                        </p>
+                        {% endif %}
+                    </div>
+                    {% if collection.filters.size > 4 %}
+                    <div class="inner-filter-plp-page pt-4" id="filterHidden">
+                        <div class="filter-inner-div flex-wrap d-lg-flex d-none align-items-center">
+                            {%- for filter in collection.filters -%}
+                            {% if forloop.index <5 %} {% continue %} {% endif %} <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button"
+                                    id="btncollectionfiler{{ forloop.index }}"
+                                    onclick="ShowFilterValues('collectionfiler{{ forloop.index }}');">
+                                    {{ filter.label }}
+                                    {%- if filter.active_values.size > 0 -%}
+                                    <span class="badge">{{ filter.active_values.size }}</span>
+                                    {% endif %}
+                                </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="second-filter-plp d-lg-block d-none">
+                <div class="dropdown sortfilter">
+                    {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+                    {% assign selectedsort= collection.sort_options | where: 'value',sort_by%}
+                    <span class="sortybytext">Sort</span>
+                    <button class="btn  dropdown-toggle text-start" type="button" id="drpsortby"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ selectedsort[0].name }}
+                    </button>
+                    <input type="hidden" name="sort_by" id="SortBy" value="{{ sort_by}}" />
+                    <ul class="dropdown-menu" aria-labelledby="drpsortby">
+                        {%- for option in collection.sort_options -%}
+                        {% if option.name !='-' %}
+                        <li><a class="dropdown-item" href="#"
+                                onclick="javascript:SortValueSelect('{{option.value  }}');">{{ option.name }}</a></li>
+                        {% endif %}
+                        {%- endfor -%}
+                    </ul>
+                </div>
+
+            </div>
+            <div class="plp-mobile-filters d-lg-none d-block w-100">
+                <div class="plp-mobile-filters ">
+                    <div class="plp-mobile-filter-buttons d-flex justify-content-between">
+                        <button type="button" class="sort" onclick="sidesort()">
+                            <img src="{{ 'Sort.svg' | asset_url }}" alt="Sort">Sort</button>
+                        <button type="button" class="search-filters" onclick="filtersopen()">
+                            <img src="{{ 'Filter.svg' | asset_url }}" alt="Filter">Filter</button>
+                        <button type="button" class="filter-up" onclick="topfunction();" style="margin-left:10px;HEIGHT:40PX">
+                          <span>                              
+                            <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="42" height="42" rx="4" fill="black"/>
+                            <path d="M21.4367 13.9743C21.1955 13.7331 20.8045 13.7331 20.5633 13.9743L16.6326 17.905C16.3914 18.1462 16.3914 18.5373 16.6326 18.7785C16.8738 19.0197 17.2649 19.0197 17.5061 18.7785L21 15.2845L24.4939 18.7785C24.7351 19.0197 25.1262 19.0197 25.3674 18.7785C25.6086 18.5373 25.6086 18.1462 25.3674 17.905L21.4367 13.9743ZM21.6176 26.589L21.6176 14.411H20.3824L20.3824 26.589H21.6176Z" fill="white"/>
+                            </svg>
+                          </span>
+                        </button>
+                    </div>
+                </div>
+                <div class=" sort-side-mobile-version" id="mobilesort">
+                    <div class="sort-head">
+                        <p>Sort <span onclick="closesort()">✕</span> </p>
+                    </div>
+                    <hr>
+                    <div class="sort-content d-flex flex-column justify-content-between">
+                        <ul class="list-unstyled">
+                            {%- for option in collection.sort_options -%}
+                            {% if option.name !='-' %}
+                            <li>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                        id="sort{{ forloop.index }}" onclick="FilterValueSelect();">
+                                    <label class="form-check-label" for="sort{{ forloop.index }}">
+                                        {{ option.name }}
+                                    </label>
+                                </div>
+                            </li>
+                            {% endif %}
+                            {%- endfor -%}
+                            <hr>
+                        </ul>
+                        <button type="submit">Apply</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+                <div class="filter-side-mobile-version" id="mobilefilters">
+                    <div class="filter-head">
+                        <p>Filter <span onclick="filterclose()">✕</span></p>
+                    </div>
+                    <hr>
+                    <div class="filter-content d-flex flex-column justify-content-between">
+                        <div class="accordion" id="filteraccordin" style="height: 100%;overflow-y: scroll;overflow-x: hidden;">
+                            {%- for filter in collection.filters -%}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne{{ forloop.index }}" aria-expanded="true"
+                                        aria-controls="collapseOne{{ forloop.index }}">{{ filter.label }}</button>
+                                </h2>
+
+                                <div id="collapseOne{{ forloop.index }}" class="accordion-collapse collapse"
+                                    aria-labelledby="headingOne" data-bs-parent="#filteraccordin">
+                                    <div class="accordion-body">
+                                       {%- case filter.type -%}
+                                      {%- when 'boolean' or 'list' -%}
+                                        {%- for filter_value in filter.values -%}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" 
+                                                name="{{ filter_value.param_name }}" onclick="FilterValueSelect()"
+                                                value="{{ filter_value.value }}"
+                                                id="Filter-{{ filter.param_name }}-{{ forloop.index }}" {% if
+                                                filter_value.active -%}checked{%- endif %} {% if filter_value.count==0
+                                                and filter_value.active==false -%}disabled{%- endif %}>
+                                            <label class="form-check-label"
+                                                for="Filter-{{ filter.param_name }}-{{ forloop.index }}">
+                                                {{ filter_value.label }}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                         {%- when 'price_range' -%}
+                                          <div class="col-12">
+                        <label for="Filter-{{ filter.min_value.param_name }}">From&nbsp;</label>
+                        <span>{{ cart.currency.symbol }}</span>
+
+                        <input name="{{ filter.min_value.param_name }}" onblur="FilterValueSelect()" style="width:100px"
+                            id="Filter-{{ filter.min_value.param_name }}" {% if filter.min_value.value -%}
+                            value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}" {%- endif
+                            %} type="number" placeholder="0" min="0"
+                            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}">
+                    </div>
+                    <div class="col-12 mt-3">
+                        <label for="Filter-{{ filter.max_value.param_name }}">To</label>
+                        <span>{{ cart.currency.symbol }}</span>
+
+                        <input name="{{ filter.max_value.param_name }}" onblur="FilterValueSelect()" style="width:100px"
+                            id="Filter-{{ filter.max_value.param_name }}" {% if filter.max_value.value -%}
+                            value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}" {%- endif
+                            %} type="number"
+                            placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}" min="0"
+                            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}">
+                    </div>
+                                         {%- endcase -%}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="filter-buttons">
+                            <button class="clear-filters" type="button"
+                                onclick="window.location='{{ collection.url }}?sort_by={{ collection.sort_by }}'">Clear
+                                All</button>
+                            <button type="submit">Apply Filter</button>
+                        </div>
+                    </div>
+                </div>
+        {%- for filter in collection.filters -%}
+        <div class="dropdown-plp-filters" style="display:none;" id="collectionfiler{{ forloop.index }}">
+            <hr>
+            <div class="brands-dropdown-filters">
+                <div class="brnds-dropdown-filters-head pb-3">
+                    <h5>Select {{ filter.label }} <span style="float: right;cursor: pointer;"
+                            onclick="CloseFilterValues('collectionfiler{{ forloop.index }}');">&#10005;</span></h5>
+                </div>
+                <div class="collecFilterShow d-flex flex-wrap flex-row">
+                    {%- case filter.type -%}
+                    {%- when 'boolean' or 'list' -%}
+                    {%- for filter_value in filter.values -%}
+                    <div class="form-check">
+                        <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}" class="form-check-label">{{ filter_value.label }}</label>
+                      <input type="checkbox" class="form-check-input" name="{{ filter_value.param_name }}"
+                                onclick="FilterValueSelect()" value="{{ filter_value.value }}"
+                                id="Filter-{{ filter.param_name }}-{{ forloop.index }}" {% if filter_value.active
+                                -%}checked{%- endif %} {% if filter_value.count==0 and filter_value.active==false
+                                -%}disabled{%- endif %}>
+
+
+                    </div>
+                    {% endfor %}
+                    {%- when 'price_range' -%}
+                    <div class="col-2">
+                        <label for="Filter-{{ filter.min_value.param_name }}">From&nbsp;</label>
+                        <span>{{ cart.currency.symbol }}</span>
+
+                        <input name="{{ filter.min_value.param_name }}" onblur="FilterValueSelect()"
+                            id="Filter-{{ filter.min_value.param_name }}" {% if filter.min_value.value -%}
+                            value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}" {%- endif
+                            %} type="number" placeholder="0" min="0"
+                            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}">
+                    </div>
+                    <div class="col-2">
+                        <label for="Filter-{{ filter.max_value.param_name }}">To</label>
+                        <span>{{ cart.currency.symbol }}</span>
+
+                        <input name="{{ filter.max_value.param_name }}" onblur="FilterValueSelect()"
+                            id="Filter-{{ filter.max_value.param_name }}" {% if filter.max_value.value -%}
+                            value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}" {%- endif
+                            %} type="number"
+                            placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}" min="0"
+                            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}">
+                    </div>
+
+                    {%- endcase -%}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <input type="submit" value="Apply" style="display:none" id="btnfiltersubmit">
+</form>
+
+
+
+</div>
+</div>
+<script>
+    function ShowFilterValues(filterid) {
+        $('div[id^="collectionfiler"]').each(function (index, el) {
+            $(el).css("display", "none");
+        });
+        document.getElementById(filterid).style.display = "block";
+        document.getElementById('btn' + filterid).classList.toggle("active");
+    }
+
+    function CloseFilterValues(filterid) {
+        document.getElementById(filterid).style.display = "none";
+        document.getElementById('btn' + filterid).classList.toggle("active");
+    }
+    function FilterValueSelect() {
+        $('#btnfiltersubmit').click();
+    }
+    function sidesort() {
+        document.getElementById("mobilesort").style.transform = "translateX(0)";
+    }
+
+    function closesort() {
+        document.getElementById("mobilesort").style.transform = "translateX(-100%)";
+    }
+
+    function filtersopen() {
+        document.getElementById("mobilefilters").style.transform = "translateX(0)";
+    }
+
+    function filterclose() {
+        document.getElementById("mobilefilters").style.transform = "translateX(-100%)";
+    }
+    function SortValueSelect(sortval) {
+        document.getElementById("SortBy").value = sortval;
+        FilterValueSelect();
+    }
+
+    window.onscroll = function () { myFunction() };
+    var header = document.getElementById("filterSicky");
+    var sticky = header.offsetTop;
+    function myFunction() {
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+          document.getElementById("plpfil").style.padding = "16px 0px"
+        } else {
+            header.classList.remove("sticky");
+          document.getElementById("plpfil").style.padding = "40px 0px"
+        }
+    }
+
+</script>
+<script>
+    let newClick = document.getElementById("innerText");
+    $(document).ready(function () {
+        $("#Click").click(function () {
+            if (newClick.innerHTML === "Less") {
+                newClick.innerHTML = "More";
+                document.getElementById("angleDown").style.transform = "rotate(0deg)"
+            } else {
+                newClick.innerHTML = "Less";
+                document.getElementById("angleDown").style.transform = "rotate(180deg)"
+            }
+            $("#filterHidden").fadeToggle();
+        });
+    });
+</script>

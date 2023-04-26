@@ -1,0 +1,122 @@
+{% for order in customer.orders %}
+{% for line_item in order.line_items %}
+<div class="cuurent-products mb-3">
+    <div class="cuurent-product-info d-flex align-items-center">
+        <div class="cuurent-product-img">
+            <img src="{{ line_item.image | product_img_url:'medium' }}" alt="{{ line_item.product.title }}"
+                class="img-fluid"></img>
+        </div>
+        <div class="cuurent-product-cont">
+            <h3>{{ line_item.product.title }}</h3>
+            <p>{{ line_item.vendor }} <span class="badge">Seasonal</span></p>
+            <ul class="list-unstyled d-flex m-0">
+                {% for key in line_item.variant.metafields.productvariantoption %}
+                {% if key[1]!='' %}
+                <li>{{ key[1] }}</li>
+                {% if forloop.index!=forloop.length %}
+                <li>|</li>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="current-order-id py-4">
+        <div class="row">
+            <div class="col-9 col-sm-9 col-md-9 col-lg-10">
+                <div class="current-order-id-cont">
+                    <ul class="list-unstyled d-flex m-0  flex-md-row flex-column">
+                        <li>
+                            <div class="current-order-id-content d-flex align-items-center">
+                                <h3>Order ID</h3>
+                                <span class="ordernumbercopy" id="myOrder_{{ order.order_number }}_{{ forloop.index }}">#{{ order.order_number }}</span>
+                                <button onclick="copyordertext('myOrder_{{ order.order_number }}_{{ forloop.index }}')" id="copy-myorderid">
+                                    <svg width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M4.66797 2.83268V12.8327C4.66797 13.2747 4.84356 13.6986 5.15612 14.0112C5.46869 14.3238 5.89261 14.4993 6.33464 14.4993H13.0013C13.4433 14.4993 13.8673 14.3238 14.1798 14.0112C14.4924 13.6986 14.668 13.2747 14.668 12.8327V5.53435C14.6679 5.31232 14.6235 5.09253 14.5374 4.88789C14.4513 4.68325 14.3251 4.49788 14.1663 4.34268L11.4038 1.64102C11.0924 1.33656 10.6743 1.16607 10.2388 1.16602H6.33464C5.89261 1.16602 5.46869 1.34161 5.15612 1.65417C4.84356 1.96673 4.66797 2.39065 4.66797 2.83268V2.83268Z"
+                                            stroke="#EB6162" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                        <path
+                                            d="M11.334 14.4987V16.1654C11.334 16.6074 11.1584 17.0313 10.8458 17.3439C10.5333 17.6564 10.1093 17.832 9.66732 17.832H3.00065C2.55862 17.832 2.1347 17.6564 1.82214 17.3439C1.50958 17.0313 1.33398 16.6074 1.33398 16.1654V6.9987C1.33398 6.55667 1.50958 6.13275 1.82214 5.82019C2.1347 5.50763 2.55862 5.33203 3.00065 5.33203H4.66732"
+                                            stroke="#EB6162" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </li>
+                        <li class="d-md-block d-none">|</li>
+                        <li>
+                            <div class="current-order-dates d-flex">
+                                <h3>Ordered Date:</h3>
+                                <p>{{ order.created_at | date: format: 'month_day_year' }}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-3 col-sm-3 col-md-3 col-lg-2">
+                <div class="current-order-quantity-info h-100">
+                    <ul class="list-unstyled d-flex m-0 justify-content-end flex-md-row flex-column h-100 align-items-md-center align-items-end">
+                        <li>
+                            <div class="current-order-quantity">
+                                <p>{{ line_item.quantity }}pc</p>
+                            </div>
+                        </li>
+                        <li class="d-md-block d-none">|</li>
+                        <li>
+                            <div class="current-order-price">
+                                <h3>{{ line_item.final_price |money_without_trailing_zeros }}</h3>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="m-0">
+
+    <div class="view-order-sec">
+        <div class="row">
+            <div class="col-8 col-sm-6 col-md-6 col-lg-6">
+                <div class="current-ordered d-flex">
+                    <div class="current-ordered-icon">                        
+                      <img src="https://cdn.shopify.com/s/files/1/0634/1243/7232/files/Order_Icon_50d3deb2-1a4e-466f-b54a-bf23e556fba4.svg?v=1679996773" class="img-fluid w-100 h-100" />
+                    </div>
+                    <div class="current-ordered-cont">
+                        <h3>Ordered</h3>
+                        <p>{{ order.created_at | date: format: 'month_day_year' }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 col-sm-6 col-md-6 col-lg-6 d-flex justify-content-end align-items-center">
+                <div class="current-order-view">
+                    <h3> <a href="{{ order.customer_url }}">
+                            View Order 
+                      <i class="d-sm-block d-none">                        
+                        <svg width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.923103 11.5L23.0769 11.5" stroke="#EB6162" stroke-width="1.84615" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17.2587 5.68227L23.0764 11.5L16.916 17.6605" stroke="#EB6162" stroke-width="1.84615" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </i>
+                        </a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endfor %}
+
+{% schema %}
+{
+"name": "Section name",
+"settings": []
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

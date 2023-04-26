@@ -1,0 +1,79 @@
+{% assign isfurniture= product.collections.last.metafields.type.is_furniture.value %}
+
+<div class="{% if isfurniture == true %}slide {% else %}container-lg  slide-container{% endif %} pt-4">
+    <div class="swiper er">
+        <div class="swiper-wrapper">
+            {% assign allimages=product.images %}
+
+            {% for image in allimages %}
+
+            {% if image.alt !='Zoom Images' and image.alt !='Portrait' %}
+            <div class="swiper-slide">
+                <img src="{{ image.src | product_img_url: 'original' }}" class="s-img d-block w-100"
+                    alt="{{ image.alt | escape }}">
+            </div>
+            {% endif %}
+            {% endfor %}
+
+        </div>
+        <div class="swiper-button-next imagesliderbutton">
+
+            <svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="34" cy="34" r="34" fill="black" />
+                <path d="M23.6154 34L44.3846 34" stroke="white" stroke-width="1.73077" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <path d="M38.9306 28.5458L44.3848 34L38.6094 39.7754" stroke="white" stroke-width="1.73077"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+
+        </div>
+        <div class="swiper-button-prev imagesliderbutton">
+
+            <svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="34" cy="34" r="34" fill="black" />
+                <path d="M44.3846 34L23.6154 34" stroke="white" stroke-width="1.73077" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <path d="M29.0694 39.4542L23.6152 34L29.3906 28.2246" stroke="white" stroke-width="1.73077"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+
+        </div>
+        <div class="swiper-pagination imgsliderpaging"></div>
+    </div>
+</div>
+<script>
+    var swiper = new Swiper(".er", {
+
+        slidesPerView: 3,
+        spaceBetween: 30,
+        loop: true,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+            el: ".swiper-pagination",
+        },
+        breakpoints: {
+            320: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+            },
+            576: {
+                slidesPerView: 1,
+                spaceBetween: 30,
+            },
+            768: {
+                slidesPerView: 1,
+                spaceBetween: 30,
+            },
+            1366: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+            }
+        },
+    });
+    $(document).ready(function (e) {
+        $('#prevImg').click();
+    });
+</script>

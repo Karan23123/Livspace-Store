@@ -1,0 +1,60 @@
+<!--Banner Start-->
+<div class="plp-banner">
+    <div class="plp-inner-banner"></div>
+    <div class="container-lg">
+        <div class="plp-banner-content">
+            <nav class="col-12 col-sm-9 col-lg-9 breadcrum d-md-block d-none">
+                <ul class="breadcrumb-list list-unstyled d-flex m-0 flex-wrap">
+                    <li><a href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a></li>
+                    {%- if current_tags -%}
+                    <li>
+                        {{ collection.title | link_to: collection.url }}
+                    </li>
+                    <li>
+                        {%- capture tag_url -%}{{ collection.url }}/{{ current_tags | join: "+"}}{%- endcapture -%}
+                        <a href="{{ tag_url }}">{{ current_tags | join: " + "}}</a>
+                    </li>
+                    {%- else -%}
+                    <li>
+                        <a href="{{ collection.url }}">{{ collection.title }}</a>
+                    </li>
+                    {%- endif -%}
+                </ul>
+            </nav>
+            <div class="plp-banner-inner-content">
+                <h1>{{ collection.title }}</h1>
+                <p>{{ collection.description }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Banner End-->
+<style>
+    .plp-banner {
+        background-image:url("{{ collection.image.src | collection_img_url: 'original'  }}") !important;
+    }
+
+    @media(max-width:576px) {
+            {% if collection.metafields.collection.mobilebanner !=blank %}
+
+        .plp-banner {
+            background-image:url("{{ collection.metafields.collection.mobilebanner | img_url:'original'}}") !important;
+        }
+
+            {% endif %}
+
+        .plp-banner-inner-content h1 {
+            font-size: 36px !important;
+            text-align: center !important;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .plp-banner-inner-content p {
+            font-size: 16px !important;
+            text-align: center !important;
+            color: #fff;
+        }
+    }
+</style>

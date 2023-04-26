@@ -1,0 +1,260 @@
+<form class="filter-form">
+    <input type="hidden" name="q" value="{{ search.terms }}">
+    <div class="plp-filters" id="plpfil" style="padding:40px 0px 20px">
+        <div class="container-lg p-0">
+            <div class="plp-filters-inner d-flex justify-content-between">
+                <div class="first-filters flex-wrap d-lg-flex d-none align-items-center">
+
+                    {%- for filter in search.filters -%}
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="btncollectionfiler{{ forloop.index }}"
+                            onclick="ShowFilterValues('collectionfiler{{ forloop.index }}');">
+                            {{ filter.label }}
+                            {%- if filter.active_values.size > 0 -%}
+                            <span class="badge">{{ filter.active_values.size }}</span>
+                            {% endif %}
+                        </button>
+                    </div>
+                    {% endfor %}
+                    <div class="dropdown ps-lg-5 ps-md-4 ps-4">
+                        <a href="{{ routes.search_url }}?sort_by={{ search.sort_by }}&q={{ search.terms }}"
+                            class="clear-filter">Clear All</a>
+                    </div>
+                </div>
+                <div class="second-filter-plp d-lg-block d-none">
+                    <div class="dropdown sortfilter">
+                        {% assign sort_by = search.sort_by | default: search.default_sort_by %}
+                        {% assign selectedsort= search.sort_options | where: 'value',sort_by%}
+
+                        <span class="sortybytext">Sort</span>
+                        <button class="btn  dropdown-toggle text-start" type="button" id="drpsortby"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ selectedsort[0].name }}
+                        </button>
+                        <input type="hidden" name="sort_by" id="SortBy" value="{{ sort_by}}" />
+                        <ul class="dropdown-menu" aria-labelledby="drpsortby">
+                            {%- for option in search.sort_options -%}
+                            {% if option.name !='-' %}
+                            <li><a class="dropdown-item" href="#"
+                                    onclick="javascript:SortValueSelect('{{option.value  }}');">{{ option.name }}</a>
+                            </li>
+                            {% endif %}
+                            {%- endfor -%}
+                        </ul>
+
+
+                    </div>
+                </div>
+                <div class="plp-mobile-filters d-lg-none d-block w-100">
+                    <div class="plp-mobile-filters d-flex justify-content-between align-items-center">
+                        <div class="mobile-filter-dispaly-yes d-lg-none d-block">
+                            <p>{{ search.terms | escape }} <span>({{ search.results_count }} results)</span></p>
+                        </div>
+                        <div class="plp-mobile-filter-buttons d-flex justify-content-between">
+                            <button type="button" class="sort" onclick="sidesort()">
+                                <img src="{{ 'Sort.svg' | asset_url }}" alt="Sort"></button>
+                            <button type="button" class="search-filters" onclick="filtersopen()">
+                                <img src="{{ 'Filter.svg' | asset_url }}" alt="Filter"></button>
+                        </div>
+
+                    </div>
+                    <div class=" sort-side-mobile-version" id="mobilesort">
+                        <div class="sort-head">
+                            <p>Sort <span onclick="closesort()">✕</span> </p>
+                        </div>
+                        <hr>
+                        <div class="sort-content">
+                            <ul class="list-unstyled">
+                                {%- for option in search.sort_options -%}
+                                {% if option.name !='-' %}
+                                <li>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="sort{{ forloop.index }}" onclick="FilterValueSelect();">
+                                        <label class="form-check-label" for="sort{{ forloop.index }}">
+                                            {{ option.name }}
+                                        </label>
+                                    </div>
+                                </li>
+                                {% endif %}
+                                {%- endfor -%}
+                            </ul>
+                            <hr>
+                            <button type="submit" style="display:none">Apply</button>
+                        </div>
+                    </div>
+                    <div class="filter-side-mobile-version" id="mobilefilters">
+                        <div class="filter-head">
+                            <p>Filter <span onclick="filterclose()">✕</span></p>
+                        </div>
+                        <hr>
+                        <div class="filter-content d-flex flex-column justify-content-between">
+                            <div class="accordion" id="filteraccordin">
+                                {%- for filter in search.filters -%}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseOne{{ forloop.index }}"
+                                            aria-expanded="true" aria-controls="collapseOne">{{ filter.label }}</button>
+                                    </h2>
+
+                                    <div id="collapseOne{{ forloop.index }}" class="accordion-collapse collapse"
+                                        aria-labelledby="headingOne" data-bs-parent="#filteraccordin">
+                                        <div class="accordion-body">
+                                             {%- case filter.type -%}
+                                      {%- when 'boolean' or 'list' -%}
+                                            {%- for filter_value in filter.values -%}
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    name="{{ filter_value.param_name }}" onclick="FilterValueSelect()"
+                                                    value="{{ filter_value.value }}"
+                                                    id="Filter-{{ filter.param_name }}-{{ forloop.index }}" {% if
+                                                    filter_value.active -%}checked{%- endif %} {% if
+                                                    filter_value.count==0 and filter_value.active==false -%}disabled{%-
+                                                    endif %}>
+                                                <label class="form-check-label"
+                                                    for="Filter-{{ filter.param_name }}-{{ forloop.index }}">
+                                                    {{ filter_value.label }}
+                                                </label>
+                                            </div>
+                                            {% endfor %}
+                                                 {%- when 'price_range' -%}
+                                                <div class="col-12">
+                        <label for="Filter-{{ filter.min_value.param_name }}">From&nbsp;</label>
+                        <span>{{ cart.currency.symbol }}</span>
+
+                        <input name="{{ filter.min_value.param_name }}" onblur="FilterValueSelect()" style="width:100px"
+                            id="Filter-{{ filter.min_value.param_name }}" {% if filter.min_value.value -%}
+                            value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}" {%- endif
+                            %} type="number" placeholder="0" min="0"
+                            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}">
+                    </div>
+                    <div class="col-12">
+                        <label for="Filter-{{ filter.max_value.param_name }}">To</label>
+                        <span>{{ cart.currency.symbol }}</span>
+
+                        <input name="{{ filter.max_value.param_name }}" onblur="FilterValueSelect()" style="width:100px"
+                            id="Filter-{{ filter.max_value.param_name }}" {% if filter.max_value.value -%}
+                            value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}" {%- endif
+                            %} type="number"
+                            placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}" min="0"
+                            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}">
+                    </div>
+                                         {%- endcase -%}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <hr>
+
+                            </div>
+                            <div class="filter-buttons">
+                                <button class="clear-filters" type="button"
+                                    onclick="window.location='{{ routes.search_url }}?sort_by={{ search.sort_by }}&q={{ search.terms }}'">Clear
+                                    All</button>
+                                <button type="submit" style="display:none">Apply Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            {%- for filter in search.filters -%}
+            <div class="dropdown-plp-filters" style="display:none;" id="collectionfiler{{ forloop.index }}">
+                <hr>
+                <div class="brands-dropdown-filters">
+                    <div class="brnds-dropdown-filters-head pb-3">
+                        <h5>Select {{ filter.label }} <span style="float: right;cursor: pointer;"
+                                onclick="CloseFilterValues('collectionfiler{{ forloop.index }}');">&#10005;</span></h5>
+                    </div>
+                    <div class="d-flex flex-wrap flex-row">
+                        {%- case filter.type -%}
+                        {%- when 'boolean' or 'list' -%}
+                        {%- for filter_value in filter.values -%}
+                        <div class="form-check">
+                            <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}" class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="{{ filter_value.param_name }}"
+                                    onclick="FilterValueSelect()" value="{{ filter_value.value }}"
+                                    id="Filter-{{ filter.param_name }}-{{ forloop.index }}" {% if filter_value.active
+                                    -%}checked{%- endif %} {% if filter_value.count==0 and filter_value.active==false
+                                    -%}disabled{%- endif %}>
+                                {{ filter_value.label }}</label>
+
+
+                        </div>
+                        {% endfor %}
+                        {%- when 'price_range' -%}
+                        <div class="col-2">
+                            <label for="Filter-{{ filter.min_value.param_name }}">From&nbsp;</label>
+                            <span>{{ cart.currency.symbol }}</span>
+
+                            <input name="{{ filter.min_value.param_name }}" onblur="FilterValueSelect()"
+                                id="Filter-{{ filter.min_value.param_name }}" {% if filter.min_value.value -%}
+                                value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}" {%-
+                                endif %} type="number" placeholder="0" min="0"
+                                max="{{ filter.range_max | money_without_currency | replace: ',', '' }}">
+                        </div>
+                        <div class="col-2">
+                            <label for="Filter-{{ filter.max_value.param_name }}">To</label>
+                            <span>{{ cart.currency.symbol }}</span>
+
+                            <input name="{{ filter.max_value.param_name }}" onblur="FilterValueSelect()"
+                                id="Filter-{{ filter.max_value.param_name }}" {% if filter.max_value.value -%}
+                                value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}" {%-
+                                endif %} type="number"
+                                placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}" min="0"
+                                max="{{ filter.range_max | money_without_currency | replace: ',', '' }}">
+                        </div>
+
+                        {%- endcase -%}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <input type="submit" value="Apply" style="display:none" id="btnfiltersubmit">
+</form>
+
+
+
+</div>
+</div>
+<script>
+    function ShowFilterValues(filterid) {
+        $('div[id^="collectionfiler"]').each(function (index, el) {
+            $(el).css("display", "none");
+        });
+        document.getElementById(filterid).style.display = "block";
+        document.getElementById('btn' + filterid).classList.toggle("active");
+    }
+
+    function CloseFilterValues(filterid) {
+        document.getElementById(filterid).style.display = "none";
+        document.getElementById('btn' + filterid).classList.toggle("active");
+    }
+    function FilterValueSelect() {
+        $('#btnfiltersubmit').click();
+    }
+    function sidesort() {
+        document.getElementById("mobilesort").style.transform = "translateX(0)";
+    }
+
+    function closesort() {
+        document.getElementById("mobilesort").style.transform = "translateX(-100%)";
+    }
+
+    function filtersopen() {
+        document.getElementById("mobilefilters").style.transform = "translateX(0)";
+    }
+
+    function filterclose() {
+        document.getElementById("mobilefilters").style.transform = "translateX(-100%)";
+    }
+    function SortValueSelect(sortval) {
+        document.getElementById("SortBy").value = sortval;
+        FilterValueSelect();
+    }
+
+</script>
